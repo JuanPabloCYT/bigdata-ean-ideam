@@ -23,6 +23,8 @@ Este repositorio aloja el proyecto acumulativo de la asignatura. Contiene el ent
 
 No necesita instalar Python, ni pandas, ni PostgreSQL en su equipo. Todo eso vive dentro de los contenedores. Esa es la razón de ser de este montaje.
 
+> **Ruta de infraestructura declarada: A · Docker local.** El proyecto se construyó y se verificó con Docker Desktop en macOS 27 (`arm64`), de modo que quedan cubiertas las tres capas de aislamiento que aplican a esta sesión: código (Git), dependencias (`requirements.txt` anclado) y ejecución (contenedores). No se recurrió a la ruta B (Codespaces) ni a la ruta C (`venv`), que no aísla el entorno de ejecución. La capa de datos se aborda en S5.
+
 ---
 
 ## 2. Cómo se levanta
@@ -155,6 +157,22 @@ Si un paso falla y no está en esta tabla, es un defecto del contrato: repórtel
 | T2 | Este entorno reproducible | raíz del repositorio |
 
 Las cifras de T1 (S₀, memoria del DataFrame, k, M, g y el horizonte de saturación) están en [`docs/T1/ficha_tecnica.md`](docs/T1/ficha_tecnica.md), con las condiciones y el equipo en que se midieron.
+
+### Cómo se conecta T1 con T2
+
+T2 no es una entrega nueva que reemplace a T1: es la **infraestructura que vuelve verificable** lo que T1 afirmó. La relación es concreta en cinco puntos.
+
+**1. T2 consume T1.** La ficha deja de ser un archivo adjunto y pasa a ser el primer documento versionado del proyecto, en `docs/T1/`. Cualquiera puede ver en la historia de Git cuándo cambió una cifra y por qué.
+
+**2. El anclaje de versiones existe por T1.** `requirements.txt` fija `pandas==2.2.3` porque ese es exactamente el valor con el que se midió la ficha. `df.memory_usage(deep=True).sum()` es determinista dados los mismos datos y la misma versión de pandas: cambiar la versión mayor cambiaría el factor de expansión *k* por una diferencia de la librería, no del dato. El `==` es lo que impide que la cifra de T1 se vuelva irreproducible.
+
+**3. La clave candidata se convierte en restricción.** En T1 se comprobó que `codigoestacion + codigosensor + fechaobservacion` identifica unívocamente cada registro: 141.007 filas, 141.007 combinaciones únicas, 0 duplicados y 0 nulos. Eso era un hallazgo sobre una partición. En `sql/01_esquema.sql` es la **clave primaria** que PostgreSQL hace cumplir en cada inserción futura. El cuaderno de verificación lo comprueba contra `information_schema`.
+
+**4. La recomendación de T1 se vuelve estructura.** T1 concluyó que la ingesta debía ser incremental por `fechaobservacion`. De ahí salen el índice sobre esa columna y la tabla `control_ingesta`, que registra qué partición se cargó, cuándo, con cuántas filas y con qué hash. Sin ese registro, una ingesta incremental no es auditable.
+
+**5. T1 explica por qué los datos no están en Git.** La ficha midió que una sola partición diaria pesa 21.953.076 bytes. Esa cifra es el argumento, no una intuición: `data/raw/` está en `.gitignore` y el README documenta cómo obtener las particiones y con qué hash verificarlas.
+
+Hay además una continuidad conceptual. La prueba de T1 era *"otra persona debe poder reproducir su cifra con lo que usted escribió"*, y aplicaba al cuaderno. En T2 la misma prueba se aplica al entorno completo: código, dependencias y ejecución. La medición de T1 se rehízo en esta MacBook y el resultado ilustra el punto — *k* y S₀ no cambiaron, porque el archivo y la versión de pandas eran los mismos, pero *M* pasó de 7,43 GB a 1,50 GB y el horizonte de 474 a 313 años. **El umbral es una propiedad del binomio dato–equipo, y por eso el equipo hay que declararlo y congelarlo.** Eso es exactamente lo que hace este repositorio.
 
 ---
 
