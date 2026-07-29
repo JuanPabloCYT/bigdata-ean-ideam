@@ -30,7 +30,7 @@ No necesita instalar Python, ni pandas, ni PostgreSQL en su equipo. Todo eso viv
 ## 2. Cómo se levanta
 
 ```bash
-git clone <URL-DEL-REPOSITORIO> && cd proyecto-ideam-precipitacion
+git clone https://github.com/JuanPabloCYT/bigdata-ean-ideam.git && cd bigdata-ean-ideam
 ```
 
 ```bash
@@ -105,7 +105,7 @@ Y abra `http://localhost:8889`. Los puertos del anfitrión son configurables por
 ## 6. Estructura y por qué cada cosa está donde está
 
 ```
-proyecto-ideam-precipitacion/
+bigdata-ean-ideam/
 ├── docker-compose.yml     # la "cocina": servicios, puertos, volúmenes
 ├── requirements.txt       # dependencias ancladas con ==
 ├── .env.example           # plantilla de credenciales (SÍ se versiona)

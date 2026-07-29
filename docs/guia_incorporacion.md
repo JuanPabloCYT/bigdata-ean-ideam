@@ -28,13 +28,13 @@ En macOS, `Terminal`. En Windows, `PowerShell`. En Linux, la que use. Todos los 
 **2. Descargue el proyecto.**
 
 ```bash
-git clone <URL-DEL-REPOSITORIO>
+git clone https://github.com/JuanPabloCYT/bigdata-ean-ideam.git
 ```
 
 **3. Entre a la carpeta que acaba de crearse.**
 
 ```bash
-cd proyecto-ideam-precipitacion
+cd bigdata-ean-ideam
 ```
 
 **4. Cree su archivo de configuración personal.**
