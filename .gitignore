@@ -1,0 +1,39 @@
+# =============================================================
+# .gitignore · escrito ANTES del primer commit
+# Proteger antes de guardar. Una credencial que entra a la
+# historia de Git queda ahí aunque después se borre el archivo.
+# =============================================================
+
+# --- Datos: nunca se versionan -------------------------------
+# Los CSV del IDEAM pesan ~21 MB por partición diaria. Git no
+# está hecho para binarios grandes: degradaría el repositorio
+# de forma permanente. Se documenta en el README cómo obtenerlos.
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+*.csv
+!docs/**/*.csv
+
+# --- Credenciales y variables de entorno ---------------------
+.env
+.env.local
+*.key
+*.pem
+secrets/
+
+# --- Temporales de Python y Jupyter --------------------------
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.venv/
+venv/
+.python-version
+
+# --- Sistema operativo y editores ----------------------------
+.DS_Store
+.idea/
+.vscode/
+
+# --- Volúmenes locales de Docker -----------------------------
+.docker-data/

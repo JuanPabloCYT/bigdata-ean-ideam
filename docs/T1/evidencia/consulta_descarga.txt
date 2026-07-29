@@ -1,0 +1,27 @@
+Endpoint: https://www.datos.gov.co/resource/s54a-sgyg.csv
+Período principal diario: [2026-06-22T00:00:00, 2026-06-23T00:00:00)
+Conteo previo: 141007
+$where=fechaobservacion >= '2026-06-22T00:00:00' AND fechaobservacion < '2026-06-23T00:00:00'
+$order=fechaobservacion,codigoestacion,codigosensor,:id
+$limit=50000
+$offset=0, 50000, ... hasta completar
+Primera URL: https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-22T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-23T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=0
+Última URL: https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-22T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-23T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=100000
+Tamaño bytes: 21953076
+SHA-256: 9a8dc75af1969e21ad7e13bddd9fad0291ebbeba2a0b1418cd4237f81a5155be
+
+Período comparable diario: [2026-06-21T00:00:00, 2026-06-22T00:00:00)
+Conteo previo: 139657
+Primera URL: https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-21T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-22T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=0
+Última URL: https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-21T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-22T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=100000
+Tamaño bytes: 21762351
+SHA-256: 96258f8e60d4283b78ae2bfe1c0d723909f97e13ebec708a3db1ca5d2d159680
+
+Estimación histórica por conteos:
+Junio 2025: 3120484 registros
+Consulta: https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272025-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272025-07-01T00%3A00%3A00%27
+Junio 2026: 2971298 registros
+Consulta: https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272026-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-07-01T00%3A00%3A00%27
+Períodos transcurridos: 1 año (12 meses)
+g anual: -0.04780860917729424
+g mensual equivalente: -0.00407411349065856

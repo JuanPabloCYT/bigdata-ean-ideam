@@ -1,0 +1,2 @@
+﻿clave_candidata,filas,combinaciones_unicas,filas_en_grupos_duplicados,porcentaje_filas_duplicadas,nulos,es_clave_unica_en_el_periodo
+"['codigoestacion', 'codigosensor', 'fechaobservacion']",141007,141007,0,0.0,"{'codigoestacion': 0, 'codigosensor': 0, 'fechaobservacion': 0}",True

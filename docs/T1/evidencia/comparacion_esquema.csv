@@ -1,0 +1,13 @@
+﻿columna,existe_A,existe_B,posicion_A,posicion_B,tipo_A,tipo_B,proporcion_nulos_A,proporcion_nulos_B,mismo_tipo,misma_posicion
+codigoestacion,True,True,0,0,int64,int64,0.0,0.0,True,True
+codigosensor,True,True,1,1,int64,int64,0.0,0.0,True,True
+fechaobservacion,True,True,2,2,object,object,0.0,0.0,True,True
+valorobservado,True,True,3,3,float64,float64,0.0,0.0,True,True
+nombreestacion,True,True,4,4,object,object,0.0,0.0,True,True
+departamento,True,True,5,5,object,object,0.0,0.0,True,True
+municipio,True,True,6,6,object,object,0.0,0.0,True,True
+zonahidrografica,True,True,7,7,object,object,0.0,0.0,True,True
+latitud,True,True,8,8,float64,float64,0.0,0.0,True,True
+longitud,True,True,9,9,float64,float64,0.0,0.0,True,True
+descripcionsensor,True,True,10,10,object,object,0.0,0.0,True,True
+unidadmedida,True,True,11,11,object,object,0.0,0.0,True,True

@@ -1,0 +1,79 @@
+# =============================================================
+# docker-compose.yml · "la cocina escrita en texto"
+#
+# Dos servicios en la red interna que crea Compose:
+#   jupyter  -> entorno de análisis
+#   db       -> PostgreSQL
+#
+# jupyter alcanza a db por el NOMBRE DEL SERVICIO ("db"), no por
+# localhost ni por una IP. Dentro de la red de Compose el nombre
+# del servicio funciona como nombre de host.
+#
+# Ninguna credencial está escrita aquí: todas se inyectan desde
+# .env, que NO se versiona. Ver .env.example.
+# =============================================================
+
+services:
+  jupyter:
+    # Imagen anclada por digest: ni "latest" ni una etiqueta móvil.
+    # La etiqueta legible se conserva como comentario porque el
+    # digest es exacto pero ilegible.
+    # quay.io/jupyter/scipy-notebook:python-3.12
+    image: quay.io/jupyter/scipy-notebook@sha256:68f680024e25e9e433fa796f5adb41afd4907f1f97cb6c585c8432c60d244de1
+    container_name: ideam_jupyter
+    ports:
+      - "${JUPYTER_PORT:-8888}:8888"
+    environment:
+      # Credenciales y destino de la base: se leen de .env.
+      POSTGRES_HOST: db
+      POSTGRES_PORT: "5432"
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      # El código y los datos se MONTAN, no se copian a la imagen:
+      # cambian entre personas y entre ejecuciones.
+      - ./notebooks:/home/jovyan/work/notebooks
+      - ./src:/home/jovyan/work/src
+      - ./data:/home/jovyan/work/data
+      - ./sql:/home/jovyan/work/sql
+      - ./docs:/home/jovyan/work/docs
+      - ./requirements.txt:/tmp/requirements.txt:ro
+    working_dir: /home/jovyan/work
+    command: >
+      bash -c "pip install --quiet --no-cache-dir -r /tmp/requirements.txt &&
+               start-notebook.py --IdentityProvider.token=''"
+    depends_on:
+      db:
+        # No basta con que el contenedor exista: debe aceptar
+        # conexiones. Sin esto, la primera celda falla por carrera.
+        condition: service_healthy
+
+  db:
+    # postgres:16.4-alpine anclado por digest.
+    image: postgres@sha256:5660c2cbfea50c7a9127d17dc4e48543eedd3d7a41a595a2dfa572471e37e64c
+    container_name: ideam_db
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      # Se expone al host solo para inspección con un cliente
+      # externo. El cuaderno NO usa este puerto: usa la red interna.
+      - "${POSTGRES_PORT_HOST:-5432}:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+      # Los scripts de este directorio se ejecutan una sola vez,
+      # cuando el volumen se crea vacío.
+      - ./sql:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+volumes:
+  # Volumen nombrado y gestionado por Docker: el estado de la base
+  # vive fuera del repositorio y fuera de la imagen.
+  db_data:

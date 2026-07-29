@@ -1,0 +1,3 @@
+﻿periodo,inicio,fin_exclusivo,registros,periodos_transcurridos,unidad,g_historico_anual,g_mensual_equivalente,consulta
+junio 2025,2025-06-01T00:00:00,2025-07-01T00:00:00,3120484,1,año,-0.04780860917729424,-0.00407411349065856,https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272025-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272025-07-01T00%3A00%3A00%27
+junio 2026,2026-06-01T00:00:00,2026-07-01T00:00:00,2971298,1,año,-0.04780860917729424,-0.00407411349065856,https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272026-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-07-01T00%3A00%3A00%27

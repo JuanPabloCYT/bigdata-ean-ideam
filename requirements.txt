@@ -1,0 +1,22 @@
+# =============================================================
+# requirements.txt · versiones ancladas, no las últimas disponibles
+#
+# Estas versiones NO son arbitrarias: son exactamente las que se
+# usaron para medir la ficha técnica T1. Anclarlas es lo que
+# permite que `docs/T1/medicion.ipynb` vuelva a producir las
+# mismas cifras. Un `pandas` sin `==` haría irreproducible la T1.
+# =============================================================
+
+# --- Núcleo de análisis (fijado por la medición de T1) -------
+pandas==2.2.3
+numpy==1.26.4
+psutil==7.2.2
+requests==2.32.5
+
+# --- Entorno de cuadernos ------------------------------------
+jupyterlab==4.2.5
+ipykernel==6.29.5
+
+# --- Acceso a PostgreSQL (segundo servicio del compose) ------
+psycopg[binary]==3.2.3
+SQLAlchemy==2.0.35

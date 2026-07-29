@@ -1,0 +1,241 @@
+{
+  "dataset": {
+    "id": "s54a-sgyg",
+    "portal_url": "https://www.datos.gov.co/Ambiente-y-Desarrollo-Sostenible/Precipitaci-n/s54a-sgyg",
+    "api_csv": "https://www.datos.gov.co/resource/s54a-sgyg.csv",
+    "metadata_url": "https://www.datos.gov.co/api/views/s54a-sgyg",
+    "entidad": "Instituto de Hidrología, Meteorología y Estudios Ambientales - IDEAM, Bogotá D.C.",
+    "descripcion": "Contiene datos sobre la cantidad de lluvia registrada cada 10 minutos en diferentes estaciones meteorológicas ubicadas sobre el territorio colombiano. Los cuales han sido verificados mediante un control de calidad básico, de acuerdo con las recomendaciones de la Organización Meteorológica Mundial (OMM). \nPor lo anterior, se han corregido o eliminado valores que no han cumplido con estos controles y podrían requerir validaciones adicionales según el uso específico. \nEste conjunto de datos puede ser útil para analizar el comportamiento de la precipitación, determinar fenómenos extremos, realizar estudios climáticos e hidrológicos o apoyar sistemas de alerta temprana. \nSe recomienda a los usuarios aplicar criterios adicionales de verificación para usos sensibles o técnicos especializados.\nLos datos disponibles a través de este medio pueden ser libremente consumidos bajo los siguientes clausulas: 1. Los datos a visualizar o descargar a continuación no han sido validados por el IDEAM. 2. Los datos aquí dispuestos son datos crudos instantáneos provenientes de los sensores de las estaciones automáticas de la red propia y/o producto de convenios interadministrativos con terceras entidades. 3. Los datos son puestos a disposición de la ciudadanía como mecanismo de transparencia y para proveer una herramienta de apoyo a la gestión del riesgo territorial y como datos abiertos en cumplimiento de la Ley 1712 de 2014. 4. Es posible que los datos aquí dispuestos tengan cierto retraso en el tiempo debido a las frecuencias de envío de datos de los sensores y los medios de transmisión utilizados. 5. Los datos presenten errores y/o inconsistencias estando incluso por fuera de los límites considerados normales, producto de fallas en los sensores de origen. 6. El posterior uso e interpretación que se le dé para cualquier finalidad queda bajo la exclusiva responsabilidad del portador de los datos. 7. Cualquier destino que se le dé a los datos exime al IDEAM de realizarles cualquier tipo de justificación o iniciarles proceso alguno de validación posterior, cuya fuente primaria deben ser los canales oficialmente dispuestos por la Entidad para el suministro de información oficial y validada. 8. Por las razones expuestas anteriormente los datos dispuestos no podrán ser utilizados como evidencia jurídica ante entes de control acerca de la ocurrencia o no de fenómenos hidro climatológicos o de soporte a cualquier tipo de situación o evento ocurrido como consecuencia de estos.",
+    "licencia": {
+      "name": "Creative Commons Attribution | Share Alike 4.0 International",
+      "logoUrl": "images/licenses/cc30bysa.png",
+      "termsLink": "http://creativecommons.org/licenses/by-sa/4.0/legalcode"
+    },
+    "frecuencia_actualizacion": "Diaria"
+  },
+  "entorno": {
+    "python": "3.12.8 (main, Jun 29 2026, 10:05:04) [Clang 21.0.0 (clang-2100.1.1.101)]",
+    "sistema_operativo": "macOS-27.0-arm64-arm-64bit",
+    "pandas": "2.2.3",
+    "psutil": "7.2.2",
+    "requests": "2.32.5",
+    "fecha_hora_local": "2026-07-29T15:17:07.880500-05:00",
+    "ruta_trabajo": "/Users/juanpablocastro/Downloads/T1_Castro_JuanPablo",
+    "conversion_bytes_GB": "bytes / (1024 ** 3)"
+  },
+  "periodos_medicion": {
+    "principal": [
+      "2026-06-22T00:00:00",
+      "2026-06-23T00:00:00"
+    ],
+    "comparacion_diaria": [
+      "2026-06-21T00:00:00",
+      "2026-06-22T00:00:00"
+    ],
+    "conteo_principal": 141007,
+    "conteo_comparacion_diaria": 139657
+  },
+  "consultas": {
+    "descubrimiento": "https://www.datos.gov.co/resource/s54a-sgyg.csv?%24limit=10",
+    "conteo_diario_A": "https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272026-06-21T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-22T00%3A00%3A00%27",
+    "conteo_diario_B": "https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272026-06-22T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-23T00%3A00%3A00%27",
+    "descarga_diaria_A": {
+      "ruta": "/Users/juanpablocastro/Downloads/T1_Castro_JuanPablo/evidencia/precipitacion_2026-06-21.csv",
+      "filas": 139657,
+      "where": "fechaobservacion >= '2026-06-21T00:00:00' AND fechaobservacion < '2026-06-22T00:00:00'",
+      "order": "fechaobservacion,codigoestacion,codigosensor,:id",
+      "limit": 50000,
+      "primera_url": "https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-21T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-22T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=0",
+      "ultima_url": "https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-21T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-22T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=100000",
+      "paginas": 3,
+      "origen": "archivo preexistente reutilizado; no se volvió a descargar"
+    },
+    "descarga_diaria_B": {
+      "ruta": "/Users/juanpablocastro/Downloads/T1_Castro_JuanPablo/evidencia/precipitacion_2026-06-22.csv",
+      "filas": 141007,
+      "where": "fechaobservacion >= '2026-06-22T00:00:00' AND fechaobservacion < '2026-06-23T00:00:00'",
+      "order": "fechaobservacion,codigoestacion,codigosensor,:id",
+      "limit": 50000,
+      "primera_url": "https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-22T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-23T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=0",
+      "ultima_url": "https://www.datos.gov.co/resource/s54a-sgyg.csv?%24where=fechaobservacion+%3E%3D+%272026-06-22T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-06-23T00%3A00%3A00%27&%24order=fechaobservacion%2Ccodigoestacion%2Ccodigosensor%2C%3Aid&%24limit=50000&%24offset=100000",
+      "paginas": 3,
+      "origen": "archivo preexistente reutilizado; no se volvió a descargar"
+    },
+    "conteo_historico_A": "https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272025-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272025-07-01T00%3A00%3A00%27",
+    "conteo_historico_B": "https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272026-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-07-01T00%3A00%3A00%27"
+  },
+  "disco": {
+    "S0_bytes": 21953076,
+    "S0_MB_1024": 20.936084747314453,
+    "S0_GB_1024": 0.02044539526104927,
+    "alcance_S0": "tamaño de la partición diaria 2026-06-22; no es el acumulado histórico",
+    "filas": 141007,
+    "sha256": "9a8dc75af1969e21ad7e13bddd9fad0291ebbeba2a0b1418cd4237f81a5155be",
+    "ruta": "/Users/juanpablocastro/Downloads/T1_Castro_JuanPablo/evidencia/precipitacion_2026-06-22.csv"
+  },
+  "memoria_equipo": {
+    "fecha_hora_local": "2026-07-29T15:17:10.825578-05:00",
+    "RAM_total_bytes": 8589934592,
+    "RAM_disponible_M_bytes": 1609220096,
+    "RAM_disponible_M_GB_1024": 1.4987030029296875,
+    "porcentaje_uso": 81.3
+  },
+  "dataframe": {
+    "filas": 141007,
+    "columnas": 12,
+    "tipos": {
+      "codigoestacion": "int64",
+      "codigosensor": "int64",
+      "fechaobservacion": "object",
+      "valorobservado": "float64",
+      "nombreestacion": "object",
+      "departamento": "object",
+      "municipio": "object",
+      "zonahidrografica": "object",
+      "latitud": "float64",
+      "longitud": "float64",
+      "descripcionsensor": "object",
+      "unidadmedida": "object"
+    },
+    "columnas_texto": [
+      "fechaobservacion",
+      "nombreestacion",
+      "departamento",
+      "municipio",
+      "zonahidrografica",
+      "descripcionsensor",
+      "unidadmedida"
+    ],
+    "cantidad_columnas_texto": 7,
+    "proporcion_columnas_texto": 0.5833333333333334,
+    "memoria_dataframe_bytes": 71118728,
+    "memoria_dataframe_MB_1024": 67.82410430908203,
+    "memoria_dataframe_GB_1024": 0.06623447686433792,
+    "k": 3.239579182434389
+  },
+  "clave": {
+    "clave_candidata": [
+      "codigoestacion",
+      "codigosensor",
+      "fechaobservacion"
+    ],
+    "filas": 141007,
+    "combinaciones_unicas": 141007,
+    "filas_en_grupos_duplicados": 0,
+    "porcentaje_filas_duplicadas": 0.0,
+    "nulos": {
+      "codigoestacion": 0,
+      "codigosensor": 0,
+      "fechaobservacion": 0
+    },
+    "es_clave_unica_en_el_periodo": true
+  },
+  "frecuencia": {
+    "frecuencia_actualizacion_declarada": "Diaria",
+    "cadencia_mencionada_en_descripcion": "cada 10 minutos",
+    "moda_observada": "0 days 00:01:00",
+    "mediana_observada": "0 days 00:02:00",
+    "proporcion_intervalo_modal": 0.44164655460868696
+  },
+  "esquema_identico": true,
+  "datos_personales": {
+    "coincidencias_en_nombres_y_descripciones": [],
+    "conclusion": "Las columnas describen estaciones, sensores, fechas, ubicación y mediciones técnicas. No se identificaron nombres de ciudadanos, documentos, teléfonos ni correos. 'nombreestacion' es el nombre de una estación meteorológica, no de una persona."
+  },
+  "crecimiento": {
+    "metodo_definitivo": "conteos API del mismo mes calendario en años consecutivos",
+    "periodo_historico_A": [
+      "2025-06-01T00:00:00",
+      "2025-07-01T00:00:00"
+    ],
+    "periodo_historico_B": [
+      "2026-06-01T00:00:00",
+      "2026-07-01T00:00:00"
+    ],
+    "registros_historico_A": 3120484,
+    "registros_historico_B": 2971298,
+    "periodos_transcurridos": 1,
+    "unidad_tasa_principal": "año",
+    "formula": "(rows_B / rows_A) ** (1 / n_años) - 1",
+    "g_historico_anual": -0.04780860917729424,
+    "g_historico_mensual_equivalente": -0.00407411349065856,
+    "consulta_conteo_A": "https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272025-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272025-07-01T00%3A00%3A00%27",
+    "consulta_conteo_B": "https://www.datos.gov.co/resource/s54a-sgyg.json?%24select=count%28%2A%29+as+n&%24where=fechaobservacion+%3E%3D+%272026-06-01T00%3A00%3A00%27+AND+fechaobservacion+%3C+%272026-07-01T00%3A00%3A00%27",
+    "escenario_corto_plazo": {
+      "periodo_A": [
+        "2026-06-21T00:00:00",
+        "2026-06-22T00:00:00"
+      ],
+      "periodo_B": [
+        "2026-06-22T00:00:00",
+        "2026-06-23T00:00:00"
+      ],
+      "g_tamano_diario": 0.008763988780440046,
+      "g_registros_diario": 0.009666540166264559,
+      "uso": "escenario operativo; no tendencia histórica"
+    }
+  },
+  "umbral": {
+    "M_medida_en_esta_ejecucion_GB": 1.4987030029296875,
+    "M_sensibilidad_GB": 1.4987030029296875,
+    "k_sensibilidad": 3.239579182434389,
+    "S0_sensibilidad_GB": 0.02044539526104927,
+    "alcance_S0": "partición diaria; no acumulado histórico",
+    "g_historico_anual": -0.04780860917729424,
+    "t_umbral_historico_anios": null,
+    "interpretacion_historica": "No existe horizonte futuro de saturación bajo la tasa histórica negativa; una partición representativa disminuiría en el modelo.",
+    "formula_escenarios": "log(M / (k * S0)) / log(1 + g_escenario)",
+    "escenario_referencia": "1 % anual",
+    "sustitucion_referencia": "log(1.4987030029296875 / (3.239579182434389 * 0.02044539526104927)) / log(1 + 0.01)",
+    "t_umbral_referencia_anios": 313.4724129716826,
+    "nota_remedicion": "Mediciones definitivas realizadas en macOS (MacBook Neo). Reemplazan la línea base previa de Windows (M=7,431983948 GB, k=3,2395791824, t_1%=474,390960 años). El período, el archivo, la clave candidata, la licencia y el método de cálculo de g no cambian.",
+    "escenario_corto_plazo_dias": 357.4630844087288
+  },
+  "sensibilidad": [
+    {
+      "escenario": "1% anual",
+      "M_GB": 1.4987030029296875,
+      "k": 3.239579182434389,
+      "S0_GB": 0.02044539526104927,
+      "g_anual": 0.01,
+      "t_umbral_anios": 313.4724129716826,
+      "alcance": "crecimiento del tamaño de una partición diaria"
+    },
+    {
+      "escenario": "2% anual",
+      "M_GB": 1.4987030029296875,
+      "k": 3.239579182434389,
+      "S0_GB": 0.02044539526104927,
+      "g_anual": 0.02,
+      "t_umbral_anios": 157.51214097792578,
+      "alcance": "crecimiento del tamaño de una partición diaria"
+    },
+    {
+      "escenario": "5% anual",
+      "M_GB": 1.4987030029296875,
+      "k": 3.239579182434389,
+      "S0_GB": 0.02044539526104927,
+      "g_anual": 0.05,
+      "t_umbral_anios": 63.92998005863222,
+      "alcance": "crecimiento del tamaño de una partición diaria"
+    },
+    {
+      "escenario": "10% anual",
+      "M_GB": 1.4987030029296875,
+      "k": 3.239579182434389,
+      "S0_GB": 0.02044539526104927,
+      "g_anual": 0.1,
+      "t_umbral_anios": 32.726349156122815,
+      "alcance": "crecimiento del tamaño de una partición diaria"
+    },
+    {
+      "escenario": "variación observada entre dos días",
+      "M_GB": 1.4987030029296875,
+      "k": 3.239579182434389,
+      "S0_GB": 0.02044539526104927,
+      "g_anual": null,
+      "t_umbral_anios": null,
+      "alcance": "escenario de corto plazo: g=0.008763988780 por día; t=357.463084 días"
+    }
+  ]
+}
