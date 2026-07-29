@@ -134,11 +134,14 @@ El razonamiento completo sobre qué vive dentro de la imagen, qué se monta y qu
 | `docker compose up` no encuentra el comando | Docker Compose v1 | Pruebe `docker-compose up`, con guion |
 | Error de puerto en uso | Otro proceso usa 8888 o 5432 | Cambie los puertos en `.env` (sección 5) |
 | El navegador pide un token | El parámetro de token no se aplicó | Revise la indentación del bloque `command` en el YAML: en YAML la indentación es sintaxis |
-| `KeyError: 'POSTGRES_PASSWORD'` en el cuaderno | No copió `.env.example` a `.env` | `cp .env.example .env` y `docker compose up` de nuevo |
+| `required variable POSTGRES_PASSWORD is missing a value` | No copió `.env.example` a `.env` | `cp .env.example .env` y `docker compose up` de nuevo |
 | El cuaderno no alcanza la base | Usó `localhost` en vez de `db` | Dentro de la red de Compose el host es el nombre del servicio: `db` |
-| `Tablas creadas: (ninguna)` | El volumen ya existía cuando cambió `sql/` | `docker compose down -v && docker compose up`. **El `-v` borra los datos de la base** |
+| `password authentication failed for user "ideam_app"` | El volumen de la base ya existía, inicializado con otra contraseña. `POSTGRES_PASSWORD` solo se aplica cuando PostgreSQL crea un directorio de datos vacío: sobre un volumen preexistente se ignora en silencio | `docker compose down -v && docker compose up`. **El `-v` borra los datos de la base** |
+| `Tablas creadas: (ninguna)` | Los scripts de `sql/` solo corren cuando el volumen se crea vacío; si ya existía, editar el SQL no tiene efecto | `docker compose down -v && docker compose up`. **El `-v` borra los datos de la base** |
 | `git status` muestra CSV de datos | El `.gitignore` se escribió tarde | `git rm --cached <archivo>` y verifique el orden |
 | Docker no se puede instalar en su equipo | Permisos o virtualización | Use GitHub Codespaces (ruta B). Si tampoco, `venv` + `requirements.txt` (ruta C), y declare que la capa de ejecución quedó sin aislar |
+
+> **Sobre los volúmenes y el nombre del proyecto.** Compose deriva el nombre del proyecto del nombre de la carpeta, y el volumen de la base se llama `<nombre-de-carpeta>_db_data`. Si clona el repositorio en un directorio con el mismo nombre que otra copia suya, **ambas compartirán el mismo volumen de base de datos**. Eso hace que un "clon limpio" no sea limpio en la capa de datos. Para partir realmente de cero, use `docker compose down -v`, o clone en una carpeta con otro nombre.
 
 Si un paso falla y no está en esta tabla, es un defecto del contrato: repórtelo abriendo un *issue* en el repositorio, indicando su sistema operativo, la salida completa del error y el paso exacto en que ocurrió.
 
