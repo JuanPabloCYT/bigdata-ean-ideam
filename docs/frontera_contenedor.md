@@ -63,6 +63,29 @@ Es decir: había **estado fuera del repositorio** sobreviviendo entre dos proyec
 
 La consecuencia práctica quedó documentada en el README: cambiar `sql/` o la contraseña no tiene efecto sobre un volumen que ya existe, y `-v` borra los datos.
 
+### Fallo 3 · Durante el primer arranque el servicio se declara enfermo
+
+En el clon final, `docker compose ps` reportó `jupyter: unhealthy` y el navegador no respondía. No era un fallo: `pip install` corre con `--quiet` y no imprime nada, y la comprobación de salud de la imagen solo pasa cuando el servidor ya escucha. Entre ambos momentos hay minutos de silencio en los que el estado visible es `unhealthy`.
+
+Un recién llegado interpretaría eso como que el montaje está roto y empezaría a depurar algo que solo necesitaba tiempo. Se corrigió en la documentación, no en el código: el README advierte que ese estado es esperado y ofrece `docker compose logs -f jupyter` para ver el avance en lugar de esperar a ciegas.
+
+### Verificación final · el clon limpio desde la URL pública
+
+La prueba de aceptación se ejecutó tal como la exige la tarea: clon del repositorio **desde su enlace público de GitHub**, en un directorio nuevo y con un nombre distinto (para no compartir el volumen), sin `.env`, sin datos y sin variables heredadas.
+
+Secuencia ejecutada, exactamente la del README:
+
+```bash
+git clone https://github.com/JuanPabloCYT/bigdata-ean-ideam.git
+cd bigdata-ean-ideam
+cp .env.example .env      # y se cambió POSTGRES_PASSWORD
+docker compose up
+```
+
+Resultado: `db` y `jupyter` en estado `healthy`, `http://localhost:8888/lab` con HTTP 200 sin token, y el cuaderno de verificación ejecutado de principio a fin **con 0 errores**. Las 8 versiones ancladas coincidieron, los seis puntos de montaje respondieron, `data/raw` apareció vacío (lo correcto en un clon limpio), el motor reportó `PostgreSQL 16.4` alcanzado por el nombre de servicio `db`, y la clave primaria de la base coincidió con la clave candidata de T1.
+
+No hubo que añadir, editar ni recordar nada fuera de lo escrito en el README.
+
 ### Decisiones tomadas para evitar fallos que sí anticipé
 
 Dos cosas se diseñaron desde el principio para no fallar, y conviene decir que **no llegaron a fallar porque se previnieron, no porque el problema no exista**:

@@ -43,7 +43,9 @@ Abra `.env` y cambie `POSTGRES_PASSWORD` por un valor propio. Es un entorno loca
 docker compose up
 ```
 
-La primera vez descarga las imágenes e instala las dependencias ancladas: toma varios minutos. Las siguientes veces arranca en segundos.
+La primera vez descarga las imágenes (unos 5,5 GB) e instala las dependencias ancladas: toma varios minutos. Las siguientes veces arranca en segundos.
+
+> **Durante ese primer arranque, `docker compose ps` muestra `jupyter` como `unhealthy` y el navegador no responde. Es normal, no es un fallo.** El servicio se declara sano solo cuando el servidor de cuadernos ya está escuchando, y antes de eso `pip` está instalando en silencio (`--quiet`). Espere a que <http://localhost:8888> responda. Si quiere ver el avance en vez de esperar a ciegas, ejecute `docker compose logs -f jupyter`.
 
 ---
 
