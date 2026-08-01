@@ -37,3 +37,9 @@ venv/
 
 # --- Volúmenes locales de Docker -----------------------------
 .docker-data/
+
+# --- Practica S03 · muestra del cluster HDFS -----------------
+# La muestra se regenera con genera_muestra.py y semilla fija,
+# asi que no hay razon para versionarla.
+practica/s03-hdfs/muestra/*
+!practica/s03-hdfs/muestra/.gitkeep

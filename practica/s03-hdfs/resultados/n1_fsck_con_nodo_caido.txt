@@ -1,0 +1,59 @@
+FSCK started by root (auth:SIMPLE) from /172.18.0.5 for path /datos/muestra.csv at Sat Aug 01 03:11:35 UTC 2026
+/datos/muestra.csv 10358654 bytes, replicated: replication=3, 10 block(s):  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741825_1001. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741826_1002. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741827_1003. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741828_1004. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741829_1005. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741830_1006. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741831_1007. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741832_1008. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741833_1009. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+ Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741834_1010. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+0. BP-1817063076-172.18.0.5-1785553083187:blk_1073741825_1001 len=1048576 Live_repl=2
+1. BP-1817063076-172.18.0.5-1785553083187:blk_1073741826_1002 len=1048576 Live_repl=2
+2. BP-1817063076-172.18.0.5-1785553083187:blk_1073741827_1003 len=1048576 Live_repl=2
+3. BP-1817063076-172.18.0.5-1785553083187:blk_1073741828_1004 len=1048576 Live_repl=2
+4. BP-1817063076-172.18.0.5-1785553083187:blk_1073741829_1005 len=1048576 Live_repl=2
+5. BP-1817063076-172.18.0.5-1785553083187:blk_1073741830_1006 len=1048576 Live_repl=2
+6. BP-1817063076-172.18.0.5-1785553083187:blk_1073741831_1007 len=1048576 Live_repl=2
+7. BP-1817063076-172.18.0.5-1785553083187:blk_1073741832_1008 len=1048576 Live_repl=2
+8. BP-1817063076-172.18.0.5-1785553083187:blk_1073741833_1009 len=1048576 Live_repl=2
+9. BP-1817063076-172.18.0.5-1785553083187:blk_1073741834_1010 len=921470 Live_repl=2
+
+
+Status: HEALTHY
+ Number of data-nodes:	2
+ Number of racks:		1
+ Total dirs:			0
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	10358654 B
+ Total files:	1
+ Total blocks (validated):	10 (avg. block size 1035865 B)
+ Minimally replicated blocks:	10 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	10 (100.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	3
+ Average block replication:	2.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		10 (33.333332 %)
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+FSCK ended at Sat Aug 01 03:11:35 UTC 2026 in 8 milliseconds
+
+
+The filesystem under path '/datos/muestra.csv' is HEALTHY

@@ -1,0 +1,45 @@
+==================================================================
+INSUMOS TOMADOS DE LA FICHA T1
+==================================================================
+  S0 (partición diaria)  : 21,953,076 bytes = 20.94 MB
+  g histórico anual      : -0.0478086092  (-4.780861 %)
+  g mensual equivalente  : -0.0040741135  (-0.407411 %)
+
+==================================================================
+VOLUMEN LÓGICO ACUMULADO A 12 MESES
+==================================================================
+  Histórico (g = -4,780861 % anual)        7.2976 GB
+  Conservador (g = 0 %)                    7.4626 GB
+  Sensibilidad (g = +1 % anual)            7.4967 GB
+
+==================================================================
+ALMACENAMIENTO FÍSICO POR FACTOR DE RÉPLICA
+==================================================================
+  Escenario                                     R=1        R=2        R=3
+  Histórico (g = -4,780861 % anual)          7.298G    14.595G    21.893G
+  Conservador (g = 0 %)                      7.463G    14.925G    22.388G
+  Sensibilidad (g = +1 % anual)              7.497G    14.993G    22.490G
+
+  Tolerancia: R=1 -> 0 nodos | R=2 -> 1 nodo | R=3 -> 2 nodos
+
+==================================================================
+TAMAÑO DE BLOQUE · PARTICIÓN DIARIA CONTRA BLOQUE DE 128 MB
+==================================================================
+  Partición diaria         : 20.94 MB
+  Bloque HDFS              : 128 MB
+  Bloques por partición    : 1
+  Ocupación del bloque     : 16.4 %
+
+  Con partición DIARIA     : 365 archivos + 365 bloques
+    objetos en el maestro  : 730
+    memoria del maestro    : 0.104 MB al año
+
+  Con consolidación MENSUAL: 12 archivos + 60 bloques
+    objetos en el maestro  : 72
+    memoria del maestro    : 0.010 MB al año
+    reducción de objetos   : 90.1 %
+
+  Nota: HDFS NO desperdicia disco en bloques parciales. Una
+  partición de 20,94 MB ocupa 20,94 MB, no 128 MB. El costo de
+  los archivos pequeños es la memoria del nodo maestro y el
+  exceso de tareas en el procesamiento, no el espacio en disco.

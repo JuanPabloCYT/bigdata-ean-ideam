@@ -1,0 +1,4 @@
+9.9 M  29.6 M  /datos/muestra.csv
+9.9 M  9.9 M   /datos/muestra_r1.csv
+9.9 M  19.8 M  /datos/muestra_r2.csv
+9.9 M  29.6 M  /datos/muestra_r3.csv

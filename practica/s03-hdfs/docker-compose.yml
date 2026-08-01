@@ -1,0 +1,75 @@
+# Cluster HDFS didactico: un maestro y tres nodos de datos.
+#
+# Dos cambios respecto del compose de la guia, ambos forzados por el
+# equipo donde corre esta practica:
+#
+# 1. platform: linux/amd64
+#    Las imagenes bde2020/hadoop-* solo publican manifiesto amd64.
+#    Este equipo es arm64 (Apple Silicon), asi que los contenedores
+#    corren emulados. Sin esta linea Docker falla o elige mal.
+#
+# 2. Limites de memoria por servicio
+#    La VM de Docker en este equipo tiene 3,83 GB. Sin limites, cuatro
+#    JVM emuladas la agotan. Se acota el heap de Hadoop para que los
+#    cuatro nodos quepan.
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: namenode
+    environment:
+      - CLUSTER_NAME=acueducto
+      - HADOOP_HEAPSIZE=512
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "9870:9870"                 # interfaz web del nodo maestro
+    volumes:
+      - namenode:/hadoop/dfs/name
+      - ./muestra:/muestra:ro        # carpeta con el archivo a cargar
+    mem_limit: 1g
+
+  datanode1:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: datanode1
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+      - HADOOP_HEAPSIZE=256
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - datanode1:/hadoop/dfs/data
+    mem_limit: 768m
+
+  datanode2:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: datanode2
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+      - HADOOP_HEAPSIZE=256
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - datanode2:/hadoop/dfs/data
+    mem_limit: 768m
+
+  datanode3:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: datanode3
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+      - HADOOP_HEAPSIZE=256
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - datanode3:/hadoop/dfs/data
+    mem_limit: 768m
+
+volumes:
+  namenode:
+  datanode1:
+  datanode2:
+  datanode3:

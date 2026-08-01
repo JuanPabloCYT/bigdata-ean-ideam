@@ -1,0 +1,46 @@
+FSCK started by root (auth:SIMPLE) from /172.18.0.3 for path /datos/muestra_r1.csv at Sat Aug 01 03:17:12 UTC 2026
+
+/datos/muestra_r1.csv: MISSING 4 blocks of total size 4067198 B.
+Status: CORRUPT
+ Number of data-nodes:	2
+ Number of racks:		1
+ Total dirs:			0
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	10358654 B
+ Total files:	1
+ Total blocks (validated):	10 (avg. block size 1035865 B)
+  ********************************
+  UNDER MIN REPL'D BLOCKS:	4 (40.0 %)
+  MINIMAL BLOCK REPLICATION:	1
+  CORRUPT FILES:	1
+  MISSING BLOCKS:	4
+  MISSING SIZE:		4067198 B
+  ********************************
+ Minimally replicated blocks:	6 (60.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	0 (0.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	3
+ Average block replication:	0.6
+ Missing blocks:		4
+ Corrupt blocks:		0
+ Missing replicas:		0 (0.0 %)
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+FSCK ended at Sat Aug 01 03:17:12 UTC 2026 in 4 milliseconds
+
+
+The filesystem under path '/datos/muestra_r1.csv' is CORRUPT

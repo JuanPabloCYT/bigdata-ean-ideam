@@ -1,0 +1,58 @@
+FSCK started by root (auth:SIMPLE) from /172.18.0.3 for path /datos/muestra_r3.csv at Sat Aug 01 03:17:16 UTC 2026
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741855_1031. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741856_1032. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741857_1033. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741858_1034. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741859_1035. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741860_1036. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741861_1037. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741862_1038. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741863_1039. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+/datos/muestra_r3.csv:  Under replicated BP-1817063076-172.18.0.5-1785553083187:blk_1073741864_1040. Target Replicas is 3 but found 2 live replica(s), 0 decommissioned replica(s), 0 decommissioning replica(s).
+
+Status: HEALTHY
+ Number of data-nodes:	2
+ Number of racks:		1
+ Total dirs:			0
+ Total symlinks:		0
+
+Replicated Blocks:
+ Total size:	10358654 B
+ Total files:	1
+ Total blocks (validated):	10 (avg. block size 1035865 B)
+ Minimally replicated blocks:	10 (100.0 %)
+ Over-replicated blocks:	0 (0.0 %)
+ Under-replicated blocks:	10 (100.0 %)
+ Mis-replicated blocks:		0 (0.0 %)
+ Default replication factor:	3
+ Average block replication:	2.0
+ Missing blocks:		0
+ Corrupt blocks:		0
+ Missing replicas:		10 (33.333332 %)
+
+Erasure Coded Block Groups:
+ Total size:	0 B
+ Total files:	0
+ Total block groups (validated):	0
+ Minimally erasure-coded block groups:	0
+ Over-erasure-coded block groups:	0
+ Under-erasure-coded block groups:	0
+ Unsatisfactory placement block groups:	0
+ Average block group size:	0.0
+ Missing block groups:		0
+ Corrupt block groups:		0
+ Missing internal blocks:	0
+FSCK ended at Sat Aug 01 03:17:16 UTC 2026 in 9 milliseconds
+
+
+The filesystem under path '/datos/muestra_r3.csv' is HEALTHY
