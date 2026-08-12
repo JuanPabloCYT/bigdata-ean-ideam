@@ -104,6 +104,8 @@ bigdata-ean-ideam/
 | T1 | Ficha técnica de la fuente y cuaderno de medición | [`docs/T1/`](docs/T1/) |
 | T2 | Este entorno reproducible | raíz del repositorio |
 | T3 | Proyección de almacenamiento y factor de réplica | [`docs/T3_proyeccion_almacenamiento.md`](docs/T3_proyeccion_almacenamiento.md) |
+| — | Consolidación de la fuente del equipo | [`docs/T3_consolidacion_equipo.md`](docs/T3_consolidacion_equipo.md) |
+| — | Trabajo pendiente de T3 y reparto | [`docs/T3_tareas_pendientes.md`](docs/T3_tareas_pendientes.md) |
 | — | Práctica del clúster HDFS que sustenta T3 | [`practica/s03-hdfs/`](practica/s03-hdfs/) |
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 
