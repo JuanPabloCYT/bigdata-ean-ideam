@@ -85,12 +85,27 @@ bigdata-ean-ideam/
 ├── sql/
 │   └── 01_esquema.sql     # la clave candidata de T1 es la clave primaria
 ├── src/
-│   └── config.py
+│   ├── config.py
+│   └── proyeccion_almacenamiento.py   # T3, lee sus insumos de la ficha T1
+├── practica/
+│   └── s03-hdfs/          # clúster HDFS de la sesión 3 y sus evidencias
 └── docs/
     ├── T1/                # ficha técnica y evidencias de T1
+    ├── T3_proyeccion_almacenamiento.md
+    ├── glosario_bilingue.md
     ├── frontera_contenedor.md
     └── guia_incorporacion.md
 ```
+
+### Entregas del curso
+
+| Entrega | Qué es | Dónde |
+|---|---|---|
+| T1 | Ficha técnica de la fuente y cuaderno de medición | [`docs/T1/`](docs/T1/) |
+| T2 | Este entorno reproducible | raíz del repositorio |
+| T3 | Proyección de almacenamiento y factor de réplica | [`docs/T3_proyeccion_almacenamiento.md`](docs/T3_proyeccion_almacenamiento.md) |
+| — | Práctica del clúster HDFS que sustenta T3 | [`practica/s03-hdfs/`](practica/s03-hdfs/) |
+| — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 
 ### Los datos no están en el repositorio
 

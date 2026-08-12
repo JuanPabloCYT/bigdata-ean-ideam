@@ -60,7 +60,7 @@ También agregué al `hadoop.env` una detección de nodos caídos más rápida. 
 | `n2_fsck_r1.txt` | Ubicación de los bloques con factor 1, sin copias |
 | `n2_fsck_muestra_r1_nodo_caido.txt` | Factor 1 con un nodo caído: `CORRUPT` |
 | `n2_fsck_muestra_r3_nodo_caido.txt` | Factor 3 con el mismo nodo caído: `HEALTHY` |
-| `n3_proyeccion.txt` | Salida de `proyeccion_almacenamiento.py` |
+| `n3_proyeccion.txt` | Salida de `src/proyeccion_almacenamiento.py` |
 
 Las observaciones están en [`bitacora.md`](bitacora.md) y la recomendación a gerencia en [`reto_negocio.md`](reto_negocio.md).
 

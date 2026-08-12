@@ -1,45 +1,60 @@
-==================================================================
-INSUMOS TOMADOS DE LA FICHA T1
-==================================================================
-  S0 (partición diaria)  : 21,953,076 bytes = 20.94 MB
-  g histórico anual      : -0.0478086092  (-4.780861 %)
-  g mensual equivalente  : -0.0040741135  (-0.407411 %)
+========================================================================
+T3 · PROYECCIÓN DE ALMACENAMIENTO · Precipitación del IDEAM
+========================================================================
 
-==================================================================
-VOLUMEN LÓGICO ACUMULADO A 12 MESES
-==================================================================
-  Histórico (g = -4,780861 % anual)        7.2976 GB
-  Conservador (g = 0 %)                    7.4626 GB
-  Sensibilidad (g = +1 % anual)            7.4967 GB
+1. INSUMOS (leídos de docs/T1/evidencia/resultados_medicion.json)
+------------------------------------------------------------------------
+  S0, partición diaria     : 21,953,076 bytes = 20.94 MB
+  Registros de esa partición: 141,007
+  Alcance de S0            : tamaño de la partición diaria 2026-06-22; no es el acumulado histórico
+  g histórico anual        : -0.0478086092 = -4.780861 %
+  g mensual equivalente    : -0.0040741135 = -0.407411 %
+  Equipo de la medición    : macOS-27.0-arm64-arm-64bit
 
-==================================================================
-ALMACENAMIENTO FÍSICO POR FACTOR DE RÉPLICA
-==================================================================
-  Escenario                                     R=1        R=2        R=3
-  Histórico (g = -4,780861 % anual)          7.298G    14.595G    21.893G
-  Conservador (g = 0 %)                      7.463G    14.925G    22.388G
-  Sensibilidad (g = +1 % anual)              7.497G    14.993G    22.490G
+2. VOLUMEN ACTUAL
+------------------------------------------------------------------------
+  T1 midió una partición diaria, no el repositorio acumulado.
+  Se define el volumen actual como un año de operación al ritmo
+  de hoy, que es la base con la que se dimensiona el disco:
+    V0 = 365 x 21,953,076 = 8,012,872,740 bytes = 7.4626 GB
 
-  Tolerancia: R=1 -> 0 nodos | R=2 -> 1 nodo | R=3 -> 2 nodos
+3. VOLUMEN A DOCE MESES · DOS MODELOS
+------------------------------------------------------------------------
+  Modelo A, fórmula del enunciado: V0 x (1 + g_mensual) ^ 12
+    -> lo que la fuente PRODUCIRÁ durante el año siguiente.
+  Modelo B, acumulado mes a mes: suma de las particiones.
+    -> lo que habrá que TENER GUARDADO al cabo de 12 meses.
 
-==================================================================
-TAMAÑO DE BLOQUE · PARTICIÓN DIARIA CONTRA BLOQUE DE 128 MB
-==================================================================
-  Partición diaria         : 20.94 MB
-  Bloque HDFS              : 128 MB
-  Bloques por partición    : 1
-  Ocupación del bloque     : 16.4 %
+  Escenario                                Modelo A     Modelo B
+  Histórico (g = -4,780861 % anual)       7.1058 GB    7.2976 GB
+  Conservador (g = 0 % anual)             7.4626 GB    7.4626 GB
+  Sensibilidad (g = +1 % anual)           7.5372 GB    7.4967 GB
 
-  Con partición DIARIA     : 365 archivos + 365 bloques
-    objetos en el maestro  : 730
-    memoria del maestro    : 0.104 MB al año
+4. ALMACENAMIENTO FÍSICO POR FACTOR DE RÉPLICA
+------------------------------------------------------------------------
+  Físico = volumen lógico x R. Se usa el Modelo B, que es el que
+  dimensiona el disco. Tolerancia: R = 1 -> 0 nodos; R = 2 -> 1; R = 3 -> 2.
 
-  Con consolidación MENSUAL: 12 archivos + 60 bloques
-    objetos en el maestro  : 72
-    memoria del maestro    : 0.010 MB al año
-    reducción de objetos   : 90.1 %
+  Escenario                                   R=1        R=2        R=3
+  Histórico (g = -4,780861 % anual)        7.298    14.595    21.893
+  Conservador (g = 0 % anual)              7.463    14.925    22.388
+  Sensibilidad (g = +1 % anual)            7.497    14.993    22.490
 
-  Nota: HDFS NO desperdicia disco en bloques parciales. Una
-  partición de 20,94 MB ocupa 20,94 MB, no 128 MB. El costo de
-  los archivos pequeños es la memoria del nodo maestro y el
-  exceso de tareas en el procesamiento, no el espacio en disco.
+  Escenario de dimensionamiento (el más exigente, +1 % anual):
+    R=1:   7.497 GB   tolera 0 nodo(s) caído(s)   costo 1x
+    R=2:  14.993 GB   tolera 1 nodo(s) caído(s)   costo 2x
+    R=3:  22.490 GB   tolera 2 nodo(s) caído(s)   costo 3x
+
+5. NÚMERO DE BLOQUES (bloque real de HDFS = 128 MB)
+------------------------------------------------------------------------
+  Partición diaria de 20.94 MB -> 1 bloque
+    ocupa el 16.4 % de un bloque de 128 MB
+  Un año en particiones diarias -> 365 archivos, 365 bloques
+  Un año consolidado por mes    -> 12 archivos, 60 bloques
+
+  Metadatos en el nodo maestro (~150 B por objeto):
+    particiones diarias : 730 objetos = 0.104 MB
+    consolidado mensual : 72 objetos = 0.010 MB
+    reducción de objetos: 90.1 %
+
+========================================================================

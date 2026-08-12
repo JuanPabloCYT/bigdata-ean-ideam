@@ -102,7 +102,7 @@ Esto responde la pregunta 1 de la autoevaluación de forma tangible: repartir si
 
 ## Nivel 3 · Autónomo
 
-Las cifras salen de `proyeccion_almacenamiento.py`, que lee los valores directamente de la ficha T1 en lugar de tenerlos escritos a mano. Otra persona con la misma ficha obtiene los mismos números.
+Las cifras salen de `src/proyeccion_almacenamiento.py`, que lee los valores directamente de la ficha T1 en lugar de tenerlos escritos a mano. Otra persona con la misma ficha obtiene los mismos números.
 
 ### El problema de proyectar con crecimiento negativo
 
