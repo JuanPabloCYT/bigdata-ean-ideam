@@ -39,19 +39,19 @@ Si más de una fuente cumple los cuatro, se decide por estos, en este orden.
 
 > Completar en la reunión. La columna de la fuente A está llena con datos medidos, no declarados; las otras dos deben llenarse con el mismo nivel de evidencia. **Si un dato no está medido, se escribe «no medido», no se estima.**
 
-| | **A · Precipitación IDEAM** | **B · SECOP II** | **C · _(por definir)_** |
+| | **A · Precipitación IDEAM** | **B · SECOP II** | **C · Resultados Agregados Saber 11 (ICFES)** |
 |---|---|---|---|
-| **Integrante** | Juan Pablo Castro | Camilo Rojas | |
-| **Conjunto** | `s54a-sgyg`, Datos Abiertos | `p6dx-8zbt`, Datos Abiertos | |
-| **1. Volumen medido** | 21.953.076 B por partición diaria; 141.007 registros | 8,89 millones de registros; 59 columnas | |
-| **2. Licencia** | CC BY-SA 4.0 | CC BY-SA 4.0 | |
-| **3. Tasa de crecimiento** | −4,780861 % anual, de conteos jun-2025 vs jun-2026 | **+6,42 % anual**, de conteos 2024 vs 2025 | |
-| **4. Formato y esquema** | CSV sin comprimir, 12 columnas, estable entre dos días completos | CSV sin comprimir, 59 columnas, estable entre los dos períodos comparados | |
-| Clave candidata | Sí, verificada: 0 duplicados, 0 nulos en 141.007 filas | Verificada: 0 duplicados, 0 nulos en la muestra analizada | |
-| Acceso programático | Sí, API Socrata con `count(*)` previo y paginación | Sí, API Socrata/OData, con consulta y paginación | |
-| Columna categórica | `departamento`, `municipio`, `codigoestacion` | `departamento_entidad`, `ciudad_entidad`, `entidad`, `fase` | |
-| Factor de expansión *k* | 3,2396, medido con `deep=True` | 3,1847, medido con `deep=True` | |
-| Repositorio T2 | <https://github.com/JuanPabloCYT/bigdata-ean-ideam> | _(falta enlace)_ | |
+| **Integrante** | Juan Pablo Castro | Camilo Rojas | Lina Ramírez |
+| **Conjunto** | `s54a-sgyg`, Datos Abiertos | `p6dx-8zbt`, Datos Abiertos | Resultados Agregados Saber 11, portal oficial ICFES (no tiene ID tipo Socrata; es descarga directa por período) |
+| **1. Volumen medido** | 21.953.076 B por partición diaria; 141.007 registros | 8,89 millones de registros; 59 columnas | 1.859.817 B (1,86 MB) por archivo de período; 14.045 registros consolidados, 21 columnas |
+| **2. Licencia** | CC BY-SA 4.0 | CC BY-SA 4.0 | No declarada explícitamente en el portal ICFES |
+| **3. Tasa de crecimiento** | −4,780861 % anual, de conteos jun-2025 vs jun-2026 | **+6,42 % anual**, de conteos 2024 vs 2025 | +0,59 % anual, de conteos consolidados 2024-2 (13.963) vs 2025-2 (14.045) |
+| **4. Formato y esquema** | CSV sin comprimir, 12 columnas, estable entre dos días completos | CSV sin comprimir, 59 columnas, estable entre los dos períodos comparados | xlsx, 21 columnas |
+| Clave candidata | Sí, verificada: 0 duplicados, 0 nulos en 141.007 filas | Verificada: 0 duplicados, 0 nulos en la muestra analizada | 0 duplicados en 14.045 filas |
+| Acceso programático | Sí, API Socrata con `count(*)` previo y paginación | Sí, API Socrata/OData, con consulta y paginación |No,Descarga manual de archivo `.xlsx` por período, ni `count(*)` previo |
+| Columna categórica | `departamento`, `municipio`, `codigoestacion` | `departamento_entidad`, `ciudad_entidad`, `entidad`, `fase` |`DEPARTAMENTO`, `CALENDARIO` y `NATURALEZA` |
+| Factor de expansión *k* | 3,2396, medido con `deep=True` | 3,1847, medido con `deep=True` | 3,91, medido con `deep=True` |
+| Repositorio T2 | <https://github.com/JuanPabloCYT/bigdata-ean-ideam> | _(falta enlace)_ |https://github.com/yuyisramirezsa2005-lgtm/proyecto-acueducto |
 
 > **Datos de la columna B aportados por Camilo Rojas**, commits `6d25399` y `3531904`.
 >
