@@ -3,7 +3,7 @@
 **IFPN0025 · Big Data e Ingeniería de Datos · Universidad Ean**
 Paso cero de T3: de tres fichas y tres repositorios, a uno solo.
 
-> **Decisión tomada: fuente A, Precipitación del IDEAM.** Las tres columnas están llenas y la justificación está en la sección 3. Falta que Camilo firme el acuerdo de la sección 4 — su commit anterior fue solo de datos comparativos, no de aceptación.
+> **Decisión tomada y firmada por los tres integrantes: fuente A, Precipitación del IDEAM.** Las tres columnas están llenas, la justificación está en la sección 3, y las tres firmas de la sección 4 están completas.
 
 ---
 
@@ -194,5 +194,5 @@ La decisión está tomada cuando los tres han hecho al menos un commit en el rep
 
 **Pendiente de cada integrante, ahora que la fuente está decidida:**
 
-- **Camilo:** falta su firma de acuerdo en la sección 4 — su commit anterior fue solo la comparación técnica, no la aceptación de la fuente elegida. Y le queda la tarea 1 o la tarea 3 de [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md) para sumar una contribución sobre el repositorio ya consolidado, no solo sobre la comparación de fuentes.
+- **Camilo:** ya firmó el acuerdo (commit `af622fc`). Le queda la tarea 1 o la tarea 3 de [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md) para sumar una contribución sobre el repositorio ya consolidado, no solo sobre la comparación de fuentes.
 - **Lina:** ya firmó el acuerdo. Le queda la tarea 2 de [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md) —el párrafo en inglés y el glosario— si tiene el extracto de Kleppmann, o cualquier otra de las cinco tareas repartidas.
