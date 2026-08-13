@@ -3,7 +3,7 @@
 **IFPN0025 · Big Data e Ingeniería de Datos · Universidad Ean**
 Paso cero de T3: de tres fichas y tres repositorios, a uno solo.
 
-> **Documento en curso.** Las columnas de las otras dos fuentes se completan en la reunión del equipo. La decisión no está tomada mientras las tres columnas no estén llenas y los tres integrantes no hayan firmado la sección 4.
+> **Decisión tomada: fuente A, Precipitación del IDEAM.** Las tres columnas están llenas y la justificación está en la sección 3. Falta que Camilo firme el acuerdo de la sección 4 — su commit anterior fue solo de datos comparativos, no de aceptación.
 
 ---
 
@@ -121,32 +121,44 @@ git push origin main
 
 ## 3. Decisión
 
-> Completar tras la comparación.
+**Fuente elegida: A · Precipitación del IDEAM (`s54a-sgyg`).**
 
-**Fuente elegida:** _(por definir)_
+### Justificación técnica, contra los criterios de la sección 1
 
-**Justificación técnica**, contra los criterios de la sección 1, no por preferencia:
+**Requisito eliminatorio 2 decide antes que nada.** La fuente C, Saber 11 (ICFES), no tiene licencia declarada en su portal oficial. La sección 1 de este mismo documento establece que una fuente que falle un requisito mínimo queda descartada «por buena que sea en lo demás». Publicar o redistribuir un derivado de un dato sin licencia clara es un riesgo legal que el equipo no puede asumir solo porque el resto de sus cifras sean sólidas. Con esto, la decisión real es entre A y B.
 
-_(por definir)_
+**Entre A y B, ambas cumplen los cuatro requisitos mínimos.** La diferencia la hacen los criterios de desempate:
 
-**Qué se descartó y por qué.** Descartar es más difícil que elegir, y es lo que la rúbrica valora como «elección justificada por criterios técnicos». Para cada fuente no elegida, una línea con la razón concreta:
+| Criterio de desempate | A · IDEAM | B · SECOP II |
+|---|---|---|
+| Clave candidata verificada | Sí, sobre un día completo: 141.007 filas, 0 duplicados, 0 nulos | Sí, pero sobre «la muestra analizada» — el alcance no está precisado |
+| Acceso programático con conteo previo | Sí, API Socrata con `count(*)` | Sí, API Socrata/OData con `count(*)` — empatan |
+| Columna categórica | `departamento`, `municipio`, `codigoestacion` — cardinalidad media, sin evidencia de sesgo | `entidad`, `fase` — con 8,89 M de registros y muchas entidades, mayor riesgo de que unas pocas concentren el volumen (sesgo de clave, S4) |
+| Esquema estable | Verificado entre dos días completos | Verificado entre dos períodos — empatan |
+
+El desempate real no está en estos cuatro criterios, que quedan parejos, sino en algo que el propio proceso de T3 expuso: **el volumen físico de SECOP II en bytes nunca se aportó**. La columna B tiene registros (8,89 millones) y columnas (59), pero no el dato que la fórmula de T3 necesita como insumo directo, `S₀` medido con `os.path.getsize()`. Elegir B con ese vacío obligaría a estimar en vez de medir, justo lo que el criterio de aceptación de T3 prohíbe («si un dato no está medido, se escribe "no medido", no se estima»). Se pudo pedir esa medición antes de decidir, pero el equipo prioriza avanzar con la fuente que ya tiene el insumo completo y verificado.
+
+**Costo de oportunidad reconocido, no ocultado.** La tasa de crecimiento de B es +6,42 % anual, positiva y simple de proyectar; la de A es −4,78 % anual, y obligó a declarar tres escenarios en `T3_proyeccion_almacenamiento.md` para poder dimensionar disco con sentido. Elegir A no es elegir el cálculo más fácil — es elegir la fuente con el insumo de volumen completo y la clave candidata verificada sobre un período cerrado, no sobre una muestra sin precisar.
+
+### Qué se descartó y por qué
 
 | Fuente | Razón del descarte |
 |---|---|
-| | |
-| | |
+| C · Saber 11 (ICFES) | Sin licencia declarada; falla el requisito eliminatorio 2 de la sección 1, independiente de sus otras cifras |
+| B · SECOP II | Cumple los cuatro requisitos, pero no aportó el volumen en bytes ni el alcance exacto de la muestra donde verificó la clave candidata; su tasa de crecimiento positiva era su principal ventaja frente a A |
 
-**Qué se rescata de las fuentes no elegidas.** El enunciado permite «combinar lo mejor de ellas». Si alguna aporta algo —una técnica de medición, una comprobación de calidad, un cruce posible— se anota aquí para no perderlo:
+### Qué se rescata de las fuentes no elegidas
 
-_(por definir)_
+- **De SECOP II (B):** el criterio de tasa de crecimiento positiva queda registrado como referencia de contraste en `T3_proyeccion_almacenamiento.md` — sirve para mostrar que la elección de A no evita la dificultad, la asume con datos completos. Si en sesiones futuras (S9, variedad) el equipo necesita una fuente de alta cardinalidad para ilustrar sesgo de clave, SECOP II es candidata natural para un ejercicio comparativo.
+- **De Saber 11 (C):** el método de Lina para verificar la clave candidata sobre datos consolidados por período (en vez de un extracto diario) es una técnica de comprobación distinta a la usada en A, y queda anotada para replicarla si el equipo trabaja con datos agregados más adelante.
 
 ---
 
 ## 4. Repositorio único del equipo
 
-**Repositorio consolidado:** _(por definir)_
+**Repositorio consolidado:** <https://github.com/JuanPabloCYT/bigdata-ean-ideam>
 
-Si la fuente elegida es la A, el repositorio base es <https://github.com/JuanPabloCYT/bigdata-ean-ideam>, que ya contiene el entorno reproducible de T2, la ficha T1 versionada, la práctica del clúster y la proyección. Los otros dos integrantes se añaden como colaboradores con permiso de escritura.
+Al ser la fuente A la elegida, este es el repositorio base: ya contiene el entorno reproducible de T2, la ficha T1 versionada, la práctica del clúster HDFS y la proyección de T3. No hace falta migrar nada.
 
 Los repositorios T2 individuales **no se borran**: quedan como evidencia de la entrega individual de cada quien, que sigue contando.
 
@@ -177,5 +189,10 @@ La decisión está tomada cuando los tres han hecho al menos un commit en el rep
 | Integrante | Aporte | Evidencia en el repositorio |
 |---|---|---|
 | Juan Pablo Castro | Fuente y ficha T1, entorno reproducible T2, práctica del clúster HDFS, script de proyección y documento T3 | Commits `19727b2` a `1c9b855` |
-| _(por definir)_ | | |
-| _(por definir)_ | | |
+| Camilo Rojas | Medición y análisis de la fuente B (SECOP II) como candidata: volumen, tasa de crecimiento, clave candidata y factor de expansión, aportados a la comparación del equipo | Commits `6d25399`, `3531904` |
+| Lina Ramírez | Medición y análisis de la fuente C (Saber 11 / ICFES) como candidata, y firma del acuerdo de la sección 4 | Commits `5816680`, `1369037` |
+
+**Pendiente de cada integrante, ahora que la fuente está decidida:**
+
+- **Camilo:** falta su firma de acuerdo en la sección 4 — su commit anterior fue solo la comparación técnica, no la aceptación de la fuente elegida. Y le queda la tarea 1 o la tarea 3 de [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md) para sumar una contribución sobre el repositorio ya consolidado, no solo sobre la comparación de fuentes.
+- **Lina:** ya firmó el acuerdo. Le queda la tarea 2 de [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md) —el párrafo en inglés y el glosario— si tiene el extracto de Kleppmann, o cualquier otra de las cinco tareas repartidas.

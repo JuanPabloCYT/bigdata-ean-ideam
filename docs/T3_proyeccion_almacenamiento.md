@@ -5,7 +5,7 @@ Módulo 1 · Sesión 3 · Entrega grupal
 
 **Fuente consolidada del equipo:** Precipitación del IDEAM, conjunto `s54a-sgyg` del Portal de Datos Abiertos de Colombia.
 
-> **Pendiente de completar por el equipo.** La consolidación está en curso en [`T3_consolidacion_equipo.md`](T3_consolidacion_equipo.md), y el trabajo que falta, repartido, en [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md). Los nombres de los tres integrantes y el aporte de cada uno van en la sección 10.
+> **Fuente consolidada por el equipo el 12 de agosto de 2026**, tras comparar tres candidatas contra los cuatro requisitos de T1. El detalle de la decisión está en [`T3_consolidacion_equipo.md`](T3_consolidacion_equipo.md). Falta cerrar el componente en inglés y la firma de un integrante; el reparto está en [`T3_tareas_pendientes.md`](T3_tareas_pendientes.md).
 
 ---
 
