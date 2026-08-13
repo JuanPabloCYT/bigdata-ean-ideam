@@ -48,8 +48,8 @@ Si más de una fuente cumple los cuatro, se decide por estos, en este orden.
 | **3. Tasa de crecimiento** | −4,780861 % anual, de conteos jun-2025 vs jun-2026 | **+6,42 % anual**, de conteos 2024 vs 2025 | +0,59 % anual, de conteos consolidados 2024-2 (13.963) vs 2025-2 (14.045) |
 | **4. Formato y esquema** | CSV sin comprimir, 12 columnas, estable entre dos días completos | CSV sin comprimir, 59 columnas, estable entre los dos períodos comparados | xlsx, 21 columnas |
 | Clave candidata | Sí, verificada: 0 duplicados, 0 nulos en 141.007 filas | Verificada: 0 duplicados, 0 nulos en la muestra analizada | 0 duplicados en 14.045 filas |
-| Acceso programático | Sí, API Socrata con `count(*)` previo y paginación | Sí, API Socrata/OData, con consulta y paginación |No,Descarga manual de archivo `.xlsx` por período, ni `count(*)` previo |
-| Columna categórica | `departamento`, `municipio`, `codigoestacion` | `departamento_entidad`, `ciudad_entidad`, `entidad`, `fase` |`DEPARTAMENTO`, `CALENDARIO` y `NATURALEZA` |
+| Acceso programático | Sí, API Socrata con `count(*)` previo y paginación | Sí, API Socrata/OData, con consulta y paginación | No, descarga manual de archivo `.xlsx` por período, sin `count(*)` previo |
+| Columna categórica | `departamento`, `municipio`, `codigoestacion` | `departamento_entidad`, `ciudad_entidad`, `entidad`, `fase` | `DEPARTAMENTO`, `CALENDARIO` y `NATURALEZA` |
 | Factor de expansión *k* | 3,2396, medido con `deep=True` | 3,1847, medido con `deep=True` | 3,91, medido con `deep=True` |
 | Repositorio T2 | <https://github.com/JuanPabloCYT/bigdata-ean-ideam> | _(falta enlace)_ |https://github.com/yuyisramirezsa2005-lgtm/proyecto-acueducto |
 
@@ -165,8 +165,8 @@ La decisión está tomada cuando los tres han hecho al menos un commit en el rep
 | Integrante | Usuario de GitHub | De acuerdo con la fuente elegida |
 |---|---|---|
 | Juan Pablo Castro | `JuanPabloCYT` | Sí |
-| _(por definir)_ |`yuyisramirezsa2005-lgtm` | sí |
-| _(por definir)_ | | |
+| Lina Ramírez | `yuyisramirezsa2005-lgtm` | Sí |
+| Camilo Rojas | `Juanext81` | _(falta firmar)_ |
 
 ---
 
