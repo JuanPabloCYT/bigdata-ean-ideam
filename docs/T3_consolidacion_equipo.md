@@ -165,7 +165,7 @@ La decisión está tomada cuando los tres han hecho al menos un commit en el rep
 | Integrante | Usuario de GitHub | De acuerdo con la fuente elegida |
 |---|---|---|
 | Juan Pablo Castro | `JuanPabloCYT` | Sí |
-| _(por definir)_ | | |
+| _(por definir)_ |`yuyisramirezsa2005-lgtm` | sí |
 | _(por definir)_ | | |
 
 ---
