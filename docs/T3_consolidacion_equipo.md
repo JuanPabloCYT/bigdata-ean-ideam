@@ -178,7 +178,7 @@ La decisión está tomada cuando los tres han hecho al menos un commit en el rep
 |---|---|---|
 | Juan Pablo Castro | `JuanPabloCYT` | Sí |
 | Lina Ramírez | `yuyisramirezsa2005-lgtm` | Sí |
-| Camilo Rojas | `Juanext81` | _(falta firmar)_ |
+| Camilo Rojas | `Juanext81` | Sí |
 
 ---
 
