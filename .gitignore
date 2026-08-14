@@ -43,3 +43,9 @@ venv/
 # asi que no hay razon para versionarla.
 practica/s03-hdfs/muestra/*
 !practica/s03-hdfs/muestra/.gitkeep
+
+# --- Practica S04 · muestra del cluster MapReduce -------------
+# Es una copia de data/raw/ + src/mapreduce/, ambos ya versionados
+# en su ubicacion original. No hay razon para duplicarlos aqui.
+practica/s04-mapreduce/muestra/*
+!practica/s04-mapreduce/muestra/.gitkeep

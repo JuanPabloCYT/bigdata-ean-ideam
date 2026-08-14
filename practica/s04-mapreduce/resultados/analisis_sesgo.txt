@@ -1,0 +1,25 @@
+====================================================================
+SESGO DE LA CLAVE ACTUAL: departamento
+====================================================================
+  Registros totales      : 141,007
+  Departamentos distintos: 33
+
+  Departamento                    Registros  % del total
+  BOGOTÁ                             67,669       47.99%
+  ANTIOQUIA                           9,230        6.55%
+  BOYACÁ                              7,146        5.07%
+  CUNDINAMARCA                        6,343        4.50%
+  SANTANDER                           4,785        3.39%
+
+  El departamento con más carga (BOGOTÁ) concentra el 47.99 % de los registros.
+  Ese reductor procesaría esa fracción del trabajo total, sin importar cuántos reductores más se añadan.
+
+====================================================================
+CLAVE COMPUESTA CANDIDATA: departamento + codigoestacion
+(evaluada sobre las estaciones dentro de BOGOTÁ)
+====================================================================
+  Estaciones distintas dentro de BOGOTÁ: 67
+  Registros promedio por estación: 1010.0
+  Registros de la estación con más carga: 1,402 (0.99 % del total)
+
+  Con la clave compuesta, el 47.99 % que hoy va a un solo reductor se reparte en 67 claves distintas.

@@ -1,0 +1,84 @@
+# Cluster HDFS + YARN para la practica y T4 de la sesion 4.
+#
+# Deliberadamente mas chico que el de la S03: un solo nodo de datos y
+# un solo nodo de computo, en vez de los tres nodos de datos de la S03.
+# Razon: la VM de Docker de este equipo tiene 3,83 GB en total, y la S03
+# ya mostro que 4 contenedores de Hadoop la dejan al limite. Sumarle
+# resourcemanager + nodemanager (que ademas lanza JVM hijas para cada
+# tarea de map y de reduce) no cabria si se mantienen los tres nodos de
+# datos. La replica no es el objeto de estudio de esta sesion -lo fue
+# en S03- asi que se reduce sin perder lo que S04 si necesita: mapeo,
+# mezcla y reduccion reales, con contadores reales.
+#
+# Los mismos dos ajustes de la S03 siguen aplicando aqui:
+#   1. platform: linux/amd64, porque las imagenes bde2020/hadoop-* solo
+#      publican manifiesto amd64 y este equipo es arm64.
+#   2. Limites de memoria y heap por servicio, calibrados para que los
+#      cuatro contenedores quepan en 3,83 GB con margen para Docker.
+services:
+  namenode:
+    image: bde2020/hadoop-namenode:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: s04_namenode
+    environment:
+      - CLUSTER_NAME=mapreduce_ideam
+      - HADOOP_HEAPSIZE=384
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "9871:9870"                  # interfaz web del maestro HDFS
+    volumes:
+      - s04_namenode:/hadoop/dfs/name
+      - ./muestra:/muestra:ro
+    mem_limit: 640m
+
+  datanode1:
+    image: bde2020/hadoop-datanode:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: s04_datanode1
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870
+      - HADOOP_HEAPSIZE=256
+    env_file:
+      - ./hadoop.env
+    volumes:
+      - s04_datanode1:/hadoop/dfs/data
+    mem_limit: 512m
+
+  resourcemanager:
+    image: bde2020/hadoop-resourcemanager:2.0.0-hadoop3.2.1-java8
+    platform: linux/amd64
+    container_name: s04_resourcemanager
+    environment:
+      - SERVICE_PRECONDITION=namenode:9870 datanode1:9864
+      - HADOOP_HEAPSIZE=384
+    env_file:
+      - ./hadoop.env
+    ports:
+      - "8088:8088"                  # interfaz web del gestor de recursos
+    mem_limit: 640m
+
+  nodemanager:
+    # Construida a partir de nodemanager.Dockerfile: la imagen oficial
+    # no trae Python, y Hadoop Streaming ejecuta el map y el reduce
+    # como subprocesos de ESTE contenedor. Ver el Dockerfile para el
+    # porque completo.
+    build:
+      context: .
+      dockerfile: nodemanager.Dockerfile
+    platform: linux/amd64
+    container_name: s04_nodemanager
+    environment:
+      - SERVICE_PRECONDITION=resourcemanager:8088
+      - HADOOP_HEAPSIZE=256
+    env_file:
+      - ./hadoop.env
+    # 1,4 GB: su propia JVM mas las JVM hijas que lanza para cada
+    # tarea de map, de reduce y el maestro de aplicacion (AM). Es el
+    # contenedor que de verdad ejecuta el trabajo, asi que es el que
+    # mas margen necesita.
+    mem_limit: 1400m
+
+volumes:
+  s04_namenode:
+  s04_datanode1:

@@ -1,0 +1,95 @@
+packageJobJar: [/tmp/hadoop-unjar4665286023252261551/] [] /tmp/streamjob840982113771986100.jar tmpDir=null
+2026-08-14 20:00:20,643 INFO client.RMProxy: Connecting to ResourceManager at resourcemanager/172.18.0.2:8032
+2026-08-14 20:00:20,948 INFO client.RMProxy: Connecting to ResourceManager at resourcemanager/172.18.0.2:8032
+2026-08-14 20:00:21,291 INFO mapreduce.JobResourceUploader: Disabling Erasure Coding for path: /tmp/hadoop-yarn/staging/root/.staging/job_1786736762871_0010
+2026-08-14 20:00:21,419 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:21,954 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:22,415 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:22,880 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:23,428 INFO mapred.FileInputFormat: Total input files to process : 1
+2026-08-14 20:00:23,476 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:23,518 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:23,961 INFO mapreduce.JobSubmitter: number of splits:6
+2026-08-14 20:00:24,018 INFO Configuration.deprecation: mapred.min.split.size is deprecated. Instead, use mapreduce.input.fileinputformat.split.minsize
+2026-08-14 20:00:24,020 INFO Configuration.deprecation: mapred.map.tasks is deprecated. Instead, use mapreduce.job.maps
+2026-08-14 20:00:24,155 INFO sasl.SaslDataTransferClient: SASL encryption trust check: localHostTrusted = false, remoteHostTrusted = false
+2026-08-14 20:00:24,636 INFO mapreduce.JobSubmitter: Submitting tokens for job: job_1786736762871_0010
+2026-08-14 20:00:24,637 INFO mapreduce.JobSubmitter: Executing with tokens: []
+2026-08-14 20:00:24,877 INFO conf.Configuration: resource-types.xml not found
+2026-08-14 20:00:24,878 INFO resource.ResourceUtils: Unable to find 'resource-types.xml'.
+2026-08-14 20:00:24,944 INFO impl.YarnClientImpl: Submitted application application_1786736762871_0010
+2026-08-14 20:00:24,985 INFO mapreduce.Job: The url to track the job: http://resourcemanager:8088/proxy/application_1786736762871_0010/
+2026-08-14 20:00:24,987 INFO mapreduce.Job: Running job: job_1786736762871_0010
+2026-08-14 20:00:34,612 INFO mapreduce.Job: Job job_1786736762871_0010 running in uber mode : false
+2026-08-14 20:00:34,620 INFO mapreduce.Job:  map 0% reduce 0%
+2026-08-14 20:00:43,890 INFO mapreduce.Job:  map 17% reduce 0%
+2026-08-14 20:00:47,039 INFO mapreduce.Job:  map 33% reduce 0%
+2026-08-14 20:00:50,137 INFO mapreduce.Job:  map 50% reduce 0%
+2026-08-14 20:00:56,387 INFO mapreduce.Job:  map 67% reduce 0%
+2026-08-14 20:01:00,487 INFO mapreduce.Job:  map 83% reduce 0%
+2026-08-14 20:01:04,573 INFO mapreduce.Job:  map 100% reduce 28%
+2026-08-14 20:01:06,640 INFO mapreduce.Job:  map 100% reduce 100%
+2026-08-14 20:01:08,719 INFO mapreduce.Job: Job job_1786736762871_0010 completed successfully
+2026-08-14 20:01:08,837 INFO mapreduce.Job: Counters: 55
+	File System Counters
+		FILE: Number of bytes read=5050
+		FILE: Number of bytes written=1635055
+		FILE: Number of read operations=0
+		FILE: Number of large read operations=0
+		FILE: Number of write operations=0
+		HDFS: Number of bytes read=21974210
+		HDFS: Number of bytes written=724
+		HDFS: Number of read operations=23
+		HDFS: Number of large read operations=0
+		HDFS: Number of write operations=2
+		HDFS: Number of bytes read erasure-coded=0
+	Job Counters 
+		Killed map tasks=1
+		Launched map tasks=6
+		Launched reduce tasks=1
+		Rack-local map tasks=6
+		Total time spent by all maps in occupied slots (ms)=77564
+		Total time spent by all reduces in occupied slots (ms)=39580
+		Total time spent by all map tasks (ms)=38782
+		Total time spent by all reduce tasks (ms)=19790
+		Total vcore-milliseconds taken by all map tasks=38782
+		Total vcore-milliseconds taken by all reduce tasks=19790
+		Total megabyte-milliseconds taken by all map tasks=9928192
+		Total megabyte-milliseconds taken by all reduce tasks=5066240
+	Map-Reduce Framework
+		Map input records=141008
+		Map output records=141007
+		Map output bytes=2116765
+		Map output materialized bytes=5080
+		Input split bytes=654
+		Combine input records=141007
+		Combine output records=198
+		Reduce input groups=33
+		Reduce shuffle bytes=5080
+		Reduce input records=198
+		Reduce output records=33
+		Spilled Records=396
+		Shuffled Maps =6
+		Failed Shuffles=0
+		Merged Map outputs=6
+		GC time elapsed (ms)=637
+		CPU time spent (ms)=13330
+		Physical memory (bytes) snapshot=2443210752
+		Virtual memory (bytes) snapshot=17232519168
+		Total committed heap usage (bytes)=1306525696
+		Peak Map Physical memory (bytes)=368783360
+		Peak Map Virtual memory (bytes)=2463789056
+		Peak Reduce Physical memory (bytes)=264265728
+		Peak Reduce Virtual memory (bytes)=2470821888
+	Shuffle Errors
+		BAD_ID=0
+		CONNECTION=0
+		IO_ERROR=0
+		WRONG_LENGTH=0
+		WRONG_MAP=0
+		WRONG_REDUCE=0
+	File Input Format Counters 
+		Bytes Read=21973556
+	File Output Format Counters 
+		Bytes Written=724
+2026-08-14 20:01:08,837 INFO streaming.StreamJob: Output directory: /salida_con_combinador

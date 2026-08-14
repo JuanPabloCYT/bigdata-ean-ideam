@@ -107,6 +107,10 @@ bigdata-ean-ideam/
 | — | Consolidación de la fuente del equipo | [`docs/T3_consolidacion_equipo.md`](docs/T3_consolidacion_equipo.md) |
 | — | Trabajo pendiente de T3 y reparto | [`docs/T3_tareas_pendientes.md`](docs/T3_tareas_pendientes.md) |
 | — | Práctica del clúster HDFS que sustenta T3 | [`practica/s03-hdfs/`](practica/s03-hdfs/) |
+| T4 | Agregación en map/reduce, mezcla estimada y contrastada | [`docs/T4_mezcla.md`](docs/T4_mezcla.md) |
+| — | Cómo reproducir T4 y los fallos de infraestructura resueltos | [`docs/T4_ejecucion.md`](docs/T4_ejecucion.md) |
+| — | Código del mapper, reducer, combinador y scripts de estimación | [`src/mapreduce/`](src/mapreduce/) |
+| — | Clúster HDFS + YARN que sustenta T4 | [`practica/s04-mapreduce/`](practica/s04-mapreduce/) |
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 
 ### Los datos no están en el repositorio

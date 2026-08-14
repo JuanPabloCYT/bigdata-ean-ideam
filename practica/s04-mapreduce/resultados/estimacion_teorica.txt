@@ -1,0 +1,23 @@
+====================================================================
+ESQUEMA MEDIDO SOBRE EL DATO REAL
+====================================================================
+  Registros totales          : 141,007
+  Departamentos distintos    : 33
+  Bytes promedio de la clave : 8.011
+  Bytes promedio del valor   : 1.038
+
+====================================================================
+ESTIMACION SIN COMBINADOR
+====================================================================
+  Pares emitidos (= registros): 141,007
+  Bytes por par (aprox)       : 13.05
+  Bytes de mezcla (teorico)   : 1,839,937
+
+====================================================================
+ESTIMACION CON COMBINADOR (6 tareas de mapeo)
+====================================================================
+  Pares, cota superior (splits x claves): 6 x 33 = 198
+  Bytes por par agregado (aprox)         : 22.01
+  Bytes de mezcla, cota superior (teorico): 4,358
+
+  Reduccion teorica esperada: 99.8 %
