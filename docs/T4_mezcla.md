@@ -131,6 +131,11 @@ hadoop jar hadoop-streaming-3.2.1.jar \
 
 La estimación acertó el **orden de magnitud** en ambos casos —millones de bytes sin combinador, miles con combinador—, que es lo que la tarea pide razonar. El contador real es consistentemente **entre 1,2 y 1,3 veces mayor** que la estimación de bytes de texto crudo. La diferencia no es un error de cálculo: el contador de Hadoop mide el tamaño **serializado** de los pares en el formato interno de volcado a disco (`SequenceFile`, con longitudes de campo prefijadas y separadores propios del framework), no el tamaño del texto `clave\tvalor\n` sin más. Esa sobrecarga de serialización es real y consistente entre ambas corridas (30 % sin combinador, 16 % con combinador), y es precisamente el tipo de diferencia que esta tarea pide encontrar al contrastar la estimación con la medición.
 
+**Límite de esta medición.** El clúster corre con un solo `nodemanager` (ver `T4_ejecucion.md`),
+así que la mezcla ocurrió dentro de la misma máquina, no entre nodos separados. La reducción de
+bytes es real; el ahorro de tráfico de red entre servidores —el motivo real del combinador en
+producción— no queda demostrado aquí.
+
 **Resultado verificado.** La salida de ambos trabajos (`hdfs dfs -cat .../part-00000`) coincide, campo por campo, con la agregación de referencia calculada en Python puro sobre el mismo archivo. El combinador no alteró el resultado.
 
 ---
@@ -158,6 +163,15 @@ python3 src/mapreduce/analisis_sesgo.py data/raw/precipitacion_2026-06-22.csv
 | Santander | 4.785 | 3,39 % |
 
 **Hay sesgo real y severo.** El reductor que recibe la clave `BOGOTÁ` procesa casi la mitad de los 141.007 registros — más que las 32 claves restantes juntas casi en su totalidad. Añadir más reductores no acelera nada: esos 67.669 registros comparten una sola clave y van, sí o sí, al mismo reductor. El trabajo completo tarda lo que tarda ese reductor, no el promedio de los 33.
+
+**Conexión con la réplica de T3.** El sesgo también tiene una lectura desde el factor de
+réplica que el equipo definió en T3. Si el reductor que procesa BOGOTÁ concentra casi la
+mitad de los 141.007 registros, perder el nodo donde corre ese reductor específico cuesta
+mucho más que perder el nodo de cualquier otro departamento — aunque el factor de réplica R
+proteja a todos los nodos por igual, no todos los nodos pesan igual dentro del pipeline. Un
+factor de réplica pensado solo en términos de bytes totales, sin mirar cómo se distribuye el
+trabajo real entre reductores, puede dejar subprotegido justo al nodo que menos se puede
+permitir perder.
 
 ### Rediseño propuesto: `departamento + codigoestacion`
 
