@@ -79,9 +79,19 @@ def source_url(day: date) -> str:
 def download_source(day: date) -> bytes:
     import requests
 
-    rows = []
+    # Se concatenan los BYTES tal como los entrega la API, sin pasar
+    # por csv.reader/csv.writer para producir la salida. Socrata cita
+    # todos los campos ("0011027030","0240",...); si se reconstruye el
+    # CSV con csv.writer, este solo cita cuando hace falta, y el
+    # archivo resultante -aunque contenga los mismos valores- deja de
+    # ser byte a byte lo que el proveedor envio. Para la capa cruda
+    # esa diferencia importa: "sin transformar" incluye el formato,
+    # no solo los valores. csv.reader se usa unicamente para CONTAR
+    # filas y decidir cuando parar de paginar, nunca para reescribir.
+    pages = []
     offset = 0
     url_base = source_url(day)
+    header = None
     while True:
         url = url_base + "&$offset=" + str(offset)
         response = requests.get(url, timeout=60)
@@ -90,23 +100,26 @@ def download_source(day: date) -> bytes:
         if not chunk.strip():
             break
         text = chunk.decode("utf-8-sig")
-        reader = list(csv.reader(io.StringIO(text)))
-        if len(reader) <= 1:
+        row_count = sum(1 for _ in csv.reader(io.StringIO(text))) - 1
+        if row_count <= 0:
             break
-        if not rows:
-            rows.append(reader[0])
-        rows.extend(reader[1:])
-        if len(reader) - 1 < 50000:
+        chunk_header, _, chunk_body = chunk.partition(b"\n")
+        if header is None:
+            header = chunk_header
+            pages.append(chunk_header + b"\n" + chunk_body)
+        else:
+            pages.append(chunk_body)
+        if row_count < 50000:
             break
         offset += 50000
 
-    if not rows:
+    if not pages:
         raise RuntimeError("La API no devolvio registros para " + day.isoformat())
 
-    output = io.StringIO(newline="")
-    writer = csv.writer(output, lineterminator="\n")
-    writer.writerows(rows)
-    return output.getvalue().encode("utf-8")
+    body = b"".join(pages)
+    if not body.endswith(b"\n"):
+        body += b"\n"
+    return body
 
 
 def object_key(day: date) -> str:

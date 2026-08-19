@@ -5,9 +5,10 @@
 ```bash
 git clone https://github.com/JuanPabloCYT/bigdata-ean-ideam.git
 cd bigdata-ean-ideam
-git checkout t5-lago-crudo
 cp .env.example .env
 ```
+
+> `main` ya contiene todo el trabajo de T5 y un commit más que la rama `t5-lago-crudo` donde se desarrolló; no hace falta cambiar de rama.
 
 No se descarga ningún CSV al repositorio. La ingesta obtiene la partición directamente de la API de Socrata.
 
