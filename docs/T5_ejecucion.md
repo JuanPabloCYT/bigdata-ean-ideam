@@ -37,6 +37,8 @@ python3 -m pip --version
 
 Si su equipo tiene varias instalaciones de Python (por ejemplo, vía `pyenv` o Homebrew), asegúrese de que `python3` apunte a una de ellas y no a la del sistema. Con la versión correcta:
 
+> **En Windows:** el intérprete por defecto puede ser *demasiado nuevo*, no solo viejo. La verificación de `T5_verificacion_lina.md` encontró que Python 3.14 rompe la instalación de `pandas==2.2.3` (sin *wheel* precompilado para esa versión en Windows); creando el entorno explícitamente sobre Python 3.12 (`py -3.12 -m venv .venv`) la instalación completa funciona sin cambiar ninguna dependencia.
+
 ```bash
 python3 -m pip install -r requirements.txt
 ```
