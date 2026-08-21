@@ -28,7 +28,14 @@ La consola web queda en `http://localhost:9001` y la API S3 en `http://localhost
 
 ## 3. Instalar dependencias
 
-Con Python 3:
+**Requiere Python 3.10 o superior, con pip actualizado.** En macOS, `python3` suele resolver al intérprete del sistema (Herramientas de Línea de Comandos de Xcode), que trae Python 3.9 con una versión de `pip` demasiado vieja para resolver los paquetes de `requirements.txt` — falla con `psycopg-binary` sin encontrar una versión compatible. Verifique antes de instalar:
+
+```bash
+python3 --version   # debe reportar 3.10 o superior
+python3 -m pip --version
+```
+
+Si su equipo tiene varias instalaciones de Python (por ejemplo, vía `pyenv` o Homebrew), asegúrese de que `python3` apunte a una de ellas y no a la del sistema. Con la versión correcta:
 
 ```bash
 python3 -m pip install -r requirements.txt
@@ -132,3 +139,18 @@ docker compose down -v
 ```
 
 **Advertencia:** `-v` elimina el volumen `minio_data` y, por tanto, las versiones almacenadas. Solo usar para una prueba limpia.
+
+---
+
+## Un fallo real, encontrado en la verificación final desde cero
+
+Al reproducir esta guía en un clon completamente limpio (`git clone` en un directorio nuevo, sin nada preinstalado), el paso 3 falló:
+
+```
+ERROR: Could not find a version that satisfies the requirement psycopg-binary==3.2.3
+ModuleNotFoundError: No module named 'boto3'
+```
+
+La causa no fue el proyecto: fue que `python3` resolvió al Python 3.9 del sistema (Herramientas de Línea de Comandos de Xcode en macOS), con `pip` 21.2.4 — demasiado viejo para resolver los paquetes publicados para `psycopg[binary]`. Con `python3` apuntando a una instalación 3.12 (vía `pyenv`), la instalación y la ingesta completa funcionaron sin cambios, con el mismo resultado exacto (mismo SHA-256, mismos tres buckets, versionado activo).
+
+No se cambió ninguna dependencia del proyecto por esto: es un problema de qué intérprete resuelve `python3` en el equipo de quien reproduce, no del `requirements.txt`. Por eso el paso 3 ahora empieza pidiendo verificar la versión antes de instalar, en vez de asumir que cualquier `python3` sirve.
