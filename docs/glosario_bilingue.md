@@ -63,6 +63,17 @@ Términos técnicos del curso, en español e inglés, con la precisión de uso q
 | Clase de almacenamiento | storage class | Nivel que cambia el compromiso entre costo y latencia de recuperación. No se observa en el laboratorio local, solo en un despliegue en la nube |
 | Lago de datos | data lake | Dato organizado por capas sobre almacenamiento de objetos, navegable en el tiempo. La organización, no la tecnología, es lo que lo distingue de un pantano |
 
+## Sesión 6 · Formatos de archivo y compresión
+
+| Español | Inglés | Precisión de uso |
+|---|---|---|
+| Orientación por columnas | columnar | Guarda juntos los valores de una misma columna. Lee solo lo que la consulta pide. Es Parquet |
+| Orientación por filas | row-oriented | Guarda un registro completo tras otro. Es el CSV, y conviene al flujo y a escribir de a uno |
+| Empuje de predicados | predicate pushdown | Que el filtro llegue al lector del archivo, para no cargar lo que se va a descartar |
+| Poda de particiones | partition pruning | Saltarse particiones enteras leyendo solo el prefijo de la ruta, sin abrir los archivos |
+| Evolución de esquema | schema evolution | Agregar columnas a datos futuros sin romper la lectura de los antiguos |
+| Codec de compresión | compression codec | El algoritmo que comprime cada columna. Medido sobre la fuente real: `zstd` en este proyecto, con `snappy` 22 % más grande y `gzip` 49 % más lento de escribir para una ganancia marginal de tamaño |
+
 ## Sesión 3 · Lectura anclada en inglés · Kleppmann (2017), replicación
 
 > **Pendiente.** Los tres términos de esta sección deben tomarse del extracto de Kleppmann asignado en Canvas, que aún no se ha incorporado al repositorio. Se completa junto con el párrafo en inglés de T3.

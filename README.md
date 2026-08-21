@@ -116,6 +116,11 @@ bigdata-ean-ideam/
 | — | Mapa del lago para un analista nuevo (reto de negocio) | [`docs/T5_reto_negocio.md`](docs/T5_reto_negocio.md) |
 | — | Verificación independiente de T5, con dos correcciones | [`docs/T5_verificacion.md`](docs/T5_verificacion.md) |
 | — | Script de ingesta a MinIO | [`src/ingesta/cargar_cruda.py`](src/ingesta/cargar_cruda.py) |
+| T6 | Conversión a Parquet y codec justificado por medición | [`docs/T6_formato.md`](docs/T6_formato.md) |
+| — | Comandos de ejecución de T6 | [`docs/T6_ejecucion.md`](docs/T6_ejecucion.md) |
+| — | Análisis de costo y beneficio para gerencia (reto de negocio) | [`docs/T6_reto_negocio.md`](docs/T6_reto_negocio.md) |
+| — | Scripts de medición y conversión | [`src/refinar/`](src/refinar/) |
+| — | Evidencia de la práctica de S06 | [`practica/s06-parquet/`](practica/s06-parquet/) |
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 
 ### Los datos no están en el repositorio

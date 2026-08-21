@@ -1,0 +1,11 @@
+Descargando la partición cruda desde el lago (lago-crudo/cruda/ideam_precipitacion/anio=2026/mes=06/dia=22/precipitacion_2026-06-22.csv)...
+Filas: 141007 | Columnas: 12
+CSV: 21,953,076 bytes
+
+Formato     Tamaño (bytes)   Escritura (s)  Lectura sel. (s)        vs CSV
+CSV             21,953,076               -                 -             -
+snappy             381,716          0.0218            0.0030         98.3%
+gzip               284,431          0.0323            0.0016         98.7%
+zstd               312,373          0.0198            0.0016         98.6%
+
+Repeticiones por medición: 3 (se reporta la mediana)

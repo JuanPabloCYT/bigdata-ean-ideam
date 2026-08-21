@@ -1,0 +1,10 @@
+CSV local: 21,953,076 bytes
+Parquet local: 312,373 bytes
+
+Filas resultado Parquet: 33 | Filas resultado CSV: 33
+Mismas claves (departamentos): True
+Diferencia maxima absoluta entre promedios: 5.55e-17 (precision de punto flotante double, ~1e-16; no es una diferencia de datos)
+
+Tiempo consulta sobre Parquet (mediana de 3): 0.0015 s
+Tiempo consulta sobre CSV     (mediana de 3): 0.1429 s
+Parquet fue 93.5x mas rapido que CSV en esta consulta
