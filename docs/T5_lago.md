@@ -41,6 +41,18 @@ cruda/ideam_precipitacion/anio=2026/mes=06/dia=22/precipitacion_2026-06-22.csv
 
 La ruta contiene la fuente y sus tres componentes de fecha como claves `anio`, `mes` y `dia`; no depende de carpetas reales del sistema de archivos.
 
+### La misma convención en las otras dos capas
+
+T5 solo ingesta la cruda, pero el nivel 3 de la práctica pide la convención **completa del lago**, no solo la que ya se usa. Las otras dos capas siguen el mismo patrón de partición por fecha; lo que cambia es el formato del archivo y, en la curada, que el grano ya no es el registro crudo sino un agregado.
+
+| Capa | Plantilla de ruta | Ejemplo real (22/06/2026) | Cuándo se llena |
+|---|---|---|---|
+| Cruda | `cruda/<fuente>/anio=YYYY/mes=MM/dia=DD/<archivo>.csv` | `cruda/ideam_precipitacion/anio=2026/mes=06/dia=22/precipitacion_2026-06-22.csv` | T5, ya ingestada |
+| Refinada | `refinada/<fuente>/anio=YYYY/mes=MM/dia=DD/<archivo>.parquet` | `refinada/ideam_precipitacion/anio=2026/mes=06/dia=22/precipitacion_2026-06-22.parquet` | T6, cuando la cruda se convierta a Parquet tipado |
+| Curada | `curada/<fuente>/<agregacion>/anio=YYYY/mes=MM/<archivo>.parquet` | `curada/ideam_precipitacion/promedio_departamento/anio=2026/mes=06/promedio_departamento_2026-06.parquet` | Cuando se modele un consumo específico (p. ej. la agregación de T4, promedio por departamento) |
+
+La curada pierde el nivel `dia=` porque su grano ya no es la observación diaria: es el resultado de una agregación (como la de T4), que se recalcula por período más amplio, no por partición cruda. Esa es la diferencia real entre las capas, no solo el formato de archivo: cruda y refinada conservan el grano original del dato; curada tiene el grano que la pregunta de negocio necesite.
+
 ## 3. Por qué se particiona por fecha
 
 La fuente se consulta y se ingiere incrementalmente por `fechaobservacion`. La partición diaria permite:
@@ -54,7 +66,11 @@ La fuente ya fue medida en T1 por partición diaria, por lo que esta convención
 
 ## 4. Inmutabilidad de la cruda
 
-`lago-crudo` tiene **versionado de objetos habilitado**. La ingesta normal es idempotente y no sobrescribe un objeto existente:
+`lago-crudo` tiene **versionado de objetos habilitado**.
+
+**Por qué el versionado protege la inmutabilidad, y no solo la política del script.** El script de ingesta ya impide sobrescribir por diseño (ver más abajo): si el contenido difiere, falla en vez de reemplazar. Pero esa es una regla de la aplicación, no del almacenamiento — cualquier otra herramienta con acceso directo a MinIO (la consola web, otro script, un error humano) sí podría sobrescribir el objeto sin pasar por esa regla. El versionado es la garantía que no depende de que nadie respete la convención: aunque algo sobrescriba `lago-crudo` por fuera del script, MinIO conserva la versión anterior como una versión más, no la borra. La inmutabilidad de la cruda no depende entonces de la disciplina de quien la usa, sino de una propiedad del almacenamiento que ni el propio equipo puede desactivar por accidente con una operación normal de escritura.
+
+La ingesta normal, además, es idempotente y no sobrescribe un objeto existente:
 
 - si la clave no existe, se crea;
 - si existe y el contenido tiene el mismo ETag, la ejecución termina sin duplicar ni modificar;

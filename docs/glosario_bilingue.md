@@ -49,6 +49,20 @@ Términos técnicos del curso, en español e inglés, con la precisión de uso q
 | Clave de agrupación | grouping key | La clave que decide qué se reúne. Gobierna resultado, paralelismo y costo de la mezcla |
 | Sesgo de clave | key skew, data skew | Una clave concentra el trabajo y su reductor se vuelve el cuello de botella. Añadir nodos no lo resuelve |
 
+## Sesión 5 · Almacenamiento de objetos y el lago por capas
+
+| Español | Inglés | Precisión de uso |
+|---|---|---|
+| Cubo | bucket | Contenedor de nivel superior donde viven los objetos. Uno por capa: `lago-crudo`, `lago-refinado`, `lago-curado` |
+| Objeto | object | El archivo completo con sus metadatos, la unidad de almacenamiento. No se edita, se reemplaza |
+| Clave | key | El nombre único del objeto dentro del cubo. Incluye el prefijo que finge ser ruta |
+| Prefijo | prefix | La parte inicial de la clave que da la apariencia de carpeta y permite listar por grupo. No es un directorio real |
+| Espacio de nombres plano | flat namespace | No existen carpetas reales en el almacenamiento de objetos; la jerarquía es una convención de nombres, no una estructura del sistema |
+| Inmutabilidad | immutability | Propiedad de que un objeto se reemplaza pero no se edita en el lugar. En `lago-crudo` se hace cumplir con idempotencia por ETag y con versionado |
+| Versionado | versioning | Conserva las versiones anteriores de un objeto al sobrescribirlo, en vez de borrarlas. Es la garantía de inmutabilidad que no depende de la disciplina de quien escribe |
+| Clase de almacenamiento | storage class | Nivel que cambia el compromiso entre costo y latencia de recuperación. No se observa en el laboratorio local, solo en un despliegue en la nube |
+| Lago de datos | data lake | Dato organizado por capas sobre almacenamiento de objetos, navegable en el tiempo. La organización, no la tecnología, es lo que lo distingue de un pantano |
+
 ## Sesión 3 · Lectura anclada en inglés · Kleppmann (2017), replicación
 
 > **Pendiente.** Los tres términos de esta sección deben tomarse del extracto de Kleppmann asignado en Canvas, que aún no se ha incorporado al repositorio. Se completa junto con el párrafo en inglés de T3.

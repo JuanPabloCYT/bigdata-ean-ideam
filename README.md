@@ -111,6 +111,11 @@ bigdata-ean-ideam/
 | — | Cómo reproducir T4 y los fallos de infraestructura resueltos | [`docs/T4_ejecucion.md`](docs/T4_ejecucion.md) |
 | — | Código del mapper, reducer, combinador y scripts de estimación | [`src/mapreduce/`](src/mapreduce/) |
 | — | Clúster HDFS + YARN que sustenta T4 | [`practica/s04-mapreduce/`](practica/s04-mapreduce/) |
+| T5 | Ingesta de la fuente cruda al lago por capas | [`docs/T5_lago.md`](docs/T5_lago.md) |
+| — | Comandos de ejecución de T5 | [`docs/T5_ejecucion.md`](docs/T5_ejecucion.md) |
+| — | Mapa del lago para un analista nuevo (reto de negocio) | [`docs/T5_reto_negocio.md`](docs/T5_reto_negocio.md) |
+| — | Verificación independiente de T5, con dos correcciones | [`docs/T5_verificacion.md`](docs/T5_verificacion.md) |
+| — | Script de ingesta a MinIO | [`src/ingesta/cargar_cruda.py`](src/ingesta/cargar_cruda.py) |
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 
 ### Los datos no están en el repositorio
