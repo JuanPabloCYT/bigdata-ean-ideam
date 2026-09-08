@@ -124,6 +124,7 @@ bigdata-ean-ideam/
 | — | Scripts de medición y conversión | [`src/refinar/`](src/refinar/) |
 | — | Evidencia de la práctica de S06 | [`practica/s06-parquet/`](practica/s06-parquet/) |
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
+| T7 | Decisión de paradigma del proyecto (lotes/flujo/casi real) y compromiso CAP | [`docs/T7_paradigma.md`](docs/T7_paradigma.md) |
 
 ### Los datos no están en el repositorio
 
