@@ -125,6 +125,7 @@ bigdata-ean-ideam/
 | — | Evidencia de la práctica de S06 | [`practica/s06-parquet/`](practica/s06-parquet/) |
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 | T7 | Decisión de paradigma del proyecto (lotes/flujo/casi real) y compromiso CAP | [`docs/T7_paradigma.md`](docs/T7_paradigma.md) |
+| — | Taller de decisión de paradigma de S07 (los cinco requerimientos del acueducto) | [`practica/s07-paradigmas/`](practica/s07-paradigmas/) |
 
 ### Los datos no están en el repositorio
 

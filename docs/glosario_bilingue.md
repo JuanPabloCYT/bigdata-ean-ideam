@@ -74,6 +74,20 @@ Términos técnicos del curso, en español e inglés, con la precisión de uso q
 | Evolución de esquema | schema evolution | Agregar columnas a datos futuros sin romper la lectura de los antiguos |
 | Codec de compresión | compression codec | El algoritmo que comprime cada columna. Medido sobre la fuente real: `zstd` en este proyecto, con `snappy` 22 % más grande y `gzip` 49 % más lento de escribir para una ganancia marginal de tamaño |
 
+## Sesión 7 · Paradigmas por lotes y por flujo
+
+| Español | Inglés | Precisión de uso |
+|---|---|---|
+| Por lotes | batch | Procesar el dato de un periodo de una vez, cuando el lote está completo. Es el paradigma de todo el pipeline medido hasta T6 |
+| Por flujo | stream | Procesar cada dato a medida que llega. En este proyecto solo lo exige la alerta de creciente súbita, no la ingesta |
+| Casi real | near real-time | Frescura de minutos, resuelta con micro-lotes. Es el punto medio que evita pagar la infraestructura de flujo cuando el negocio no exige segundos |
+| Latencia | latency | El tiempo que tarda un dato en ser procesado. No es lo mismo que frescura: un lote nocturno tiene latencia alta y frescura suficiente |
+| Rendimiento | throughput | Cuánto dato se procesa por unidad de tiempo. Es el criterio que puede empujar a lotes un requisito cuya frescura tentaría al flujo |
+| Frescura | freshness | Qué tan reciente es el dato que se consulta. Es la métrica que decide el paradigma, y se toma la **exigida** por el negocio, no la deseable |
+| Teorema CAP | CAP theorem | Bajo una partición de red hay que elegir entre consistencia y disponibilidad. El compromiso solo aplica **durante** la partición, no de forma permanente |
+| Consistencia eventual | eventual consistency | Las réplicas pueden diferir un tiempo, pero al final convergen. Aceptable para un tablero de precipitación; peligrosa para el saldo de una cuenta |
+| Tolerancia a particiones | partition tolerance | Seguir operando aunque la red entre nodos se corte. No es opcional en un sistema distribuido: es la condición que obliga a elegir entre las otras dos |
+
 ## Sesión 3 · Lectura anclada en inglés · Kleppmann (2017), replicación
 
 > **Pendiente.** Los tres términos de esta sección deben tomarse del extracto de Kleppmann asignado en Canvas, que aún no se ha incorporado al repositorio. Se completa junto con el párrafo en inglés de T3.
