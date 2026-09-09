@@ -126,6 +126,9 @@ bigdata-ean-ideam/
 | — | Glosario técnico bilingüe acumulativo | [`docs/glosario_bilingue.md`](docs/glosario_bilingue.md) |
 | T7 | Decisión de paradigma del proyecto (lotes/flujo/casi real) y compromiso CAP | [`docs/T7_paradigma.md`](docs/T7_paradigma.md) |
 | — | Taller de decisión de paradigma de S07 (los cinco requerimientos del acueducto) | [`practica/s07-paradigmas/`](practica/s07-paradigmas/) |
+| T8 · Hito A | Documento de arquitectura: arquitectura elegida, diagramas C4 y compromisos | [`docs/T8_arquitectura.md`](docs/T8_arquitectura.md) |
+| — | Justificación de la arquitectura para gerencia (reto de negocio) | [`docs/T8_reto_negocio.md`](docs/T8_reto_negocio.md) |
+| — | Diagramas C4 editables (draw.io) y el modelo como código (Structurizr) | [`practica/s08-c4/`](practica/s08-c4/) |
 
 ### Los datos no están en el repositorio
 

@@ -1,0 +1,85 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="C4 Nivel 2 - Contenedor" id="c4-nivel2">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="950" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="titulo" value="&lt;b&gt;Nivel 2 · Diagrama de contenedor&lt;/b&gt;&lt;div&gt;Interior de la plataforma. Contenedor de C4, no de Docker: una pieza que se ejecuta o almacena dato de forma independiente&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="900" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="socrata" value="&lt;b&gt;Portal de Datos Abiertos&lt;/b&gt;&lt;div&gt;[Sistema externo]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Publica s54a-sgyg, 1 vez al día&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="60" y="90" width="240" height="110" as="geometry" />
+        </mxCell>
+        <mxCell id="telemetria" value="&lt;b&gt;Telemetría de estaciones&lt;/b&gt;&lt;div&gt;[Sistema externo · PLANIFICADO]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Lecturas por estación&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="60" y="700" width="240" height="110" as="geometry" />
+        </mxCell>
+
+        <mxCell id="frontera" value="Plataforma de datos de precipitación · [Sistema]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;strokeColor=#666666;dashed=1;verticalAlign=bottom;align=left;spacingLeft=10;spacingBottom=6;fontColor=#666666;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="380" y="80" width="960" height="780" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ingesta" value="&lt;b&gt;Ingesta de la partición diaria&lt;/b&gt;&lt;div&gt;[Contenedor: Python 3.12 · boto3]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Descarga la partición, verifica su huella SHA-256 y la deposita en la capa cruda sin reescribirla si ya existe&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="120" width="270" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="lago" value="&lt;b&gt;Lago de datos por capas&lt;/b&gt;&lt;div&gt;[Almacén: MinIO · API S3]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;lago-crudo, lago-refinado, lago-curado. La cruda es inmutable y versionada&lt;/div&gt;" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=15;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#FFFFFF;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="800" y="120" width="280" height="190" as="geometry" />
+        </mxCell>
+
+        <mxCell id="refinador" value="&lt;b&gt;Refinador a Parquet&lt;/b&gt;&lt;div&gt;[Contenedor: Python · PyArrow]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Convierte el CSV crudo a Parquet con codec zstd y lo escribe en la capa refinada&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="330" width="270" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="motor" value="&lt;b&gt;Motor de agregación por lotes&lt;/b&gt;&lt;div&gt;[Contenedor: Hadoop MapReduce Streaming]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Agrega la precipitación promedio por departamento, con combinador&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="420" y="530" width="270" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="analitica" value="&lt;b&gt;Base analítica&lt;/b&gt;&lt;div&gt;[Almacén: PostgreSQL]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Sirve el agregado con la clave candidata de T1 como clave primaria&lt;/div&gt;" style="shape=cylinder3;boundedLbl=1;backgroundOutline=1;size=15;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#FFFFFF;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="1090" y="530" width="230" height="170" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cuaderno" value="&lt;b&gt;Cuaderno de análisis y panel&lt;/b&gt;&lt;div&gt;[Contenedor: Jupyter · DuckDB]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Consulta selectiva sobre Parquet sin cargar el archivo entero, y alimenta el panel operativo&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#438DD5;strokeColor=#3C7FC0;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="800" y="360" width="280" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="detector" value="&lt;b&gt;Detector de umbral de lluvia intensa&lt;/b&gt;&lt;div&gt;[Contenedor de flujo · PLANIFICADO, no implementado]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Evalúa el umbral sobre las lecturas recientes de la cuenca y dispara la alerta en segundos&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#A9C9E8;strokeColor=#3C7FC0;fontColor=#1A1A1A;arcSize=12;verticalAlign=top;spacing=8;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="700" width="270" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="r1" value="Entrega la partición&#10;[CSV sobre HTTP, paginado]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;" edge="1" parent="1" source="socrata" target="ingesta">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r2" value="Escribe la capa cruda, idempotente por ETag&#10;[S3 PutObject]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;" edge="1" parent="1" source="ingesta" target="lago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r3" value="Lee la cruda y escribe la refinada&#10;[S3 · Parquet zstd]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;exitX=1;exitY=0.3;exitDx=0;exitDy=0;entryX=0;entryY=0.8;entryDx=0;entryDy=0;" edge="1" parent="1" source="refinador" target="lago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r4" value="Lee la refinada y escribe el agregado en la curada&#10;[S3 · Hadoop Streaming]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;exitX=1;exitY=0.2;exitDx=0;exitDy=0;entryX=0.15;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="motor" target="lago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r5" value="Carga el agregado por departamento&#10;[SQL]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;" edge="1" parent="1" source="motor" target="analitica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r6" value="Consulta la capa refinada&#10;[DuckDB sobre Parquet]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="cuaderno" target="lago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r7" value="Consulta el agregado servido&#10;[SQL]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;strokeColor=#707070;exitX=1;exitY=0.7;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="cuaderno" target="analitica">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r8" value="Entregaría las lecturas por estación&#10;[PLANIFICADO]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;dashed=1;strokeColor=#909090;" edge="1" parent="1" source="telemetria" target="detector">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="r9" value="Depositaría sus eventos en la cruda, para poder auditar qué vio la alerta&#10;[PLANIFICADO]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;dashed=1;strokeColor=#909090;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="detector" target="lago">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leyenda" value="&lt;b&gt;Leyenda&lt;/b&gt;&lt;div&gt;Azul: contenedor de C4 · Cilindro: almacén de dato · Gris: sistema externo&lt;/div&gt;&lt;div&gt;Línea discontinua y relleno claro: pieza PLANIFICADA, decidida pero aún no construida&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;&lt;i&gt;La ingesta y el refinador son procesos de Python en el anfitrión, sin contenedor de Docker; el cuaderno, la base y el lago sí corren en Docker. Contenedor de C4 y de Docker no coinciden uno a uno.&lt;/i&gt;&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="290" width="300" height="180" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

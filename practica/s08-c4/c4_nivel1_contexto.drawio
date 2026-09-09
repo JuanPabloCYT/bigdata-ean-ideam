@@ -1,0 +1,58 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="C4 Nivel 1 - Contexto" id="c4-nivel1">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1300" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="titulo" value="&lt;b&gt;Nivel 1 · Diagrama de contexto&lt;/b&gt;&lt;div&gt;Plataforma de datos de precipitación del IDEAM · equipo bigdata-ean-ideam&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=16;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="700" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="operador" value="&lt;b&gt;Operador de gestión del riesgo&lt;/b&gt;&lt;div&gt;[Persona]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Vigila la lluvia del turno y activa el protocolo ante una creciente súbita&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="40" y="80" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="analista" value="&lt;b&gt;Analista de recursos hídricos&lt;/b&gt;&lt;div&gt;[Persona]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Estudia el comportamiento de la precipitación por departamento&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="460" y="80" width="260" height="130" as="geometry" />
+        </mxCell>
+        <mxCell id="gerencia" value="&lt;b&gt;Gerencia de planeación&lt;/b&gt;&lt;div&gt;[Persona]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Recibe el consolidado mensual para planear e informar&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#08427B;strokeColor=#073B6F;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="880" y="80" width="260" height="130" as="geometry" />
+        </mxCell>
+
+        <mxCell id="plataforma" value="&lt;b&gt;Plataforma de datos de precipitación&lt;/b&gt;&lt;div&gt;[Sistema · el que este proyecto construye]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Conserva la precipitación del IDEAM de forma íntegra y versionada, y la entrega ya agregada a quien decide con ella&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0E5CAD;fontColor=#FFFFFF;arcSize=10;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="400" y="370" width="420" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="telemetria" value="&lt;b&gt;Telemetría de estaciones del IDEAM&lt;/b&gt;&lt;div&gt;[Sistema externo · PLANIFICADO]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Canal de lectura por estación. Supuesto declarado en T7; hoy no se consume&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;dashed=1;" vertex="1" parent="1">
+          <mxGeometry x="100" y="660" width="300" height="140" as="geometry" />
+        </mxCell>
+        <mxCell id="socrata" value="&lt;b&gt;Portal de Datos Abiertos de Colombia&lt;/b&gt;&lt;div&gt;[Sistema externo · Socrata]&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;&lt;div&gt;Publica el conjunto s54a-sgyg como extracto consolidado, una vez al día&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#999999;strokeColor=#8A8A8A;fontColor=#FFFFFF;arcSize=12;verticalAlign=top;spacing=8;" vertex="1" parent="1">
+          <mxGeometry x="820" y="660" width="300" height="140" as="geometry" />
+        </mxCell>
+
+        <mxCell id="e1" value="Entrega la partición diaria&#10;[CSV sobre HTTP · 1 vez al día · 21.953.076 B]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.4;exitY=0;exitDx=0;exitDy=0;entryX=0.8;entryY=1;entryDx=0;entryDy=0;strokeColor=#707070;" edge="1" parent="1" source="socrata" target="plataforma">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" value="Enviaría las lecturas por estación&#10;[unos 1/min por estación · PLANIFICADO]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;dashed=1;exitX=0.6;exitY=0;exitDx=0;exitDy=0;entryX=0.2;entryY=1;entryDx=0;entryDy=0;strokeColor=#909090;" edge="1" parent="1" source="telemetria" target="plataforma">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" value="Dispara la alerta de creciente súbita&#10;[segundos · PLANIFICADO]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;dashed=1;exitX=0.1;exitY=0;exitDx=0;exitDy=0;entryX=0.35;entryY=1;entryDx=0;entryDy=0;strokeColor=#909090;" edge="1" parent="1" source="plataforma" target="operador">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" value="Actualiza el panel operativo&#10;[casi real · cada 2-5 min]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.28;exitY=0;exitDx=0;exitDy=0;entryX=0.8;entryY=1;entryDx=0;entryDy=0;strokeColor=#707070;" edge="1" parent="1" source="plataforma" target="operador">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" value="Entrega la precipitación agregada por departamento&#10;[por lotes]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.5;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#707070;" edge="1" parent="1" source="plataforma" target="analista">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" value="Entrega el reporte mensual por departamento&#10;[por lotes]" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;exitX=0.9;exitY=0;exitDx=0;exitDy=0;entryX=0.5;entryY=1;entryDx=0;entryDy=0;strokeColor=#707070;" edge="1" parent="1" source="plataforma" target="gerencia">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="leyenda" value="&lt;b&gt;Leyenda&lt;/b&gt;&lt;div&gt;Azul oscuro: persona · Azul: el sistema de este proyecto · Gris: sistema externo&lt;/div&gt;&lt;div&gt;Línea discontinua: pieza o relación PLANIFICADA, aún no construida&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="40" y="560" width="520" height="60" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

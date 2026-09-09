@@ -88,6 +88,21 @@ Términos técnicos del curso, en español e inglés, con la precisión de uso q
 | Consistencia eventual | eventual consistency | Las réplicas pueden diferir un tiempo, pero al final convergen. Aceptable para un tablero de precipitación; peligrosa para el saldo de una cuenta |
 | Tolerancia a particiones | partition tolerance | Seguir operando aunque la red entre nodos se corte. No es opcional en un sistema distribuido: es la condición que obliga a elegir entre las otras dos |
 
+## Sesión 8 · Arquitecturas de referencia y notación C4
+
+| Español | Inglés | Precisión de uso |
+|---|---|---|
+| Arquitectura de referencia | reference architecture | Patrón maduro que resuelve una tensión conocida. Se deriva del paradigma ya decidido, no se elige de un catálogo |
+| Capa de velocidad | speed layer | La rama de baja latencia de Lambda, que da un resultado aproximado de lo reciente |
+| Capa de servicio | serving layer | Combina la vista por lotes y la de velocidad para responder la consulta. Es lo que este proyecto **no** necesita, porque sus dos vías no calculan lo mismo |
+| Registro de eventos | event log | El histórico de eventos que Kappa relee para recalcular. Retenerlo es una de sus tres condiciones de viabilidad |
+| Reproceso | reprocessing | Recalcular releyendo el registro desde el inicio, en vez de correr un sistema aparte por lotes |
+| Malla de datos | data mesh | Arquitectura **sociotécnica** por dominios, no un patrón de procesamiento. Con un solo equipo y un solo dominio es sobrediseño |
+| Dato como producto | data as a product | Publicar el dato con calidad, documentación y contrato para que otro dominio lo consuma con confianza |
+| Gobierno federado | federated governance | Reglas comunes decididas **entre** los dominios, no impuestas desde un punto único |
+| Diagrama de contexto | context diagram | Nivel 1 de C4: el sistema como una sola caja, con sus actores y sistemas externos. Ninguna pieza interna |
+| Diagrama de contenedor | container diagram | Nivel 2 de C4. El **contenedor de C4 no es el de Docker**: es una pieza que se ejecuta o almacena dato de forma independiente, corra o no en Docker |
+
 ## Sesión 3 · Lectura anclada en inglés · Kleppmann (2017), replicación
 
 > **Pendiente.** Los tres términos de esta sección deben tomarse del extracto de Kleppmann asignado en Canvas, que aún no se ha incorporado al repositorio. Se completa junto con el párrafo en inglés de T3.
