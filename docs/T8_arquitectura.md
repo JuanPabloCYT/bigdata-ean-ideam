@@ -56,6 +56,17 @@ En este proyecto esa tensión **no existe**. La alerta de creciente súbita no e
 
 Kappa tampoco aplica, y falla en las tres condiciones de viabilidad a la vez. El problema no es tratable como flujo (el reporte mensual y la proyección de T3 exigen ver el período cerrado completo); el registro que habría que retener no es propiedad del equipo sino de un tercero sin acuerdo de nivel de servicio; y forzar la ingesta a flujo releería una fuente que, según sus propios metadatos, **solo publica una vez al día** —cómputo continuo para no traer ni un dato nuevo.
 
+**La derivación, requisito por requisito.** La arquitectura no se elige para el proyecto en bloque, sino que cada requisito de la sección 2 encuentra la pieza que lo sirve:
+
+| Requisito de T7 | Paradigma decidido | Pieza de esta arquitectura que lo atiende | Por qué esa y no otra |
+|---|---|---|---|
+| Reporte mensual por departamento | Lotes | Motor de agregación por lotes → base analítica | Se calcula sobre un mes cerrado: la vía por lotes da el resultado exacto y no hay versión aproximada que valga la pena adelantar |
+| Ingesta diaria de la partición cruda | Lotes | Ingesta → capa cruda del lago | La fuente publica una vez al día; una capa de velocidad sobre ella leería lo mismo repetidamente |
+| Panel operativo del operador de turno | Casi real | Cuaderno con DuckDB sobre la capa refinada en Parquet | Los 0,0015 s de la consulta selectiva medida en T6 caben de sobra en una actualización de 2 a 5 minutos: el «casi real» se resuelve **dentro de la vía por lotes**, sin infraestructura adicional |
+| Alerta de creciente súbita | Flujo | Detector de umbral, el único componente de flujo | Es el único requisito cuya frescura no cabe en ningún ciclo de lote, y por eso es el único que justifica salirse de la vía única |
+
+Ese cuarto renglón es el que decide la forma de la arquitectura, y el tercero es el que explica por qué **no** hacen falta ni una capa de velocidad ni una segunda implementación: el requisito de minutos ya lo cubre el formato columnar que T6 midió, no una rama paralela.
+
 **El costo que aceptamos.** Que las dos vías **no comparten linaje**. La vía por lotes tiene trazabilidad completa —de la huella SHA-256 de la partición cruda hasta el agregado por departamento—, mientras que el componente de flujo consumirá un canal de telemetría que nunca pasa por `lago-crudo`. En consecuencia, el umbral de «lluvia intensa» que dispare la alerta y la definición de precipitación que se consolide en la capa curada pueden desalinearse, y **ningún mecanismo lo detectaría solo**: la alerta seguiría disparando y el reporte seguiría cuadrando, cada uno con su propia definición.
 
 Es un costo asumible porque es acotado y tiene mitigación conocida. Se acepta con dos compromisos explícitos: la definición del umbral se documenta en un único lugar del repositorio y se cita desde ambas vías, y el componente de flujo, cuando se implemente, deposita también sus eventos en `lago-crudo` para que la vía por lotes pueda auditar a posteriori qué vio la alerta. Es un costo bastante menor que la doble implementación permanente que cobraría Lambda.
@@ -75,43 +86,11 @@ Archivos editables en el repositorio, como exige la práctica:
 | [`practica/s08-c4/c4_nivel1_contexto.drawio`](../practica/s08-c4/c4_nivel1_contexto.drawio) | Nivel 1, editable en draw.io |
 | [`practica/s08-c4/c4_nivel2_contenedor.drawio`](../practica/s08-c4/c4_nivel2_contenedor.drawio) | Nivel 2, editable en draw.io |
 | [`practica/s08-c4/workspace.dsl`](../practica/s08-c4/workspace.dsl) | El modelo como código en Structurizr, nivel Frontera |
+| [`practica/s08-c4/c4_nivel1_contexto.mmd`](../practica/s08-c4/c4_nivel1_contexto.mmd) y [`c4_nivel2_contenedor.mmd`](../practica/s08-c4/c4_nivel2_contenedor.mmd) | La fuente Mermaid con la que se generaron las dos imágenes de abajo |
 
 ### 4.1 Diagrama de contexto · nivel 1
 
-```mermaid
----
-config:
-  flowchart:
-    nodeSpacing: 55
-    rankSpacing: 80
----
-flowchart TB
-    socrata["Portal de Datos Abiertos de Colombia<br><i>[Sistema externo · Socrata]</i><br>Publica el conjunto s54a-sgyg como<br>extracto consolidado, una vez al día"]
-    telemetria["Telemetría de estaciones del IDEAM<br><i>[Sistema externo · PLANIFICADO]</i><br>Canal de lectura por estación. Supuesto<br>declarado en T7; hoy no se consume"]
-
-    plataforma["<b>Plataforma de datos de precipitación</b><br><i>[Sistema · el que este proyecto construye]</i><br>Conserva la precipitación del IDEAM de forma íntegra<br>y versionada, y la entrega ya agregada a quien decide con ella"]
-
-    analista["Analista de recursos hídricos<br><i>[Persona]</i><br>Estudia el comportamiento de la<br>precipitación por departamento"]
-    gerencia["Gerencia de planeación<br><i>[Persona]</i><br>Recibe el consolidado mensual<br>para planear e informar"]
-    operador["Operador de gestión del riesgo<br><i>[Persona]</i><br>Vigila la lluvia del turno y activa el<br>protocolo ante una creciente súbita"]
-
-    socrata -->|"Entrega la partición diaria<br><i>CSV sobre HTTP · 1 vez al día<br>21.953.076 B</i>"| plataforma
-    telemetria -.->|"Enviaría las lecturas por estación<br><i>≈1 lectura/min por estación<br>PLANIFICADO</i>"| plataforma
-
-    plataforma -->|"Entrega la precipitación agregada<br>por departamento<br><i>por lotes</i>"| analista
-    plataforma -->|"Entrega el reporte mensual<br>por departamento<br><i>por lotes</i>"| gerencia
-    plataforma -->|"Actualiza el panel operativo<br><i>casi real · cada 2-5 min</i><br>· · ·<br>Dispara la alerta de creciente súbita<br><i>segundos · PLANIFICADO</i>"| operador
-
-    classDef persona fill:#08427B,color:#ffffff,stroke:#073B6F,stroke-width:1px
-    classDef sistema fill:#1168BD,color:#ffffff,stroke:#0E5CAD,stroke-width:2px
-    classDef externo fill:#999999,color:#ffffff,stroke:#8A8A8A,stroke-width:1px
-    classDef planificado fill:#BFBFBF,color:#ffffff,stroke:#8A8A8A,stroke-width:1px,stroke-dasharray:6 4
-
-    class analista,gerencia,operador persona
-    class plataforma sistema
-    class socrata externo
-    class telemetria planificado
-```
+![Diagrama C4 de contexto de la plataforma de datos de precipitación](../practica/s08-c4/c4_nivel1_contexto.png)
 
 En esta vista, las dos relaciones que la plataforma tiene con el operador —el panel y la alerta— se dibujan sobre una sola línea con las dos etiquetas, por legibilidad; en el archivo editable [`c4_nivel1_contexto.drawio`](../practica/s08-c4/c4_nivel1_contexto.drawio) son dos flechas separadas, cada una con la suya.
 
@@ -119,52 +98,7 @@ Las etiquetas ya dejan ver el paradigma sin necesidad de explicarlo: «1 vez al 
 
 ### 4.2 Diagrama de contenedor · nivel 2
 
-```mermaid
----
-config:
-  flowchart:
-    nodeSpacing: 55
-    rankSpacing: 75
----
-flowchart TB
-    socrata["Portal de Datos Abiertos<br><i>[Sistema externo]</i><br>Publica s54a-sgyg, 1 vez al día"]
-    telemetria["Telemetría de estaciones<br><i>[Sistema externo · PLANIFICADO]</i><br>Lecturas por estación"]
-
-    subgraph plataforma["Plataforma de datos de precipitación · [Sistema]"]
-        direction TB
-        ingesta["Ingesta de la partición diaria<br><i>[Contenedor: Python 3.12 · boto3]</i><br>Descarga la partición, verifica su huella<br>SHA-256 y la deposita en la capa cruda<br>sin reescribirla si ya existe"]
-        refinador["Refinador a Parquet<br><i>[Contenedor: Python · PyArrow]</i><br>Convierte el CSV crudo a Parquet<br>con codec zstd hacia la capa refinada"]
-        detector["Detector de umbral de lluvia intensa<br><i>[Contenedor de flujo · PLANIFICADO]</i><br>Evalúa el umbral sobre las lecturas<br>recientes y dispara la alerta"]
-        lago[("Lago de datos por capas<br><i>[Almacén: MinIO · API S3]</i><br>lago-crudo, lago-refinado, lago-curado<br>La cruda es inmutable y versionada")]
-        motor["Motor de agregación por lotes<br><i>[Contenedor: Hadoop MapReduce Streaming]</i><br>Agrega la precipitación promedio<br>por departamento, con combinador"]
-        cuaderno["Cuaderno de análisis y panel<br><i>[Contenedor: Jupyter · DuckDB]</i><br>Consulta selectiva sobre Parquet y<br>alimenta el panel operativo"]
-        analitica[("Base analítica<br><i>[Almacén: PostgreSQL]</i><br>Sirve el agregado con la clave<br>candidata de T1 como primaria")]
-    end
-
-    socrata -->|"Entrega la partición<br><i>CSV sobre HTTP, paginado</i>"| ingesta
-    telemetria -.->|"Entregaría las lecturas<br><i>PLANIFICADO</i>"| detector
-
-    ingesta -->|"Escribe la capa cruda,<br>idempotente por ETag<br><i>S3 PutObject</i>"| lago
-    refinador -->|"Lee la cruda, escribe la refinada<br><i>S3 · Parquet zstd</i>"| lago
-    detector -.->|"Depositaría sus eventos en la cruda,<br>para auditar qué vio la alerta<br><i>PLANIFICADO</i>"| lago
-    motor -->|"Lee la refinada, escribe la curada<br><i>S3 · Hadoop Streaming</i>"| lago
-    cuaderno -->|"Consulta la refinada<br><i>DuckDB sobre Parquet</i>"| lago
-    motor -->|"Carga el agregado por departamento<br><i>SQL</i>"| analitica
-    cuaderno -->|"Consulta el agregado servido<br><i>SQL</i>"| analitica
-
-    classDef externo fill:#999999,color:#ffffff,stroke:#8A8A8A,stroke-width:1px
-    classDef planificado fill:#BFBFBF,color:#ffffff,stroke:#8A8A8A,stroke-width:1px,stroke-dasharray:6 4
-    classDef contenedor fill:#438DD5,color:#ffffff,stroke:#3C7FC0,stroke-width:1px
-    classDef almacen fill:#3C7FC0,color:#ffffff,stroke:#2F6699,stroke-width:2px
-    classDef planificadoInt fill:#A9C9E8,color:#111111,stroke:#3C7FC0,stroke-width:1px,stroke-dasharray:6 4
-
-    class socrata externo
-    class telemetria planificado
-    class ingesta,refinador,motor,cuaderno contenedor
-    class lago,analitica almacen
-    class detector planificadoInt
-    style plataforma fill:#F4F8FC,stroke:#8FA9C4,stroke-dasharray:6 4,color:#33475B
-```
+![Diagrama C4 de contenedor de la plataforma de datos de precipitación](../practica/s08-c4/c4_nivel2_contenedor.png)
 
 **Dos advertencias de notación que este diagrama respeta.**
 
@@ -214,6 +148,8 @@ lago-curado/    curada/precipitacion_por_departamento/anio=2026/mes=06/
 La capa cruda tiene el versionado activado y la ingesta es idempotente por comparación de ETag: una segunda ejecución sobre la misma partición no sobrescribe ni duplica. Detalle completo en [`T5_lago.md`](T5_lago.md).
 
 **La verificación, no la promesa.** Cada entrega de T2 a T7 se comprobó ejecutándola desde un clon limpio, y **dos integrantes lo hicieron de forma independiente y en sistemas operativos distintos**: T5 y T6 fueron reproducidos por Lina Ramírez en Windows ([`T5_verificacion_lina.md`](T5_verificacion_lina.md), [`T6_verificacion_lina.md`](T6_verificacion_lina.md)), obteniendo los mismos tamaños de Parquet byte a byte y la misma diferencia de punto flotante de 5,55 × 10⁻¹⁷. Ese cruce encontró dos fallos reales que un solo equipo no habría visto: en macOS, el Python 3.9 del sistema es demasiado **viejo** para instalar `psycopg[binary]`; en Windows, Python 3.14 es demasiado **nuevo** para `pandas==2.2.3`. Ambos están documentados en [`T5_ejecucion.md`](T5_ejecucion.md) como lo que son —una restricción de versión de intérprete, no un defecto del proyecto.
+
+**El vocabulario.** Los términos técnicos de las ocho sesiones, en español e inglés y con la precisión de uso que aplica en este proyecto, se mantienen en el glosario acumulativo [`glosario_bilingue.md`](glosario_bilingue.md), ampliado sesión a sesión. La sección de la sesión 8 recoge los términos de arquitectura y de notación C4 que este documento usa.
 
 **El repositorio.** https://github.com/JuanPabloCYT/bigdata-ean-ideam
 

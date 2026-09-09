@@ -1,0 +1,32 @@
+---
+config:
+  flowchart:
+    nodeSpacing: 55
+    rankSpacing: 80
+---
+flowchart TB
+    socrata["Portal de Datos Abiertos de Colombia<br><i>[Sistema externo · Socrata]</i><br>Publica el conjunto s54a-sgyg como<br>extracto consolidado, una vez al día"]
+    telemetria["Telemetría de estaciones del IDEAM<br><i>[Sistema externo · PLANIFICADO]</i><br>Canal de lectura por estación. Supuesto<br>declarado en T7; hoy no se consume"]
+
+    plataforma["<b>Plataforma de datos de precipitación</b><br><i>[Sistema · el que este proyecto construye]</i><br>Conserva la precipitación del IDEAM de forma íntegra<br>y versionada, y la entrega ya agregada a quien decide con ella"]
+
+    analista["Analista de recursos hídricos<br><i>[Persona]</i><br>Estudia el comportamiento de la<br>precipitación por departamento"]
+    gerencia["Gerencia de planeación<br><i>[Persona]</i><br>Recibe el consolidado mensual<br>para planear e informar"]
+    operador["Operador de gestión del riesgo<br><i>[Persona]</i><br>Vigila la lluvia del turno y activa el<br>protocolo ante una creciente súbita"]
+
+    socrata -->|"Entrega la partición diaria<br><i>CSV sobre HTTP · 1 vez al día<br>21.953.076 B</i>"| plataforma
+    telemetria -.->|"Enviaría las lecturas por estación<br><i>≈1 lectura/min por estación<br>PLANIFICADO</i>"| plataforma
+
+    plataforma -->|"Entrega la precipitación agregada<br>por departamento<br><i>por lotes</i>"| analista
+    plataforma -->|"Entrega el reporte mensual<br>por departamento<br><i>por lotes</i>"| gerencia
+    plataforma -->|"Actualiza el panel operativo<br><i>casi real · cada 2-5 min</i><br>· · ·<br>Dispara la alerta de creciente súbita<br><i>segundos · PLANIFICADO</i>"| operador
+
+    classDef persona fill:#08427B,color:#ffffff,stroke:#073B6F,stroke-width:1px
+    classDef sistema fill:#1168BD,color:#ffffff,stroke:#0E5CAD,stroke-width:2px
+    classDef externo fill:#999999,color:#ffffff,stroke:#8A8A8A,stroke-width:1px
+    classDef planificado fill:#BFBFBF,color:#ffffff,stroke:#8A8A8A,stroke-width:1px,stroke-dasharray:6 4
+
+    class analista,gerencia,operador persona
+    class plataforma sistema
+    class socrata externo
+    class telemetria planificado

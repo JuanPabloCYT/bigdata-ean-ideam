@@ -13,8 +13,10 @@ Esta sesión no tiene laboratorio de software: se **modela y se comunica una arq
 | `c4_nivel1_contexto.drawio` | 1 · Guiado | Diagrama de contexto, editable en draw.io |
 | `c4_nivel2_contenedor.drawio` | 2 · Aplicado | Diagrama de contenedor, editable en draw.io |
 | `workspace.dsl` | 3 · Frontera | El mismo modelo como código, en Structurizr |
+| `c4_nivel1_contexto.mmd` · `c4_nivel2_contenedor.mmd` | 1 y 2 | La fuente Mermaid, editable, con la que se generaron las imágenes |
+| `c4_nivel1_contexto.png` · `c4_nivel2_contenedor.png` | 1 y 2 | Las imágenes embebidas en el documento de T8, como pide el §3 del enunciado |
 
-Los tres archivos son **editables y versionables**, como pide la §6 de la guía: van al repositorio en formato editable, no solo como imagen. Los diagramas renderizados se ven directamente en [`docs/T8_arquitectura.md`](../../docs/T8_arquitectura.md), sección 4.
+Los formatos editables —`.drawio`, `.mmd` y `.dsl`— van al repositorio como pide la §6 de la guía, y las imágenes `.png` son las que quedan embebidas en [`docs/T8_arquitectura.md`](../../docs/T8_arquitectura.md), sección 4, como pide el §3 del enunciado de la tarea.
 
 ## Cómo abrirlos
 
@@ -28,6 +30,16 @@ docker run -it --rm -p 8080:8080 -v "$PWD":/usr/local/structurizr structurizr/li
 ```
 
 y abrir `http://localhost:8080`. Genera las tres vistas del mismo modelo.
+
+## Cómo se regeneran las imágenes
+
+Las dos `.png` no se dibujaron a mano: salen de las fuentes `.mmd` de este mismo directorio, así que cualquiera puede rehacerlas y obtener lo mismo.
+
+```bash
+cd practica/s08-c4
+npx --yes @mermaid-js/mermaid-cli@11 -i c4_nivel1_contexto.mmd -o c4_nivel1_contexto.png -w 1800 -b white
+npx --yes @mermaid-js/mermaid-cli@11 -i c4_nivel2_contenedor.mmd -o c4_nivel2_contenedor.png -w 2100 -b white
+```
 
 ## Las cuatro reglas de notación, y cómo las cumple cada diagrama
 
@@ -52,8 +64,8 @@ Los tres actores del nivel 1 no se repiten en el diagrama de contenedor, siguien
 
 | Elemento de la §6 de la guía | Dónde está |
 |---|---|
-| Diagrama C4 de contexto, editable | `c4_nivel1_contexto.drawio` · renderizado en T8 §4.1 |
-| Diagrama C4 de contenedor, editable | `c4_nivel2_contenedor.drawio` · renderizado en T8 §4.2 |
+| Diagrama C4 de contexto, editable, más su imagen | `c4_nivel1_contexto.drawio` y `.mmd` · imagen embebida en T8 §4.1 |
+| Diagrama C4 de contenedor, editable, más su imagen | `c4_nivel2_contenedor.drawio` y `.mmd` · imagen embebida en T8 §4.2 |
 | Nivel 3 o modelo como código | `workspace.dsl` · vía elegida: modelo como código, con la razón declarada dentro del archivo |
 | Justificación de la arquitectura | [`docs/T8_reto_negocio.md`](../../docs/T8_reto_negocio.md) y, en versión técnica, T8 §3 |
 
