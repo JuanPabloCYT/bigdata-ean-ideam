@@ -129,6 +129,7 @@ bigdata-ean-ideam/
 | T8 · Hito A | Documento de arquitectura: arquitectura elegida, diagramas C4 y compromisos | [`docs/T8_arquitectura.md`](docs/T8_arquitectura.md) |
 | — | Justificación de la arquitectura para gerencia (reto de negocio) | [`docs/T8_reto_negocio.md`](docs/T8_reto_negocio.md) |
 | — | Diagramas C4 editables (draw.io) y el modelo como código (Structurizr) | [`practica/s08-c4/`](practica/s08-c4/) |
+| — | Verificación independiente de T8 (Lina): cifras trazadas a su fuente y consistencia entre los tres formatos del diagrama | [`docs/T8_verificacion_lina.md`](docs/T8_verificacion_lina.md) |
 
 ### Los datos no están en el repositorio
 
