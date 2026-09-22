@@ -129,6 +129,9 @@ bigdata-ean-ideam/
 | T8 · Hito A | Documento de arquitectura: arquitectura elegida, diagramas C4 y compromisos | [`docs/T8_arquitectura.md`](docs/T8_arquitectura.md) |
 | — | Justificación de la arquitectura para gerencia (reto de negocio) | [`docs/T8_reto_negocio.md`](docs/T8_reto_negocio.md) |
 | — | Diagramas C4 editables (draw.io) y el modelo como código (Structurizr) | [`practica/s08-c4/`](practica/s08-c4/) |
+| T10 | Modelo lógico dimensional con grano explícito y esquema estrella | [`docs/T10_modelo_dimensional.md`](docs/T10_modelo_dimensional.md) |
+| — | Diagramas del modelo editables y evidencia de cardinalidades | [`practica/s10-dimensional/`](practica/s10-dimensional/) |
+| — | Script que mide las cardinalidades que sostienen el modelo | [`src/modelo/medir_cardinalidades.py`](src/modelo/medir_cardinalidades.py) |
 | — | Verificación independiente de T8 (Lina): cifras trazadas a su fuente y consistencia entre los tres formatos del diagrama | [`docs/T8_verificacion_lina.md`](docs/T8_verificacion_lina.md) |
 
 ### Los datos no están en el repositorio

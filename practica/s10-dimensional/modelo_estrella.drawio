@@ -1,0 +1,51 @@
+<mxfile host="app.diagrams.net" type="device">
+  <diagram name="T10 - Esquema estrella" id="t10-estrella">
+    <mxGraphModel dx="1400" dy="950" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1450" pageHeight="1000" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <mxCell id="titulo" value="&lt;b&gt;T10 · Esquema estrella · Plataforma de datos de precipitación del IDEAM&lt;/b&gt;&lt;div&gt;Grano: una fila es la observación de precipitación que un sensor de una estación registró en un instante&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=middle;fontSize=15;fontColor=#333333;" vertex="1" parent="1">
+          <mxGeometry x="40" y="10" width="1000" height="50" as="geometry" />
+        </mxCell>
+
+        <mxCell id="hechos" value="&lt;b&gt;hechos_precipitacion&lt;/b&gt;&lt;div&gt;&lt;i&gt;[Tabla de hechos]&lt;/i&gt;&lt;/div&gt;&lt;hr&gt;&lt;div align=&quot;left&quot;&gt;FK  sk_fecha&lt;br&gt;FK  sk_hora_del_dia&lt;br&gt;FK  sk_estacion&lt;br&gt;FK  sk_sensor&lt;br&gt;&lt;br&gt;&lt;b&gt;MEDIDA&lt;/b&gt;  valor_precipitacion_mm&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#1168BD;strokeColor=#0E5CAD;fontColor=#FFFFFF;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="540" y="400" width="340" height="200" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dimfecha" value="&lt;b&gt;dim_fecha&lt;/b&gt;&lt;div&gt;&lt;i&gt;[Dimensión conformada · ~365 filas/año]&lt;/i&gt;&lt;/div&gt;&lt;hr&gt;&lt;div align=&quot;left&quot;&gt;&lt;b&gt;PK  sk_fecha&lt;/b&gt;  (subrogada)&lt;br&gt;      fecha  (clave natural)&lt;br&gt;      anio&lt;br&gt;      mes&lt;br&gt;      nombre_mes&lt;br&gt;      dia&lt;br&gt;      dia_semana&lt;br&gt;      es_fin_de_semana&lt;br&gt;      trimestre&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#3C7FC0;fontColor=#1A1A1A;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="80" width="300" height="240" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dimhora" value="&lt;b&gt;dim_hora_del_dia&lt;/b&gt;&lt;div&gt;&lt;i&gt;[Dimensión conformada · 1.440 filas fijas]&lt;/i&gt;&lt;/div&gt;&lt;hr&gt;&lt;div align=&quot;left&quot;&gt;&lt;b&gt;PK  sk_hora_del_dia&lt;/b&gt;  (subrogada)&lt;br&gt;      hora_minuto  (clave natural HH:MM)&lt;br&gt;      hora&lt;br&gt;      minuto&lt;br&gt;      franja&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#3C7FC0;fontColor=#1A1A1A;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="80" width="320" height="170" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dimestacion" value="&lt;b&gt;dim_estacion&lt;/b&gt;&lt;div&gt;&lt;i&gt;[Dimensión conformada · 524 filas medidas]&lt;/i&gt;&lt;/div&gt;&lt;hr&gt;&lt;div align=&quot;left&quot;&gt;&lt;b&gt;PK  sk_estacion&lt;/b&gt;  (subrogada)&lt;br&gt;      codigoestacion  (clave natural)&lt;br&gt;      nombre_estacion  (NO es clave)&lt;br&gt;      departamento&lt;br&gt;      municipio&lt;br&gt;      zona_hidrografica&lt;br&gt;      latitud&lt;br&gt;      longitud&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#3C7FC0;fontColor=#1A1A1A;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="60" y="680" width="300" height="230" as="geometry" />
+        </mxCell>
+
+        <mxCell id="dimsensor" value="&lt;b&gt;dim_sensor&lt;/b&gt;&lt;div&gt;&lt;i&gt;[Dimensión conformada · 2 filas medidas]&lt;/i&gt;&lt;/div&gt;&lt;hr&gt;&lt;div align=&quot;left&quot;&gt;&lt;b&gt;PK  sk_sensor&lt;/b&gt;  (subrogada)&lt;br&gt;      codigosensor  (clave natural)&lt;br&gt;      descripcion_sensor&lt;br&gt;      unidad_medida&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#E8F0FA;strokeColor=#3C7FC0;fontColor=#1A1A1A;verticalAlign=top;spacing=10;" vertex="1" parent="1">
+          <mxGeometry x="1070" y="680" width="320" height="150" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ef" value="sk_fecha" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;endArrow=none;startArrow=none;strokeColor=#0E5CAD;" edge="1" parent="1" source="dimfecha" target="hechos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="eh" value="sk_hora_del_dia" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;endArrow=none;startArrow=none;strokeColor=#0E5CAD;" edge="1" parent="1" source="dimhora" target="hechos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="ee" value="sk_estacion" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;endArrow=none;startArrow=none;strokeColor=#0E5CAD;" edge="1" parent="1" source="dimestacion" target="hechos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="es" value="sk_sensor" style="edgeStyle=orthogonalEdgeStyle;rounded=0;html=1;fontSize=11;endArrow=none;startArrow=none;strokeColor=#0E5CAD;" edge="1" parent="1" source="dimsensor" target="hechos">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="nota" value="&lt;b&gt;Todas las dimensiones conectan directo al centro: eso es la estrella.&lt;/b&gt;&lt;div&gt;Ninguna medida vive en una dimensión; ningún atributo descriptivo vive en los hechos.&lt;/div&gt;&lt;div&gt;Cada clave subrogada es distinta de la clave de origen, que se conserva como atributo.&lt;/div&gt;" style="text;html=1;align=left;verticalAlign=top;fontSize=11;fontColor=#666666;" vertex="1" parent="1">
+          <mxGeometry x="480" y="640" width="460" height="70" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

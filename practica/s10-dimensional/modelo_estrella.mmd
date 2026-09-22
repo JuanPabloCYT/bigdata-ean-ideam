@@ -1,0 +1,59 @@
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#E8F0FA"
+    primaryBorderColor: "#3C7FC0"
+    lineColor: "#0E5CAD"
+---
+erDiagram
+    DIM_FECHA        ||--o{ HECHOS_PRECIPITACION : "sk_fecha"
+    DIM_HORA_DEL_DIA ||--o{ HECHOS_PRECIPITACION : "sk_hora_del_dia"
+    DIM_ESTACION     ||--o{ HECHOS_PRECIPITACION : "sk_estacion"
+    DIM_SENSOR       ||--o{ HECHOS_PRECIPITACION : "sk_sensor"
+
+    HECHOS_PRECIPITACION {
+        int  sk_fecha                FK "a DIM_FECHA"
+        int  sk_hora_del_dia         FK "a DIM_HORA_DEL_DIA"
+        int  sk_estacion             FK "a DIM_ESTACION"
+        int  sk_sensor               FK "a DIM_SENSOR"
+        num  valor_precipitacion_mm  "MEDIDA - lo registrado en el instante"
+    }
+
+    DIM_FECHA {
+        int   sk_fecha      PK "subrogada"
+        date  fecha            "clave natural AAAA-MM-DD"
+        int   anio
+        int   mes
+        text  nombre_mes
+        int   dia
+        text  dia_semana
+        bool  es_fin_de_semana
+        int   trimestre
+    }
+
+    DIM_HORA_DEL_DIA {
+        int   sk_hora_del_dia PK "subrogada"
+        text  hora_minuto        "clave natural HH-MM"
+        int   hora
+        int   minuto
+        text  franja             "madrugada-manana-tarde-noche"
+    }
+
+    DIM_ESTACION {
+        int   sk_estacion    PK "subrogada"
+        int   codigoestacion    "clave natural de origen"
+        text  nombre_estacion    "NO es clave - 13 nombres repetidos"
+        text  departamento
+        text  municipio
+        text  zona_hidrografica
+        num   latitud
+        num   longitud
+    }
+
+    DIM_SENSOR {
+        int   sk_sensor       PK "subrogada"
+        int   codigosensor       "clave natural de origen"
+        text  descripcion_sensor
+        text  unidad_medida
+    }

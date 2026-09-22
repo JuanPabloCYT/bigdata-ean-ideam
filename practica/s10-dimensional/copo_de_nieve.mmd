@@ -1,0 +1,40 @@
+---
+config:
+  theme: base
+  themeVariables:
+    primaryColor: "#FDF1E3"
+    primaryBorderColor: "#C98A3C"
+    lineColor: "#A8702A"
+---
+erDiagram
+    DIM_ESTACION_COPO   ||--o{ HECHOS_PRECIPITACION : "sk_estacion"
+    DIM_MUNICIPIO       ||--o{ DIM_ESTACION_COPO    : "sk_municipio"
+    DIM_DEPARTAMENTO    ||--o{ DIM_MUNICIPIO        : "sk_departamento"
+    DIM_ZONA_HIDRO      ||--o{ DIM_ESTACION_COPO    : "sk_zona_hidrografica"
+
+    HECHOS_PRECIPITACION {
+        int sk_estacion FK "las otras 3 claves foraneas se omiten aqui"
+        num valor_precipitacion_mm "MEDIDA"
+    }
+    DIM_ESTACION_COPO {
+        int  sk_estacion          PK
+        int  codigoestacion          "clave natural"
+        text nombre_estacion
+        int  sk_municipio         FK "1 union extra"
+        int  sk_zona_hidrografica FK "rama independiente"
+        num  latitud
+        num  longitud
+    }
+    DIM_MUNICIPIO {
+        int  sk_municipio    PK "336 filas - pares depto+municipio"
+        text nombre_municipio   "331 nombres - 5 repetidos"
+        int  sk_departamento FK "2a union extra"
+    }
+    DIM_DEPARTAMENTO {
+        int  sk_departamento PK "33 filas"
+        text nombre_departamento
+    }
+    DIM_ZONA_HIDRO {
+        int  sk_zona_hidrografica PK "31 filas"
+        text nombre_zona             "18 de 31 cruzan departamentos"
+    }

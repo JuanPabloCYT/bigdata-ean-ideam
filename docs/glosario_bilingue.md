@@ -103,6 +103,21 @@ Términos técnicos del curso, en español e inglés, con la precisión de uso q
 | Diagrama de contexto | context diagram | Nivel 1 de C4: el sistema como una sola caja, con sus actores y sistemas externos. Ninguna pieza interna |
 | Diagrama de contenedor | container diagram | Nivel 2 de C4. El **contenedor de C4 no es el de Docker**: es una pieza que se ejecuta o almacena dato de forma independiente, corra o no en Docker |
 
+## Sesión 10 · Modelado dimensional
+
+| Español | Inglés | Precisión de uso |
+|---|---|---|
+| Modelado dimensional | dimensional modeling | Organizar el dato para la consulta analítica, no para evitar redundancia |
+| Tabla de hechos | fact table | Guarda las medidas del proceso. Aquí, `hechos_precipitacion` |
+| Dimensión | dimension | El contexto por el que se filtra y se agrupa |
+| Grano | grain | Qué representa **una fila** de la tabla de hechos. Se declara primero, en una frase sin «y», y todo lo demás se justifica contra él |
+| Medida | measure | Un número que se suma o se promedia con sentido. Si describe en vez de medir, es atributo de dimensión |
+| Esquema estrella | star schema | Hechos al centro, dimensiones planas alrededor. Es el punto de partida por defecto |
+| Esquema copo de nieve | snowflake schema | Dimensiones normalizadas en subtablas. Cuesta uniones; se justifica, no se asume. En este proyecto se diseñó y se descartó |
+| Clave subrogada | surrogate key | Clave artificial sin significado de negocio. Aquí no es opcional: 13 nombres de estación están repetidos entre códigos distintos |
+| Clave natural | natural key | La clave del sistema de origen (`codigoestacion`). Se conserva como atributo, pero no es la que enlaza |
+| Dimensión conformada | conformed dimension | Dimensión compartible con otra tabla de hechos futura. `dim_fecha` y `dim_estacion` lo son por construcción |
+
 ## Sesión 3 · Lectura anclada en inglés · Kleppmann (2017), replicación
 
 > **Pendiente.** Los tres términos de esta sección deben tomarse del extracto de Kleppmann asignado en Canvas, que aún no se ha incorporado al repositorio. Se completa junto con el párrafo en inglés de T3.

@@ -1,0 +1,67 @@
+====================================================================
+CARDINALIDADES DE LA FUENTE · particion 2026-06-22 · s54a-sgyg
+====================================================================
+
+  campo                  valores distintos
+  ----------------------------------------
+  codigoestacion                       524
+  codigosensor                           2
+  fechaobservacion                   1,436
+  nombreestacion                       509
+  departamento                          33
+  municipio                            331
+  zonahidrografica                      31
+  descripcionsensor                      2
+  unidadmedida                           1
+
+====================================================================
+EL NOMBRE DE LA ESTACION NO SIRVE COMO CLAVE NATURAL
+====================================================================
+  Nombres usados por mas de un codigo de estacion: 13
+    SAN PEDRO                                     3 codigos
+    SANTA MARIA                                   3 codigos
+    BUENAVISTA                                    2 codigos
+    CORINTO                                       2 codigos
+    LA PRIMAVERA                                  2 codigos
+    LAS BRISAS                                    2 codigos
+    PAEZ                                          2 codigos
+    SAN BENITO                                    2 codigos
+    SAN RAFAEL                                    2 codigos
+    SOCHA                                         2 codigos
+    TADO                                          2 codigos
+    UNIVERSIDAD DE LA SABANA                      2 codigos
+    VILLETA                                       2 codigos
+
+====================================================================
+LA ZONA HIDROGRAFICA NO ES UN NIVEL BAJO EL DEPARTAMENTO
+====================================================================
+  Zonas hidrograficas: 31 · cruzan mas de un departamento: 18
+    MEDIO MAGDALENA                               9 departamentos
+    CAUCA                                         7 departamentos
+    META                                          6 departamentos
+    ALTO MAGDALENA                                4 departamentos
+    BAJO MAGDALENA- CAUCA -SAN JORGE              4 departamentos
+    CARIBE - LITORAL                              4 departamentos
+    ARAUCA                                        3 departamentos
+    BAJO MAGDALENA                                3 departamentos
+    CESAR                                         3 departamentos
+    GUAVIARE                                      3 departamentos
+    SOGAMOSO                                      3 departamentos
+    ATRATO - DARIÉN                               2 departamentos
+    CAQUETÁ                                       2 departamentos
+    CARIBE - GUAJIRA                              2 departamentos
+    CASANARE                                      2 departamentos
+    PATÍA                                         2 departamentos
+    PUTUMAYO                                      2 departamentos
+    TAPAJE - DAGUA - DIRECTOS                     2 departamentos
+
+====================================================================
+EL NOMBRE DEL MUNICIPIO TAMPOCO IDENTIFICA POR SI SOLO
+====================================================================
+  Nombres de municipio en mas de un departamento: 5
+    ARMENIA                                       2 departamentos
+    BUENAVISTA                                    2 departamentos
+    CHIMA                                         2 departamentos
+    EL CARMEN                                     2 departamentos
+    SANTA MARÍA                                   2 departamentos
+  Pares (departamento, municipio) distintos: 336
