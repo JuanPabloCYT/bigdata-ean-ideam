@@ -42,3 +42,23 @@ Esta máquina no tiene Node.js instalado, así que no pude ejecutar `npx @mermai
 ## Conclusión
 
 Sin hallazgos nuevos ni correcciones. Cada cifra de `T8_arquitectura.md` remite a la medición original de T1, T3, T4, T6 o T7 sin alteración, y los tres formatos del modelo C4 (Mermaid, draw.io, Structurizr) son consistentes entre sí en qué está construido y qué está planificado. La única comprobación que quedó fuera de alcance —regenerar los `.png` desde los `.mmd`— es una limitación de esta máquina, documentada arriba para quien la reproduzca con Node.js instalado.
+
+
+---
+
+## Addendum · cierre del punto 4, por Juan Pablo Castro (2026-09-22)
+
+Lina dejó explícitamente pendiente la única comprobación que su equipo no podía hacer: regenerar los `.png` desde los `.mmd` con el comando documentado y compararlos byte a byte. La ejecuté en un equipo con Node.js, sobre una copia de los `.mmd` en un directorio aparte para no sobrescribir los archivos versionados.
+
+Se usó el comando exacto de la sección «Cómo se regeneran las imágenes» de [`practica/s08-c4/README.md`](../practica/s08-c4/README.md), sin modificarlo.
+
+| Archivo | SHA-256 del versionado | SHA-256 del regenerado | Resultado |
+|---|---|---|---|
+| `c4_nivel1_contexto.png` | `83cd60b2…9b8cb75` | `83cd60b2…9b8cb75` | Idénticos byte a byte |
+| `c4_nivel2_contenedor.png` | `656ed003…2f64ab672` | `656ed003…2f64ab672` | Idénticos byte a byte |
+
+Entorno: macOS, Node.js v24.18.0, `@mermaid-js/mermaid-cli` 11.17.0.
+
+**Conclusión:** el comando documentado reproduce los archivos versionados de forma exacta, no solo equivalente. Con esto queda cerrada la única comprobación que la verificación de Lina no pudo cubrir, y la reproducibilidad de T8 pasa a ser completa: las cifras trazan a su medición (secciones 1 y 2 de este documento) y las imágenes trazan a su fuente editable (este addendum).
+
+**Una precisión sobre el alcance.** La identidad byte a byte depende de la versión de `mermaid-cli`: una versión distinta puede producir un PNG visualmente igual pero no idéntico. Por eso la versión usada queda anotada arriba y en el `README.md` de la práctica. Lo que el proyecto garantiza es que el comando documentado, con esa versión, reproduce exactamente lo versionado.

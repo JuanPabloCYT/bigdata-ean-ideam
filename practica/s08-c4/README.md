@@ -33,7 +33,7 @@ y abrir `http://localhost:8080`. Genera las tres vistas del mismo modelo.
 
 ## Cómo se regeneran las imágenes
 
-Las dos `.png` no se dibujaron a mano: salen de las fuentes `.mmd` de este mismo directorio, así que cualquiera puede rehacerlas y obtener lo mismo.
+Las dos `.png` no se dibujaron a mano: salen de las fuentes `.mmd` de este mismo directorio, así que cualquiera puede rehacerlas y obtener lo mismo. **Comprobado:** con Node.js v24.18.0 y `mermaid-cli` 11.17.0 estos comandos reproducen los archivos versionados **byte a byte** (mismo SHA-256); el detalle está en el addendum de [`docs/T8_verificacion_lina.md`](../../docs/T8_verificacion_lina.md). Con otra versión de `mermaid-cli` la imagen puede salir visualmente igual pero no idéntica, así que la versión importa y por eso queda anotada.
 
 ```bash
 cd practica/s08-c4
