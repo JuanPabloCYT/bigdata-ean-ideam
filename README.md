@@ -129,6 +129,9 @@ bigdata-ean-ideam/
 | T8 · Hito A | Documento de arquitectura: arquitectura elegida, diagramas C4 y compromisos | [`docs/T8_arquitectura.md`](docs/T8_arquitectura.md) |
 | — | Justificación de la arquitectura para gerencia (reto de negocio) | [`docs/T8_reto_negocio.md`](docs/T8_reto_negocio.md) |
 | — | Diagramas C4 editables (draw.io) y el modelo como código (Structurizr) | [`practica/s08-c4/`](practica/s08-c4/) |
+| T9 | ADR del paradigma de almacenamiento, con matriz ponderada y sensibilidad | [`docs/adr/0001-almacenamiento.md`](docs/adr/0001-almacenamiento.md) |
+| — | Índice de los registros de decisión de arquitectura | [`docs/adr/`](docs/adr/) |
+| — | Cálculo de la matriz ponderada y del punto de basculación | [`practica/s09-adr/`](practica/s09-adr/) |
 | T10 | Modelo lógico dimensional con grano explícito y esquema estrella | [`docs/T10_modelo_dimensional.md`](docs/T10_modelo_dimensional.md) |
 | — | Diagramas del modelo editables y evidencia de cardinalidades | [`practica/s10-dimensional/`](practica/s10-dimensional/) |
 | — | Script que mide las cardinalidades que sostienen el modelo | [`src/modelo/medir_cardinalidades.py`](src/modelo/medir_cardinalidades.py) |

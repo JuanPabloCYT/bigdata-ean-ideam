@@ -103,6 +103,21 @@ Términos técnicos del curso, en español e inglés, con la precisión de uso q
 | Diagrama de contexto | context diagram | Nivel 1 de C4: el sistema como una sola caja, con sus actores y sistemas externos. Ninguna pieza interna |
 | Diagrama de contenedor | container diagram | Nivel 2 de C4. El **contenedor de C4 no es el de Docker**: es una pieza que se ejecuta o almacena dato de forma independiente, corra o no en Docker |
 
+## Sesión 9 · Almacén, lago y lakehouse
+
+| Español | Inglés | Precisión de uso |
+|---|---|---|
+| Almacén de datos | data warehouse | Dato estructurado y curado, validado **al escribir**. Rápido y confiable, a costa de rigidez |
+| Lago de datos | data lake | Cualquier formato sobre almacenamiento de objetos, estructurado **al leer**. Es lo que este proyecto tiene desde T5 |
+| Lakehouse | lakehouse | Tablas transaccionales sobre el lago. Se evaluó en el ADR 0001 y se descartó por ahora: no hay concurrencia que arbitrar |
+| Pantano de datos | data swamp | Lago sin gobierno ni documentación. Las capas cruda, refinada y curada de T5 son la primera defensa contra esto |
+| Esquema en escritura | schema on write | El dato se valida antes de guardarse. Incompatible con la regla de T5 de guardar la cruda tal como llegó |
+| Esquema en lectura | schema on read | El dato se guarda tal cual y se estructura al consultarlo |
+| Formato de tabla | table format | Envuelve los Parquet con un registro de transacciones. Delta Lake e Iceberg son los dos ejemplos |
+| Viaje en el tiempo | time travel | Consultar una **versión anterior de una tabla**. No confundir con el versionado de **objetos** de T5: aquel recupera un archivo, este el estado de una tabla |
+| Registro de decisión de arquitectura | architecture decision record, ADR | Documento breve y versionado de **una** decisión, su contexto y sus consecuencias. No documenta el sistema entero |
+| Análisis de sensibilidad | sensitivity analysis | Cuánto hay que mover los pesos para que la decisión cambie. Dice si una decisión es robusta o está al filo |
+
 ## Sesión 10 · Modelado dimensional
 
 | Español | Inglés | Precisión de uso |

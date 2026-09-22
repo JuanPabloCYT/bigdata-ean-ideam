@@ -5,7 +5,7 @@
 **Proyecto:** Plataforma de datos de precipitación del IDEAM (`s54a-sgyg`)
 **Fecha:** 2026-09-22
 
-> El modelo vive en la **capa curada** del lago (`lago-curado`), que es el destino analítico que definieron [T5](T5_lago.md) y la arquitectura de [T8](T8_arquitectura.md). Los atributos y las medidas salen de la fuente perfilada en [T1](T1/ficha_tecnica.md).
+> El modelo vive en la **capa curada** del lago (`lago-curado`), que es el destino analítico que definieron [T5](T5_lago.md) y la arquitectura de [T8](T8_arquitectura.md). Que ese destino sea un lago por capas y no un almacén ni un lakehouse es la decisión registrada en el [ADR 0001 de T9](adr/0001-almacenamiento.md), y tiene una consecuencia directa sobre este modelo: al no haber transacciones de tabla, la materialización de la estrella —tarea de la sesión 19— tendrá que ser idempotente por reejecución desde la capa refinada, no confiar en poder revertir una carga. Los atributos y las medidas salen de la fuente perfilada en [T1](T1/ficha_tecnica.md).
 
 ---
 

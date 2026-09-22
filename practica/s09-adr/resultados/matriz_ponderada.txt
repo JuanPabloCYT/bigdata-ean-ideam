@@ -1,0 +1,36 @@
+==============================================================================
+MATRIZ DE CRITERIOS PONDERADOS · T9 · ADR 0001
+==============================================================================
+  Criterio                                      Peso   Alm  Lago  Lake
+  --------------------------------------------------------------------
+  Costo de almacenamiento                        10%     2     5     4
+  Flexibilidad de esquema                        10%     2     5     4
+  Rendimiento de consulta analitica              25%     5     4     4
+  Soporte transaccional y viaje en el tiempo     15%     3     2     5
+  Complejidad operativa                          25%     3     5     3
+  Adecuacion al volumen y la frescura            15%     3     5     4
+  --------------------------------------------------------------------
+  SUMA DE PESOS                                 100%
+
+  Puntaje ponderado
+    Almacen       3.30
+    Lago          4.30
+    Lakehouse     3.90
+
+  Gana: Lago (4.30), por 0.40 sobre Lakehouse
+
+==============================================================================
+ANALISIS DE SENSIBILIDAD · nivel Frontera
+==============================================================================
+  Se mueve peso de 'Complejidad operativa' hacia
+  'Soporte transaccional y viaje en el tiempo', manteniendo los otros cuatro criterios fijos.
+
+  Peso actual del criterio transaccional : 15 %
+  Peso en que Lakehouse alcanza a Lago   : 24 %  (y 16 % para complejidad)
+  Desplazamiento necesario               : +9 puntos porcentuales
+
+  En el punto de basculacion: Almacen=3.30  Lago=4.03  Lakehouse=4.08
+
+  Lectura: hace falta mas de la mitad del peso actual de ese criterio
+  para que la decision cambie. Es una decision moderadamente robusta,
+  no una que se voltee moviendo un punto.
