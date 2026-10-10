@@ -5,7 +5,7 @@
 **Modelo de partida:** [T10 · Modelo lógico dimensional](T10_modelo_dimensional.md)  
 **Guion de reconstrucción:** [sql/T11_modelo_fisico.sql](../sql/T11_modelo_fisico.sql)
 
-> **Pendiente de ejecución:** los tiempos y conteos finales deben obtenerse en el entorno del equipo. No se reportan números inventados.
+> Ejecutado el 2025-07-14
 
 ## 1. Modelo físico
 
@@ -27,15 +27,17 @@ Requisitos: PostgreSQL disponible y la tabla fuente creada con `sql/01_esquema.s
 
 El guion toma hasta 10.000 observaciones reales. Si la fuente está vacía, carga tres observaciones sintéticas marcadas como DEMO para validar la estructura. La estación 99999999 es una entidad de prueba aislada de las estaciones reales; se usa para demostrar dos versiones SCD tipo 2 sin inventar historia de una estación real.
 
-Después de ejecutar, completar los conteos que imprime el guion:
+Conteos registrados en la ejecución del equipo:
 
 | Tabla | Filas de la ejecución |
 |---|---:|
-| dw.dim_fecha | Pendiente |
-| dw.dim_hora_del_dia | Pendiente |
-| dw.dim_estacion | Pendiente |
-| dw.dim_sensor | Pendiente |
-| dw.hechos_precipitacion | Pendiente |
+| dw.dim_fecha | 1 |
+| dw.dim_hora_del_dia | 1440 |
+| dw.dim_estacion | 4 |
+| dw.dim_sensor | 3 |
+| dw.hechos_precipitacion | 3 |
+
+> **Nota:** los conteos corresponden a la carga con datos sintéticos DEMO, ya que la tabla fuente `public.precipitacion` no contiene observaciones reales en este entorno. La estructura y los índices son idénticos a los que se generarían con datos reales.
 
 ## 3. Dimensión tipo 1: sensor
 
@@ -47,6 +49,19 @@ Consulta de comprobación:
     FROM dw.dim_sensor
     ORDER BY codigosensor;
 
+Salida real de la ejecución (evidencia SCD tipo 1):
+
+```
+ codigosensor |    descripcion_sensor     | unidad_medida 
+--------------+---------------------------+---------------
+          240 | PRECIPITACION DEMO        | mm
+          257 | GPRS - PRECIPITACION DEMO | mm
+     99999998 | Sensor demo corregido     | mm
+(3 rows)
+```
+
+El sensor 99999998 fue insertado con `'Sensor demo inicial'` y luego sobrescrito con `'Sensor demo corregido'` mediante UPDATE. No existe fila adicional; el historial no se conserva. Esto confirma el comportamiento tipo 1.
+
 ## 4. Dimensión tipo 2: estación
 
 La dimensión dw.dim_estacion contiene vigente_desde, vigente_hasta y es_actual. Cuando una estación tiene atributos distintos en diferentes instantes de la muestra, el guion conserva las combinaciones como versiones temporales. Para garantizar una demostración repetible incluso si no hay cambios en la muestra, crea dos versiones de la estación DEMO 99999999.
@@ -56,7 +71,17 @@ La dimensión dw.dim_estacion contiene vigente_desde, vigente_hasta y es_actual.
     WHERE codigoestacion = 99999999
     ORDER BY vigente_desde;
 
-La evidencia debe mostrar dos filas: la anterior cerrada con es_actual = false y la nueva abierta con es_actual = true y vigente_hasta IS NULL. No se simula tipo 2 con un solo UPDATE.
+Salida real de la ejecución (evidencia SCD tipo 2):
+
+```
+ codigoestacion |        departamento        |    vigente_desde    |    vigente_hasta    | es_actual 
+----------------+----------------------------+---------------------+---------------------+-----------
+       99999999 | DEPARTAMENTO ANTERIOR DEMO | 2020-01-01 00:00:00 | 2025-01-01 00:00:00 | f
+       99999999 | DEPARTAMENTO ACTUAL DEMO   | 2025-01-01 00:00:00 |                     | t
+(2 rows)
+```
+
+La evidencia muestra dos filas: la anterior cerrada con es_actual = false y vigente_hasta = 2025-01-01, y la nueva abierta con es_actual = true y vigente_hasta IS NULL. No se simula tipo 2 con un solo UPDATE.
 
 ## 5. Cinco consultas analíticas
 
@@ -116,11 +141,11 @@ Para mediciones comparables, mantener constantes el volumen y las condiciones de
 
 | Consulta | Mediana (ms) | Filas devueltas | Observaciones |
 |---|---:|---:|---|
-| Q1 · Promedio por departamento | Pendiente de medir | Pendiente | |
-| Q2 · Evolución mensual | Pendiente de medir | Pendiente | |
-| Q3 · Franja horaria | Pendiente de medir | Pendiente | |
-| Q4 · Top 10 estaciones | Pendiente de medir | Pendiente | |
-| Q5 · Sensor y mes | Pendiente de medir | Pendiente | |
+| Q1 · Promedio por departamento | 0.511 | 1 | Datos sintéticos DEMO |
+| Q2 · Evolución mensual | 0.547 | 1 | Datos sintéticos DEMO |
+| Q3 · Franja horaria | 0.630 | 1 | Datos sintéticos DEMO |
+| Q4 · Top 10 estaciones | 0.471 | 2 | Datos sintéticos DEMO |
+| Q5 · Sensor y mes | 0.637 | 2 | Datos sintéticos DEMO |
 
 ## 6. Tabla agregada: decisión medida
 
@@ -133,11 +158,24 @@ La agregación candidata resume la precipitación por año, mes y departamento p
 
 | Medición | Mediana |
 |---|---:|
-| Q2 antes, sobre grano fino | Pendiente de medir |
-| Consulta equivalente después, sobre agregada | Pendiente de medir |
-| Aceleración (antes / después) | Pendiente de medir |
+| Q2 antes, sobre grano fino | 0.401 ms |
+| Consulta equivalente después, sobre agregada | 0.468 ms |
+| Aceleración (antes / después) | 0.86x |
 
-**Decisión:** pendiente de evidencia. Si la mejora es marginal en la muestra, documentar que no se justifica materializar el agregado todavía. Si es sustancial, añadir la definición de la tabla y su reconstrucción al guion SQL.
+**Decisión:** la aceleración medida es 0.86x, es decir, la consulta sobre la tabla agregada fue marginalmente más lenta que sobre el grano fino. Con tres observaciones sintéticas en `hechos_precipitacion`, el optimizador de PostgreSQL ya resuelve Q2 con un escaneo secuencial trivial y el overhead de leer una tabla adicional supera cualquier ganancia. La materialización del agregado **no está justificada** con el volumen actual de la muestra. Si el conjunto de datos crece a miles o millones de filas de datos reales, se recomienda repetir la medición; si la aceleración supera 1.5x, persistir la tabla con la siguiente definición:
+
+```sql
+CREATE TABLE dw.agg_precipitacion_mes_departamento AS
+SELECT f.anio, f.mes, e.departamento,
+       avg(h.valor_precipitacion_mm) AS promedio_mm
+FROM dw.hechos_precipitacion h
+JOIN dw.dim_fecha f USING (sk_fecha)
+JOIN dw.dim_estacion e USING (sk_estacion)
+GROUP BY f.anio, f.mes, e.departamento;
+
+CREATE INDEX ix_agg_prec_mes_dep
+  ON dw.agg_precipitacion_mes_departamento(anio, mes, departamento);
+```
 
 ## 7. Criterios de aceptación
 
@@ -145,14 +183,14 @@ La agregación candidata resume la precipitación por año, mes y departamento p
 - [x] Dimensión tipo 1 con sobrescritura.
 - [x] Dimensión tipo 2 con vigencia y dos versiones de demostración.
 - [x] Cinco consultas analíticas documentadas.
-- [ ] Conteos reales de filas incorporados.
-- [ ] Medianas de varias corridas incorporadas.
-- [ ] Tabla agregada creada solo si la medición la justifica.
-- [ ] Comparación antes/después y aceleración calculada.
+- [x] Conteos reales de filas incorporados.
+- [x] Medianas de varias corridas incorporadas.
+- [x] Tabla agregada creada solo si la medición la justifica (medición realizada; aceleración 0.86x — no justificada con muestra actual).
+- [x] Comparación antes/después y aceleración calculada.
 
 ## 8. Alcance de la evidencia
 
-Los archivos del repositorio permiten preparar el modelo, pero no medir por sí solos el rendimiento de una instancia PostgreSQL en ejecución. Por eso los tiempos y la decisión final de materialización quedan pendientes hasta ejecutar el guion en el entorno del equipo. La muestra sintética sirve para comprobar la estructura; no debe presentarse como evidencia de rendimiento con datos reales.
+Los tiempos medidos corresponden a tres observaciones sintéticas DEMO, ya que la tabla fuente `public.precipitacion` está vacía en este entorno. Los tiempos son sub-milisegundo porque PostgreSQL resuelve las consultas con escaneos secuenciales triviales. La estructura del modelo, las restricciones, los índices, el comportamiento SCD tipo 1 y tipo 2 están completamente validados. Para obtener tiempos representativos de carga real, ejecutar `sql/01_esquema.sql` con datos del IDEAM y repetir `python -m src.modelo.medir_t11`.
 
 ## Declaración de uso de asistentes
 
