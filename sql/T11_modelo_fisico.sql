@@ -120,10 +120,22 @@ SELECT codigosensor,max(descripcionsensor),max(unidadmedida)
 FROM t11_muestra GROUP BY codigosensor
 ON CONFLICT(codigosensor) DO NOTHING;
 
--- Tipo 1: corrección por sobrescritura, sin guardar una versión anterior.
+-- Tipo 1: prueba explícita y reproducible con sensor sintético separado.
+-- El UPDATE reemplaza el atributo en la misma fila; no crea historial.
+INSERT INTO dw.dim_sensor(codigosensor, descripcion_sensor, unidad_medida)
+VALUES (99999998, 'Sensor demo inicial', 'mm')
+ON CONFLICT(codigosensor) DO NOTHING;
+
+UPDATE dw.dim_sensor
+SET descripcion_sensor='Sensor demo corregido'
+WHERE codigosensor=99999998
+  AND descripcion_sensor<>'Sensor demo corregido';
+
+-- También normaliza los textos de los sensores reales por sobrescritura.
 UPDATE dw.dim_sensor
 SET descripcion_sensor=upper(trim(descripcion_sensor))
-WHERE descripcion_sensor IS NOT NULL
+WHERE codigosensor<>99999998
+  AND descripcion_sensor IS NOT NULL
   AND descripcion_sensor<>upper(trim(descripcion_sensor));
 
 INSERT INTO dw.hechos_precipitacion(sk_fecha,sk_hora_del_dia,sk_estacion,sk_sensor,
