@@ -60,7 +60,13 @@ La evidencia debe mostrar dos filas: la anterior cerrada con es_actual = false y
 
 ## 5. Cinco consultas analíticas
 
-Medir cada consulta al menos siete veces con la misma muestra y configuración. Descartar la primera corrida como calentamiento y calcular la mediana de las seis restantes. Registrar los tiempos en milisegundos y el número de filas devueltas. Para mediciones comparables, mantener constantes el volumen y las condiciones de ejecución.
+El benchmark automatizado está en [src/modelo/medir_t11.py](../src/modelo/medir_t11.py). Ejecutarlo desde la raíz después de cargar el modelo:
+
+    python -m src.modelo.medir_t11
+
+Configurar las variables POSTGRES_HOST, POSTGRES_PORT, POSTGRES_DB, POSTGRES_USER y POSTGRES_PASSWORD igual que en el entorno del proyecto. El script mide las cinco consultas siete veces, descarta la primera como calentamiento y reporta la mediana de las seis restantes. También compara Q2 con una tabla agregada temporal y calcula la aceleración. El tiempo incluye recuperar las filas en el cliente. Copiar los valores reales de la salida a las tablas de esta documentación.
+
+Para mediciones comparables, mantener constantes el volumen y las condiciones de ejecución.
 
 ### Q1 · Precipitación promedio por departamento
 
