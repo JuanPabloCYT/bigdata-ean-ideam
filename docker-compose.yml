@@ -23,6 +23,7 @@ services:
       - ./data:/home/jovyan/work/data
       - ./sql:/home/jovyan/work/sql
       - ./docs:/home/jovyan/work/docs
+      - ./practica:/home/jovyan/work/practica
       - ./requirements.txt:/tmp/requirements.txt:ro
     working_dir: /home/jovyan/work
     command: >
