@@ -42,32 +42,16 @@ def ingest(conn_params: dict, batch_date: date) -> dict:
     Retorno
     -------
     dict con las claves:
-        filas_procesadas  — filas leídas de public.precipitacion
-        filas_insertadas  — filas nuevas insertadas en stg.stg_lecturas
-        filas_actualizadas — filas ya existentes actualizadas
-        marca_agua        — valor final de ultima_marca_agua (ISO 8601 o null)
-    """
-    INSERT_SQL = """
-        INSERT INTO stg.stg_lecturas (
-            codigoestacion, codigosensor, fechaobservacion, valorobservado,
-            nombreestacion, departamento, municipio, zonahidrografica,
-            latitud, longitud, descripcionsensor, unidadmedida, _fuente
-        ) VALUES (
-            %s, %s, %s, %s,
-            %s, %s, %s, %s,
-            %s, %s, %s, %s, 'ideam_socrata'
-        )
-        ON CONFLICT ON CONSTRAINT uq_stg_lecturas_clave DO UPDATE SET
-            valorobservado    = EXCLUDED.valorobservado,
-            nombreestacion    = EXCLUDED.nombreestacion,
-            departamento      = EXCLUDED.departamento,
-            municipio         = EXCLUDED.municipio,
-            zonahidrografica  = EXCLUDED.zonahidrografica,
-            latitud           = EXCLUDED.latitud,
-            longitud          = EXCLUDED.longitud,
-            descripcionsensor = EXCLUDED.descripcionsensor,
-            unidadmedida      = EXCLUDED.unidadmedida,
-            _ingestado_en     = now()
+        filas_procesadas   — filas leídas de public.precipitacion
+        filas_insertadas   — filas nuevas insertadas en stg.stg_lecturas
+        filas_actualizadas — filas ya existentes actualizadas (DO UPDATE)
+        marca_agua         — valor final de ultima_marca_agua (ISO 8601 o null)
+
+    Distinción insert/update:
+        La cláusula RETURNING devuelve xmax por cada fila afectada.
+        PostgreSQL asigna xmax = 0 a las filas recién insertadas y
+        xmax != 0 a las filas actualizadas por DO UPDATE (el xmax registra
+        la transacción que las bloqueó/actualizó por última vez).
     """
 
     with psycopg.connect(**conn_params) as conn:
@@ -80,7 +64,7 @@ def ingest(conn_params: dict, batch_date: date) -> dict:
                     ("precipitacion_ideam",),
                 )
                 row = cur.fetchone()
-                watermark_actual = row[0] if row else None
+                watermark_actual = row[0] if row else None  # noqa: F841
 
                 # (b) Leer las filas de la fuente para la fecha solicitada
                 cur.execute(
@@ -98,22 +82,72 @@ def ingest(conn_params: dict, batch_date: date) -> dict:
 
                 filas_procesadas = len(filas)
 
-                # (c) Insertar/actualizar con manejo de conflictos
-                if filas:
-                    cur.executemany(INSERT_SQL, filas)
-                    # rowcount en executemany con ON CONFLICT DO UPDATE:
-                    # PostgreSQL reporta 1 por inserción nueva y 2 por
-                    # actualización (xmax != 0). Usamos xmax para distinguirlos.
-                    # Sin embargo, para simplificar y ser portable, contamos
-                    # directamente desde la tabla después del upsert.
-                    filas_insertadas_raw = cur.rowcount  # total afectadas
-
-                # (d) Calcular nueva marca de agua
+                # (c) Insertar/actualizar con manejo de conflictos y RETURNING xmax.
+                # Un único INSERT … SELECT … RETURNING permite usar xmax para
+                # distinguir inserciones nuevas de actualizaciones DO UPDATE
+                # dentro de la misma transacción:
+                #   xmax = 0  → fila recién insertada (no existía antes)
+                #   xmax != 0 → fila actualizada por DO UPDATE (existía)
+                filas_insertadas = 0
+                filas_actualizadas = 0
                 new_max = None
+
                 if filas:
                     new_max = max(r[2] for r in filas)  # r[2] es fechaobservacion
 
-                # (e) Actualizar marca de agua solo si avanza
+                    # Construye la lista de literales VALUES para el INSERT…SELECT
+                    # Usar un INSERT con RETURNING en lugar de executemany para
+                    # obtener xmax por fila y distinguir insert de update.
+                    placeholders = ", ".join(
+                        "(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"
+                        for _ in filas
+                    )
+                    # Aplana la lista de tuplas para pasar como parámetros
+                    params = [val for fila in filas for val in fila]
+
+                    cur.execute(
+                        f"""
+                        INSERT INTO stg.stg_lecturas (
+                            codigoestacion, codigosensor, fechaobservacion,
+                            valorobservado, nombreestacion, departamento,
+                            municipio, zonahidrografica, latitud, longitud,
+                            descripcionsensor, unidadmedida, _fuente
+                        )
+                        SELECT
+                            codigoestacion, codigosensor, fechaobservacion,
+                            valorobservado, nombreestacion, departamento,
+                            municipio, zonahidrografica, latitud, longitud,
+                            descripcionsensor, unidadmedida,
+                            'ideam_socrata' AS _fuente
+                        FROM (VALUES {placeholders}) AS src(
+                            codigoestacion, codigosensor, fechaobservacion,
+                            valorobservado, nombreestacion, departamento,
+                            municipio, zonahidrografica, latitud, longitud,
+                            descripcionsensor, unidadmedida
+                        )
+                        ON CONFLICT ON CONSTRAINT uq_stg_lecturas_clave DO UPDATE SET
+                            valorobservado    = EXCLUDED.valorobservado,
+                            nombreestacion    = EXCLUDED.nombreestacion,
+                            departamento      = EXCLUDED.departamento,
+                            municipio         = EXCLUDED.municipio,
+                            zonahidrografica  = EXCLUDED.zonahidrografica,
+                            latitud           = EXCLUDED.latitud,
+                            longitud          = EXCLUDED.longitud,
+                            descripcionsensor = EXCLUDED.descripcionsensor,
+                            unidadmedida      = EXCLUDED.unidadmedida,
+                            _ingestado_en     = now()
+                        RETURNING (xmax = 0)::int AS es_insercion
+                        """,
+                        params,
+                    )
+                    # Cuenta filas nuevas (xmax = 0) vs actualizadas (xmax != 0)
+                    for (es_insercion,) in cur.fetchall():
+                        if es_insercion:
+                            filas_insertadas += 1
+                        else:
+                            filas_actualizadas += 1
+
+                # (d) Actualizar marca de agua solo si avanza
                 if new_max is not None:
                     cur.execute(
                         """
@@ -127,7 +161,7 @@ def ingest(conn_params: dict, batch_date: date) -> dict:
                         (new_max, new_max),
                     )
 
-                # Leer marca de agua final para reportar
+                # (e) Leer marca de agua final para reportar
                 cur.execute(
                     "SELECT ultima_marca_agua FROM stg.estado_ingesta "
                     "WHERE nombre_proceso = %s",
@@ -135,18 +169,6 @@ def ingest(conn_params: dict, batch_date: date) -> dict:
                 )
                 row_final = cur.fetchone()
                 marca_agua_final = row_final[0] if row_final else None
-
-    # Calcular insertadas vs actualizadas:
-    # ON CONFLICT DO UPDATE devuelve rowcount = 1 (insert) o 2 (update) en
-    # psycopg3. Dividimos: si no hay filas, ambos son 0.
-    if filas_procesadas == 0:
-        filas_insertadas = 0
-        filas_actualizadas = 0
-    else:
-        # rowcount después de executemany no distingue insert/update de forma
-        # portable; reportamos filas_procesadas como proxy conservador.
-        filas_insertadas = filas_procesadas
-        filas_actualizadas = 0
 
     return {
         "filas_procesadas": filas_procesadas,

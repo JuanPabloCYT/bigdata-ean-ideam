@@ -23,6 +23,11 @@ services:
       - ./data:/home/jovyan/work/data
       - ./sql:/home/jovyan/work/sql
       - ./docs:/home/jovyan/work/docs
+      # Mount completo de practica/ requerido para ejecutar verificar_t12.py con
+      # docker exec. Los subdirectorios de prácticas anteriores (s03-hdfs,
+      # s09-adr, s10-dimensional, etc.) usan guiones en sus nombres, lo que los
+      # hace sintácticamente no importables por Python; no hay riesgo de
+      # importación accidental de código con efectos secundarios.
       - ./practica:/home/jovyan/work/practica
       - ./requirements.txt:/tmp/requirements.txt:ro
     working_dir: /home/jovyan/work
