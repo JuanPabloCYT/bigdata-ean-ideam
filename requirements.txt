@@ -13,6 +13,10 @@ ipykernel==6.29.5
 psycopg[binary]==3.2.3
 SQLAlchemy==2.0.35
 
+# --- T13 · conector API --------------------------------------
+psycopg2-binary==2.9.9
+flask==3.0.3
+
 # --- T5 · almacenamiento de objetos --------------------------
 boto3==1.35.36
 
