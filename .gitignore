@@ -49,3 +49,8 @@ practica/s03-hdfs/muestra/*
 # en su ubicacion original. No hay razon para duplicarlos aqui.
 practica/s04-mapreduce/muestra/*
 !practica/s04-mapreduce/muestra/.gitkeep
+
+# --- Artefactos de agentes (Kiro) ----------------------------
+# Reportes, planes y archivos temporales generados por los agentes
+# durante sesiones de trabajo. No son parte del codigo ni la docs.
+.agents/
