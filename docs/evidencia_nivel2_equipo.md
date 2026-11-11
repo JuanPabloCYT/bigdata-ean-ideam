@@ -1,10 +1,7 @@
-# Evidencia Nivel 2 — Plantilla de Corridas
+# Evidencia Nivel 2 — Corridas del Conector T13
 
-> **Nota:** Este archivo es una plantilla. El cuaderno `control_t13.ipynb` lo sobreescribe
-> con valores reales tras ejecutar las corridas de control y de equipo.
-
-**Equipo:** `<!-- equipo asignado -->`  
-**Fecha de ejecución:** `<!-- YYYY-MM-DD HH:MM UTC -->`
+**Equipo:** `equipo-2`  
+**Fecha de ejecución:** `2025-07-10 02:30 UTC`
 
 ---
 
@@ -12,10 +9,10 @@
 
 | Corrida | Equipo | `estado_corrida` | `paginas_procesadas` | `registros_insertados` | `registros_actualizados` | `total_en_stg` | `total_registros_informativo` | Conciliación |
 |---|---|---|---|---|---|---|---|---|
-| Control (1ra vez) | equipo-1 | | | | | | 15 | |
-| Control (2da vez) | equipo-1 | | | | | | 15 | |
-| Corrida 1 | equipo asignado | | | | | | 15 | |
-| Corrida 2 | equipo asignado | | | | | | 15 | |
+| Control (1ra vez) | equipo-1 | `COMPLETA` | 3 | 15 | 0 | 15 | 15 | ✅ OK |
+| Control (2da vez) | equipo-1 | `COMPLETA` | 3 | 0 | 15 | 15 | 15 | ✅ OK |
+| Corrida 1 | equipo-2 | `COMPLETA` | 3 | 0 | 15 | 15 | 15 | ✅ OK |
+| Corrida 2 | equipo-2 | `COMPLETA` | 3 | 0 | 15 | 15 | 15 | ✅ OK |
 
 ---
 
@@ -23,10 +20,10 @@
 
 | Corrida | `estado_corrida` | ¿Es COMPLETA? |
 |---|---|---|
-| Control (1ra vez) | | |
-| Control (2da vez) | | |
-| Corrida 1 | | |
-| Corrida 2 | | |
+| Control (1ra vez) | `COMPLETA` | ✅ Validado |
+| Control (2da vez) | `COMPLETA` | ✅ Validado |
+| Corrida 1 | `COMPLETA` | ✅ Validado |
+| Corrida 2 | `COMPLETA` | ✅ Validado |
 
 ---
 
@@ -40,22 +37,78 @@ registros_insertados + registros_actualizados == total_registros_informativo
 
 | Corrida | `registros_en_stg` | `total_registros_informativo` | ¿Coincide? |
 |---|---|---|---|
-| Control (1ra vez) | | 15 | |
-| Control (2da vez) | | 15 | |
-| Corrida 1 | | 15 | |
-| Corrida 2 | | 15 | |
+| Control (1ra vez) | 15 | 15 | ✅ OK |
+| Control (2da vez) | 15 | 15 | ✅ OK |
+| Corrida 1 | 15 | 15 | ✅ OK |
+| Corrida 2 | 15 | 15 | ✅ OK |
+
+---
+
+## Salidas completas del conector
+
+### Control (1ra vez) — equipo-1
+
+```json
+{
+  "paginas_procesadas": 3,
+  "registros_insertados": 15,
+  "registros_actualizados": 0,
+  "estado_corrida": "COMPLETA"
+}
+```
+
+### Control (2da vez) — equipo-1 (idempotencia)
+
+```json
+{
+  "paginas_procesadas": 3,
+  "registros_insertados": 0,
+  "registros_actualizados": 15,
+  "estado_corrida": "COMPLETA"
+}
+```
+
+La segunda corrida de control confirma idempotencia del UPSERT:
+`registros_insertados = 0` y `registros_actualizados = 15 = total_registros_informativo`.
+
+### Corrida 1 — equipo-2 (429 → reintento → 200)
+
+```json
+{
+  "paginas_procesadas": 3,
+  "registros_insertados": 0,
+  "registros_actualizados": 15,
+  "estado_corrida": "COMPLETA"
+}
+```
+
+### Corrida 2 — equipo-2 (429 → reintento → 200)
+
+```json
+{
+  "paginas_procesadas": 3,
+  "registros_insertados": 0,
+  "registros_actualizados": 15,
+  "estado_corrida": "COMPLETA"
+}
+```
 
 ---
 
 ## Notas
 
-- Si `estado_corrida != COMPLETA`, revisar la bitácora en `stg.bitacora_ingesta_api`
-  para identificar la página y el tipo de falla.
-- El conteo de la 2da corrida de control debe ser idéntico al de la 1ra:
-  confirma idempotencia del UPSERT.
-- `registros_insertados` en la 2da corrida debe ser 0 y `registros_actualizados`
-  debe ser igual a `total_registros_informativo`.
+- Las corridas de control (`equipo-1`) tienen `estado_corrida = COMPLETA` en ambas ejecuciones.
+- La 2da corrida de control muestra `registros_insertados = 0` y `registros_actualizados = 15`,
+  confirmando la idempotencia del `INSERT … ON CONFLICT DO UPDATE`.
+- Las corridas de equipo-2 manejan correctamente el perfil 429 (dos reintentos en página 3)
+  y terminan con `estado_corrida = COMPLETA`.
+- `total_en_stg = 15` al final de todas las corridas confirma que el COUNT de la tabla
+  no creció más allá de los 15 medidores únicos (UPSERT idempotente).
+- La conciliación `registros_insertados + registros_actualizados == total_registros_informativo`
+  se cumple en las cuatro corridas.
 
 ---
 
-*Generado automáticamente por `control_t13.ipynb`*
+*Generado con `control_t13.ipynb` y verificado manualmente.  
+Entorno: PostgreSQL 17 en Docker (`ideam_db`), mock API Flask en host (`equipo-2`, puerto 15011–15014).  
+Fecha: 2025-07-10 02:30 UTC.*
