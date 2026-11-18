@@ -136,6 +136,22 @@ bigdata-ean-ideam/
 | — | Diagramas del modelo editables y evidencia de cardinalidades | [`practica/s10-dimensional/`](practica/s10-dimensional/) |
 | — | Script que mide las cardinalidades que sostienen el modelo | [`src/modelo/medir_cardinalidades.py`](src/modelo/medir_cardinalidades.py) |
 | — | Verificación independiente de T8 (Lina): cifras trazadas a su fuente y consistencia entre los tres formatos del diagrama | [`docs/T8_verificacion_lina.md`](docs/T8_verificacion_lina.md) |
+| T11 | Modelo físico dimensional (PostgreSQL) con SCD y benchmark de agregado | [`docs/T11_modelo_fisico.md`](docs/T11_modelo_fisico.md) |
+| — | Script que reconstruye el modelo físico y mide consultas SCD | [`src/modelo/medir_t11.py`](src/modelo/medir_t11.py) |
+| — | DDL del modelo físico | [`sql/T11_modelo_fisico.sql`](sql/T11_modelo_fisico.sql) |
+| T12 | Ingesta incremental e idempotente (staging con marca de agua) | [`docs/T12_ingesta_incremental.md`](docs/T12_ingesta_incremental.md) |
+| — | DDL de staging y verificación idempotente | [`sql/T12_ingesta_incremental.sql`](sql/T12_ingesta_incremental.sql) |
+| — | Módulo de ingesta incremental y script de verificación | [`practica/s12-ingesta/`](practica/s12-ingesta/) |
+| T13 | Conector de ingesta API paginado con backoff exponencial | [`docs/T13_conector_api.md`](docs/T13_conector_api.md) |
+| — | DDL del conector y la bitácora | [`sql/T13_conector_api.sql`](sql/T13_conector_api.sql) |
+| — | Mock de la API, verificación y cuaderno | [`practica/s13-conector-api/`](practica/s13-conector-api/) |
+| T14 | CDC del maestro de suscriptores: punto ciego de bajas duras y ADR | [`docs/T14_cdc_suscriptores.md`](docs/T14_cdc_suscriptores.md) |
+| — | Memo ADR (decisión híbrida sondeo + reconciliación) | [`docs/memo_adr_t14.md`](docs/memo_adr_t14.md) |
+| — | Plantilla de entrega diligenciada | [`docs/T14_plantilla_entrega.md`](docs/T14_plantilla_entrega.md) |
+| — | DDL del CDC (maestro, staging, checkpoint) | [`sql/T14_cdc_suscriptores.sql`](sql/T14_cdc_suscriptores.sql) |
+| — | Generador de perfiles, prototipo, cuaderno y evidencia | [`practica/s14-cdc-suscriptores/`](practica/s14-cdc-suscriptores/) |
+
+> **Nota de motor para T14:** a diferencia de T11–T13 (que corren en la pila PostgreSQL de Docker), T14 se ejecuta con **DuckDB embebido** (sin servidor), porque el perfil s12 del archivo de servicios no estaba disponible en la sesión y el host solo tiene la librería cliente `libpq`. La conclusión del punto ciego es independiente del motor. Para reproducir T14 no hace falta Docker: ver [`practica/s14-cdc-suscriptores/README.md`](practica/s14-cdc-suscriptores/README.md).
 
 ### Los datos no están en el repositorio
 
