@@ -54,3 +54,15 @@ practica/s04-mapreduce/muestra/*
 # Reportes, planes y archivos temporales generados por los agentes
 # durante sesiones de trabajo. No son parte del codigo ni la docs.
 .agents/
+
+# T15 · Spark corre en un venv aparte (Python 3.11); el .venv principal es 3.14
+.venv-spark/
+
+# T15 · capas crudas no se versionan (se regeneran); la bitacora y consolidada_spark sí
+datalake/cruda/
+datalake_equipo/cruda/
+datalake_equipo/csv_contraste/
+practica/s15-carga-spark/resultados/logs/
+
+# Spark: archivos de suma de verificación (ruido)
+*.crc

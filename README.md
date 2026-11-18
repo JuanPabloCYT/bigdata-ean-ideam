@@ -150,8 +150,13 @@ bigdata-ean-ideam/
 | — | Plantilla de entrega diligenciada | [`docs/T14_plantilla_entrega.md`](docs/T14_plantilla_entrega.md) |
 | — | DDL del CDC (maestro, staging, checkpoint) | [`sql/T14_cdc_suscriptores.sql`](sql/T14_cdc_suscriptores.sql) |
 | — | Generador de perfiles, prototipo, cuaderno y evidencia | [`practica/s14-cdc-suscriptores/`](practica/s14-cdc-suscriptores/) |
+| T15 | Carga distribuida con Spark: reejecutable, reconciliada y justificada con la interfaz | [`docs/T15_carga_spark.md`](docs/T15_carga_spark.md) |
+| — | Registro de decisiones (5 ADR con cifras de la interfaz) | [`docs/adr_t15.md`](docs/adr_t15.md) |
+| — | Plantilla de entrega diligenciada | [`docs/T15_plantilla_entrega.md`](docs/T15_plantilla_entrega.md) |
+| — | Pipeline de carga (Spark) y orquestador | [`pipeline/carga_spark.py`](pipeline/carga_spark.py) |
+| — | Generadores de base/ampliación, cuaderno, bitácora y evidencia | [`practica/s15-carga-spark/`](practica/s15-carga-spark/) |
 
-> **Nota de motor para T14:** a diferencia de T11–T13 (que corren en la pila PostgreSQL de Docker), T14 se ejecuta con **DuckDB embebido** (sin servidor), porque el perfil s12 del archivo de servicios no estaba disponible en la sesión y el host solo tiene la librería cliente `libpq`. La conclusión del punto ciego es independiente del motor. Para reproducir T14 no hace falta Docker: ver [`practica/s14-cdc-suscriptores/README.md`](practica/s14-cdc-suscriptores/README.md).
+> **Nota de motor para T14 y T15:** T14 corre en DuckDB embebido (sin servidor) y T15 en PySpark 3.5.3 nativo con Java 21 en `local[2]`, porque en la sesión Docker estaba apagado y el host solo tiene la librería cliente `libpq` (sin servidor). Ambas son opciones permitidas por el enunciado con el cambio documentado. Ver [`practica/s14-cdc-suscriptores/README.md`](practica/s14-cdc-suscriptores/README.md) y [`practica/s15-carga-spark/README.md`](practica/s15-carga-spark/README.md).
 
 ### Los datos no están en el repositorio
 
