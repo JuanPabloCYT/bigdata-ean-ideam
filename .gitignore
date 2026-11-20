@@ -66,3 +66,15 @@ practica/s15-carga-spark/resultados/logs/
 
 # Spark: archivos de suma de verificación (ruido)
 *.crc
+
+# T16 · capas generadas no se versionan (se regeneran)
+datalake/cruda_t16/
+datalake_equipo/cruda_t16/
+datalake_equipo/refinada/
+datalake/refinada_spark_copia/
+
+# T16 · capas de datos grandes no se versionan (se regeneran)
+datalake/refinada/
+datalake_equipo/refinada_spark/
+datalake/refs_refinada/
+datalake_equipo/refs_refinada/

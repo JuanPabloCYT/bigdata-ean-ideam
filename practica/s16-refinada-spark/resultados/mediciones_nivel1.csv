@@ -1,0 +1,4 @@
+experimento,trabajos,MiB_leidos,tipos_inferidos,notas
+inferencia_automatica,2,29.3,meter_id=int64 timestamp=string sector=string consumo_m3=double presion_bar=double quality_flag=string,doble pasada; timestamp como string
+sin_inferencia_header_true,1,29.3,todos=string,sin tipos; requiere cast posterior
+esquema_declarado_enforceSchema,1,29.3,meter_id=long timestamp=timestamp sector=string consumo_m3=double presion_bar=double quality_flag=string,una sola pasada; tipos correctos; filas_no_conformes=0

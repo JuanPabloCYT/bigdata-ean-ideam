@@ -155,8 +155,13 @@ bigdata-ean-ideam/
 | — | Plantilla de entrega diligenciada | [`docs/T15_plantilla_entrega.md`](docs/T15_plantilla_entrega.md) |
 | — | Pipeline de carga (Spark) y orquestador | [`pipeline/carga_spark.py`](pipeline/carga_spark.py) |
 | — | Generadores de base/ampliación, cuaderno, bitácora y evidencia | [`practica/s15-carga-spark/`](practica/s15-carga-spark/) |
+| T16 | Hito B: capa refinada con esquema declarado, función propia medida y página de gerencia | [`docs/T16_capa_refinada.md`](docs/T16_capa_refinada.md) |
+| — | Registro de decisiones (5 ADR con cifras de la ampliación) | [`docs/adr_t16.md`](docs/adr_t16.md) |
+| — | Plantilla de entrega diligenciada | [`docs/T16_plantilla_entrega.md`](docs/T16_plantilla_entrega.md) |
+| — | Pipeline refinada, reproceso y verificador | [`pipeline/refinada_spark.py`](pipeline/refinada_spark.py) · [`pipeline/reproceso_spark.py`](pipeline/reproceso_spark.py) · [`pipeline/verificar_etapa.py`](pipeline/verificar_etapa.py) |
+| — | Generador de capas, cuaderno, bitácora y evidencia | [`practica/s16-refinada-spark/`](practica/s16-refinada-spark/) |
 
-> **Nota de motor para T14 y T15:** T14 corre en DuckDB embebido (sin servidor) y T15 en PySpark 3.5.3 nativo con Java 21 en `local[2]`, porque en la sesión Docker estaba apagado y el host solo tiene la librería cliente `libpq` (sin servidor). Ambas son opciones permitidas por el enunciado con el cambio documentado. Ver [`practica/s14-cdc-suscriptores/README.md`](practica/s14-cdc-suscriptores/README.md) y [`practica/s15-carga-spark/README.md`](practica/s15-carga-spark/README.md).
+> **Nota de motor para T14, T15 y T16:** T14 corre en DuckDB embebido (sin servidor), T15 y T16 en PySpark 3.5.3 nativo con Java 21 en `local[2]`, porque Docker estaba apagado y el host solo tiene la librería cliente `libpq`. Todos son entornos permitidos por el enunciado con el cambio documentado. Ver los README de cada práctica.
 
 ### Los datos no están en el repositorio
 
