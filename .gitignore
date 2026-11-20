@@ -14,6 +14,7 @@ data/processed/*
 !data/processed/.gitkeep
 *.csv
 !docs/**/*.csv
+!practica/s16-refinada-spark/resultados/*.csv
 
 # --- Credenciales y variables de entorno ---------------------
 .env
@@ -78,3 +79,8 @@ datalake/refinada/
 datalake_equipo/refinada_spark/
 datalake/refs_refinada/
 datalake_equipo/refs_refinada/
+
+# T17
+planes/
+bitacora_planes.jsonl
+hipotesis_s17.json
